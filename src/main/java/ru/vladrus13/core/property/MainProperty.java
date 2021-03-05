@@ -24,4 +24,8 @@ public class MainProperty {
     public static String get(String s) {
         return properties.getProperty(s);
     }
+
+    public static long getLong(String s) {
+        return Long.parseLong(properties.getProperty(s));
+    }
 }
