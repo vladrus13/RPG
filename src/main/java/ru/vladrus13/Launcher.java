@@ -1,7 +1,7 @@
 package ru.vladrus13;
 
 import ru.vladrus13.core.exception.GameException;
-import ru.vladrus13.core.game.Game;
+import ru.vladrus13.game.Game;
 import ru.vladrus13.core.property.MainProperty;
 
 import java.io.IOException;

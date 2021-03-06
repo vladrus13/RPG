@@ -7,7 +7,7 @@ public abstract class Drawn {
     protected boolean isPause = false;
     protected boolean isDrawing = true;
 
-    public abstract void nonCheckingDraw(Graphics graphics);
+    protected abstract void nonCheckingDraw(Graphics graphics);
 
     public void draw(Graphics graphics) {
         if (isDrawing) {

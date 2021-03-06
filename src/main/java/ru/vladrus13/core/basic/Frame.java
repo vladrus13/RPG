@@ -53,7 +53,6 @@ public abstract class Frame extends Drawn {
         this.ratioSize = size;
         this.frames = frames;
         this.parent = parent;
-        recalculate();
     }
 
     public void recalculate() {

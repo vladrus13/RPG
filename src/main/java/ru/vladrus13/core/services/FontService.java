@@ -3,7 +3,6 @@ package ru.vladrus13.core.services;
 import ru.vladrus13.core.exception.GameException;
 
 import java.awt.*;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,11 +64,10 @@ public class FontService {
      *
      * @param text     text
      * @param font     {@link Font}
-     * @param graphics {@link Graphics}
      * @return width
      */
-    public static int fontWidth(String text, Font font, Graphics graphics) {
-        return graphics.getFontMetrics(font).stringWidth(text);
+    public static int fontWidth(String text, Font font) {
+        return GameService.getGame().getFontMetrics(font).stringWidth(text);
     }
 
     /**
@@ -77,15 +75,14 @@ public class FontService {
      *
      * @param text     text
      * @param font     {@link Font}
-     * @param graphics {@link Graphics}
      * @param width    width
      * @return array of text
      */
-    public static ArrayList<String> splitByWidth(String text, Font font, Graphics graphics, int width) {
+    public static ArrayList<String> splitByWidth(String text, Font font, int width) {
         ArrayList<String> answer = new ArrayList<>();
         int current = 0, last = 0;
         while (current != text.length()) {
-            if (graphics.getFontMetrics(font).stringWidth(text.substring(last, current)) > width) {
+            if (GameService.getGame().getFontMetrics(font).stringWidth(text.substring(last, current)) > width) {
                 answer.add(text.substring(last, current));
                 last = current;
             }

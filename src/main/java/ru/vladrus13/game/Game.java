@@ -1,8 +1,9 @@
-package ru.vladrus13.core.game;
+package ru.vladrus13.game;
 
 import ru.vladrus13.core.exception.GameException;
-import ru.vladrus13.core.game.world.World;
+import ru.vladrus13.game.world.World;
 import ru.vladrus13.core.property.MainProperty;
+import ru.vladrus13.core.services.GameService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
     public Game() throws GameException {
         logger.info("Run class \"Game\"");
+        GameService.setGame(this);
         int width = MainProperty.getInteger("window.width");
         int height = MainProperty.getInteger("window.height");
         frame = new JFrame(MainProperty.get("window.name"));
@@ -43,29 +45,38 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { }
+    public void actionPerformed(ActionEvent e) {
+    }
 
     @Override
-    public void keyTyped(KeyEvent e) { }
+    public void keyTyped(KeyEvent e) {
+    }
 
     @Override
-    public void keyPressed(KeyEvent e) { }
+    public void keyPressed(KeyEvent e) {
+    }
 
     @Override
-    public void keyReleased(KeyEvent e) { }
+    public void keyReleased(KeyEvent e) {
+    }
 
     @Override
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {
+    }
 
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(MouseEvent e) {
+    }
 }
