@@ -28,4 +28,8 @@ public class MainProperty {
     public static long getLong(String s) {
         return Long.parseLong(properties.getProperty(s));
     }
+
+    public static int getInteger(String s) {
+        return Integer.parseInt(properties.getProperty(s));
+    }
 }

@@ -1,11 +1,11 @@
 package ru.vladrus13.core.basic;
 
 
+import ru.vladrus13.core.bean.CoordinatesType;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.utils.Ratio;
 
-import java.awt.*;
 import java.util.Collection;
 
 public abstract class Frame extends Drawn {
@@ -13,43 +13,59 @@ public abstract class Frame extends Drawn {
     /**
      * Real position on screen
      */
-    private Point start;
+    protected Point start;
     /**
      * Real size on screen
      */
-    private Size size;
-    private Point ratioStart;
-    private Size ratioSize;
-    private final Collection<Drawn> drawns;
-    private final Frame parent;
+    protected Size size;
+    protected Point ratioStart;
+    protected Size ratioSize;
+    protected final Collection<Frame> frames;
+    protected final Frame parent;
+    protected final CoordinatesType startType;
+    protected final CoordinatesType sizeType;
 
-    public Frame(Point start, Size size, Collection<Drawn> drawns) {
+    public Frame(Point start, Size size, Collection<Frame> frames) {
+        startType = start.coordinatesType;
+        sizeType = size.coordinatesType;
         this.start = start;
-        this.drawns = drawns;
+        this.frames = frames;
         this.size = size;
         this.parent = null;
         ratioStart = null;
         ratioSize = null;
     }
 
-    public Frame(Point ratioStart, Size ratioSize, Collection<Drawn> drawns, Frame parent) {
-        this.ratioStart = ratioStart;
-        this.ratioSize = ratioSize;
-        this.drawns = drawns;
+    public Frame(Point start, Size size, Collection<Frame> frames, Frame parent) {
+        if (start.coordinatesType == CoordinatesType.REAL) {
+            this.start = start;
+        } else {
+            this.ratioStart = start;
+        }
+        if (size.coordinatesType == CoordinatesType.REAL) {
+            this.size = size;
+        } else {
+            this.ratioSize = size;
+        }
+        startType = start.coordinatesType;
+        sizeType = size.coordinatesType;
+        this.ratioStart = start;
+        this.ratioSize = size;
+        this.frames = frames;
         this.parent = parent;
         recalculate();
     }
 
-    @Override
-    public void nonCheckingDraw(Graphics graphics) {
-        for (Drawn frame : drawns) {
-            frame.draw(graphics);
-        }
-    }
-
     public void recalculate() {
-        start = Ratio.getPoint(parent.start, parent.size, ratioStart);
-        size = Ratio.getSize(parent.size, ratioSize);
+        if (startType == CoordinatesType.RATIO && parent != null) {
+            start = Ratio.getPoint(parent.start, parent.size, ratioStart);
+        }
+        if (sizeType == CoordinatesType.RATIO && parent != null) {
+            size = Ratio.getSize(parent.size, ratioSize);
+        }
+        for (Frame frame : frames) {
+            frame.recalculate();
+        }
     }
 
     public void setStart(Point start) {
@@ -68,7 +84,7 @@ public abstract class Frame extends Drawn {
         this.ratioSize = ratioSize;
     }
 
-    public void addDrawn(Drawn drawn) {
-        drawns.add(drawn);
+    public void addFrames(Frame drawn) {
+        frames.add(drawn);
     }
 }

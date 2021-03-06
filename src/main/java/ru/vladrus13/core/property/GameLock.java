@@ -9,7 +9,16 @@ public class GameLock {
         status = "exception";
     }
 
+    public static void close() {
+        status = "close";
+    }
+
     public static boolean isException() {
         return Objects.equals(status, "exception");
     }
+
+    public static boolean isClose() {
+        return Objects.equals(status, "close");
+    }
+
 }

@@ -1,5 +1,7 @@
 package ru.vladrus13;
 
+import ru.vladrus13.core.exception.GameException;
+import ru.vladrus13.core.game.Game;
 import ru.vladrus13.core.property.MainProperty;
 
 import java.io.IOException;
@@ -14,6 +16,11 @@ public class Launcher {
                 e.printStackTrace();
             }
             MainProperty.read();
+            try {
+                Game game = new Game();
+            } catch (GameException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
