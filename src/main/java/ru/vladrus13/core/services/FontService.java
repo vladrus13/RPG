@@ -62,8 +62,8 @@ public class FontService {
     /**
      * Get font width
      *
-     * @param text     text
-     * @param font     {@link Font}
+     * @param text text
+     * @param font {@link Font}
      * @return width
      */
     public static int fontWidth(String text, Font font) {
@@ -73,9 +73,9 @@ public class FontService {
     /**
      * Split text by width
      *
-     * @param text     text
-     * @param font     {@link Font}
-     * @param width    width
+     * @param text  text
+     * @param font  {@link Font}
+     * @param width width
      * @return array of text
      */
     public static ArrayList<String> splitByWidth(String text, Font font, int width) {

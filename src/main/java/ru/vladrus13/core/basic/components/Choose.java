@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Choose extends Frame implements KeyTaker {
     private final ArrayList<Button> buttons;
@@ -19,7 +18,7 @@ public class Choose extends Frame implements KeyTaker {
         super(start, size, new ArrayList<>(buttons), parent);
         this.buttons = buttons;
         current = 0;
-        buttons.get(0).setChoose(true);
+        if (!buttons.isEmpty()) buttons.get(0).setChoose(true);
         recalculate();
     }
 
@@ -31,7 +30,7 @@ public class Choose extends Frame implements KeyTaker {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public int keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_UP:
@@ -45,13 +44,22 @@ public class Choose extends Frame implements KeyTaker {
                 buttons.get(current).setChoose(true);
                 break;
             case KeyEvent.VK_ENTER:
-                buttons.get(current).keyPressed(e);
-                break;
+                return buttons.get(current).keyPressed(e);
         }
+        return 0;
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public int mousePressed(MouseEvent e) {
 
+        return 0;
+    }
+
+    public void addButton(Button button) {
+        addFrames(button);
+        if (buttons.isEmpty()) {
+            button.setChoose(true);
+        }
+        buttons.add(button);
     }
 }

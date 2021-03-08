@@ -7,7 +7,6 @@ import ru.vladrus13.core.bean.CoordinatesType;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
-import ru.vladrus13.core.services.FontService;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,14 +17,14 @@ public class World extends Frame {
 
     Text text = new Text(
             new Point(10, 10, CoordinatesType.REAL),
-            new Size(100, 100, CoordinatesType.REAL), this, "REAL", "Inventory", new Size(20, 0, CoordinatesType.REAL), Color.BLACK, Text.TextAlign.CENTER);
+            new Size(100, 100, CoordinatesType.REAL), "REAL", "Inventory", new Size(20, 0, CoordinatesType.REAL), Color.BLACK, Text.TextAlign.CENTER, this);
 
     Text next = new Text(
             new Point(500, 500, CoordinatesType.RATIO),
-            new Size(500, 500, CoordinatesType.RATIO), this, "RATIO", "Inventory", new Size(100, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER);
+            new Size(500, 500, CoordinatesType.RATIO), "RATIO", "Inventory", new Size(100, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, this);
 
     public World(int width, int height) throws GameException {
-        super(new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), new ArrayList<>());
+        super(new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), new ArrayList<>(), null);
         frames.add(text);
         frames.add(next);
         recalculate();
@@ -39,12 +38,13 @@ public class World extends Frame {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-
+    public int keyPressed(KeyEvent e) {
+        return 0;
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public int mousePressed(MouseEvent e) {
 
+        return 0;
     }
 }

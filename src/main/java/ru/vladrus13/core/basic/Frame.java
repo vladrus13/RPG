@@ -22,38 +22,29 @@ public abstract class Frame extends Drawn implements Focus {
     protected Point ratioStart;
     protected Size ratioSize;
     protected final Collection<Frame> frames;
-    protected final Frame parent;
+    protected Frame parent;
     protected final CoordinatesType startType;
     protected final CoordinatesType sizeType;
     protected Frame focused = null;
     protected final Logger logger = Logger.getLogger(Frame.class.getName());
 
-    public Frame(Point start, Size size, Collection<Frame> frames) {
-        startType = start.coordinatesType;
-        sizeType = size.coordinatesType;
-        this.start = start;
-        this.frames = frames;
-        this.size = size;
-        this.parent = null;
-        ratioStart = null;
-        ratioSize = null;
-    }
-
     public Frame(Point start, Size size, Collection<Frame> frames, Frame parent) {
         if (start.coordinatesType == CoordinatesType.REAL) {
             this.start = start;
+            this.ratioStart = null;
         } else {
             this.ratioStart = start;
+            this.start = null;
         }
         if (size.coordinatesType == CoordinatesType.REAL) {
             this.size = size;
+            this.ratioSize = null;
         } else {
             this.ratioSize = size;
+            this.size = null;
         }
         startType = start.coordinatesType;
         sizeType = size.coordinatesType;
-        this.ratioStart = start;
-        this.ratioSize = size;
         this.frames = frames;
         this.parent = parent;
     }
@@ -93,5 +84,18 @@ public abstract class Frame extends Drawn implements Focus {
 
     public void addFrames(Frame drawn) {
         frames.add(drawn);
+    }
+
+    public void setParent(Frame parent) {
+        this.parent = parent;
+        recalculate();
+    }
+
+    public Point getStart() {
+        return start;
+    }
+
+    public Size getSize() {
+        return size;
     }
 }

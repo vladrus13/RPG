@@ -6,7 +6,6 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.services.FontService;
-import ru.vladrus13.core.utils.Writer;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -16,10 +15,14 @@ import java.util.Collections;
 public class Text extends Frame {
 
     @Override
-    public void keyPressed(KeyEvent e) { }
+    public int keyPressed(KeyEvent e) {
+        return 0;
+    }
 
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public int mousePressed(MouseEvent e) {
+        return 0;
+    }
 
     public enum TextAlign {
         CENTER, LEFT, RIGHT
@@ -32,11 +35,12 @@ public class Text extends Frame {
     private Point textStart;
     private final Size fontSize;
 
-    public Text(Point start, Size size, Frame parent, String text, String nameFont, Size fontSize, Color color, TextAlign textAlign) throws GameException {
+    public Text(Point start, Size size, String text, String nameFont, Size fontSize, Color color, TextAlign textAlign, Frame parent) throws GameException {
         super(start, size, Collections.emptyList(), parent);
         this.text = text;
         this.color = color;
-        this.font = FontService.getFont(nameFont, (int) fontSize.x);
+        this.font = FontService.getFont(nameFont,
+                (int) (fontSize.coordinatesType == CoordinatesType.RATIO ? ((fontSize.x * size.y) / 1000f) : fontSize.x));
         this.textAlign = textAlign;
         this.fontSize = fontSize;
         recalculate();
@@ -44,8 +48,6 @@ public class Text extends Frame {
 
     @Override
     public void nonCheckingDraw(Graphics graphics) {
-        graphics.setColor(Color.blue);
-        graphics.fillRect((int) start.x, (int) start.y, (int) size.x, (int) size.y);
         graphics.setColor(color);
         graphics.setFont(font);
         graphics.drawString(text, (int) textStart.x, (int) textStart.y);

@@ -2,9 +2,10 @@ package ru.vladrus13.game;
 
 import ru.vladrus13.core.basic.Frame;
 import ru.vladrus13.core.exception.GameException;
-import ru.vladrus13.game.world.World;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.core.services.GameService;
+import ru.vladrus13.game.menu.Menu;
+import ru.vladrus13.game.world.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,17 +27,15 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
         frame.setSize(width, height);
         frame.setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        current = new World(frame.getWidth(), frame.getHeight());
+        current = new Menu(frame.getWidth(), frame.getHeight());
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 Insets insets = frame.getInsets();
-                int frameLeftBorder = insets.left;
-                int frameRightBorder = insets.right;
-                int frameTopBorder = insets.top;
-                int frameBottomBorder = insets.bottom;
-                current.recalculate(frame.getWidth() - frameLeftBorder - frameRightBorder, frame.getHeight() - frameTopBorder - frameBottomBorder);
+                current.recalculate(
+                        frame.getWidth() - insets.left - insets.right,
+                        frame.getHeight() - insets.top - insets.bottom);
             }
         });
         frame.setVisible(true);

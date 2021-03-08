@@ -15,17 +15,24 @@ public class Background extends Frame {
     private final BufferedImage image;
     private final Color color;
 
-    public Background(Point start, Size size, Frame parent, BufferedImage image) {
+    public Background(Point start, Size size, BufferedImage image, Frame parent) {
         super(start, size, Collections.emptyList(), parent);
         this.image = image;
         color = null;
         recalculate();
     }
 
-    public Background(Point start, Size size, Frame parent, Color color) {
+    public Background(Point start, Size size, Color color, Frame parent) {
         super(start, size, Collections.emptyList(), parent);
         this.color = color;
         image = null;
+        recalculate();
+    }
+
+    public Background(Color color, Frame parent) {
+        super(parent.getStart(), parent.getSize(), Collections.emptyList(), parent);
+        this.color = color;
+        this.image = null;
         recalculate();
     }
 
@@ -41,12 +48,13 @@ public class Background extends Frame {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-
+    public int keyPressed(KeyEvent e) {
+        return 0;
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public int mousePressed(MouseEvent e) {
 
+        return 0;
     }
 }
