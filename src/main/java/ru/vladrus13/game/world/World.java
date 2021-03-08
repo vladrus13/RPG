@@ -10,17 +10,19 @@ import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.services.FontService;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class World extends Frame {
 
     Text text = new Text(
             new Point(10, 10, CoordinatesType.REAL),
-            new Size(100, 100, CoordinatesType.REAL), this, "REAL", FontService.getFont("Inventory", 20), Color.BLACK, Text.TextAlign.CENTER);
+            new Size(100, 100, CoordinatesType.REAL), this, "REAL", "Inventory", new Size(20, 0, CoordinatesType.REAL), Color.BLACK, Text.TextAlign.CENTER);
 
     Text next = new Text(
-            new Point(20, 50, CoordinatesType.RATIO),
-            new Size(100, 100, CoordinatesType.RATIO), this, "RATIO", FontService.getFont("Inventory", 20), Color.BLACK, Text.TextAlign.CENTER);
+            new Point(500, 500, CoordinatesType.RATIO),
+            new Size(500, 500, CoordinatesType.RATIO), this, "RATIO", "Inventory", new Size(100, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER);
 
     public World(int width, int height) throws GameException {
         super(new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), new ArrayList<>());
@@ -36,8 +38,13 @@ public class World extends Frame {
         }
     }
 
-    public void recalculate(int width, int height) {
-        size = new Size(width, height, CoordinatesType.REAL);
-        recalculate();
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
     }
 }

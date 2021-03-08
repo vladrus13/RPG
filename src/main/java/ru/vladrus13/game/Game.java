@@ -1,5 +1,6 @@
 package ru.vladrus13.game;
 
+import ru.vladrus13.core.basic.Frame;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.game.world.World;
 import ru.vladrus13.core.property.MainProperty;
@@ -14,10 +15,10 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
     Logger logger = Logger.getLogger(Game.class.getName());
     JFrame frame;
-    World world;
+    Frame current;
 
     public Game() throws GameException {
-        logger.info("Run class \"Game\"");
+        logger.info("Run class: Game");
         GameService.setGame(this);
         int width = MainProperty.getInteger("window.width");
         int height = MainProperty.getInteger("window.height");
@@ -25,12 +26,17 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
         frame.setSize(width, height);
         frame.setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        world = new World(frame.getWidth(), frame.getHeight());
+        current = new World(frame.getWidth(), frame.getHeight());
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                world.recalculate(frame.getWidth(), frame.getHeight());
+                Insets insets = frame.getInsets();
+                int frameLeftBorder = insets.left;
+                int frameRightBorder = insets.right;
+                int frameTopBorder = insets.top;
+                int frameBottomBorder = insets.bottom;
+                current.recalculate(frame.getWidth() - frameLeftBorder - frameRightBorder, frame.getHeight() - frameTopBorder - frameBottomBorder);
             }
         });
         frame.setVisible(true);
@@ -41,7 +47,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     public void paint(Graphics g) {
         super.paint(g);
         super.paintComponents(g);
-        world.draw(g);
+        current.draw(g);
     }
 
     @Override
@@ -54,6 +60,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
     @Override
     public void keyPressed(KeyEvent e) {
+        current.keyPressed(e);
     }
 
     @Override
@@ -66,6 +73,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
     @Override
     public void mousePressed(MouseEvent e) {
+        current.mousePressed(e);
     }
 
     @Override

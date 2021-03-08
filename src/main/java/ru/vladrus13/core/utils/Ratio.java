@@ -3,7 +3,6 @@ package ru.vladrus13.core.utils;
 import ru.vladrus13.core.bean.CoordinatesType;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
-import ru.vladrus13.core.property.MainProperty;
 
 public class Ratio {
     public static Point getPoint(Point startParent, Size parentSize, Point start) {
@@ -15,8 +14,8 @@ public class Ratio {
             );
         }
         return new Point(
-                startParent.x + (start.x * parentSize.x / MainProperty.getLong("window.ratio")),
-                startParent.y + (start.y * parentSize.y / MainProperty.getLong("window.ratio")),
+                startParent.x + (start.x * parentSize.x / 1000),
+                startParent.y + (start.y * parentSize.y / 1000),
                 CoordinatesType.REAL);
     }
 
@@ -25,8 +24,8 @@ public class Ratio {
             return size.copy();
         }
         return new Size(
-                size.x * parentSize.x / MainProperty.getLong("window.ratio"),
-                size.y * parentSize.y / MainProperty.getLong("window.ratio"),
+                size.x * parentSize.x / 1000,
+                size.y * parentSize.y / 1000,
                 CoordinatesType.REAL);
     }
 }

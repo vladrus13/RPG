@@ -7,8 +7,9 @@ import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.utils.Ratio;
 
 import java.util.Collection;
+import java.util.logging.Logger;
 
-public abstract class Frame extends Drawn {
+public abstract class Frame extends Drawn implements Focus {
 
     /**
      * Real position on screen
@@ -24,6 +25,8 @@ public abstract class Frame extends Drawn {
     protected final Frame parent;
     protected final CoordinatesType startType;
     protected final CoordinatesType sizeType;
+    protected Frame focused = null;
+    protected final Logger logger = Logger.getLogger(Frame.class.getName());
 
     public Frame(Point start, Size size, Collection<Frame> frames) {
         startType = start.coordinatesType;
@@ -65,6 +68,11 @@ public abstract class Frame extends Drawn {
         for (Frame frame : frames) {
             frame.recalculate();
         }
+    }
+
+    public void recalculate(int width, int height) {
+        size = new Size(width, height, CoordinatesType.REAL);
+        recalculate();
     }
 
     public void setStart(Point start) {

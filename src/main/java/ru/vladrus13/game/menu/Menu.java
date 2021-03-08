@@ -8,6 +8,8 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Menu extends Frame {
@@ -30,5 +32,15 @@ public class Menu extends Frame {
         for (Drawn drawn : frames) {
             drawn.draw(graphics);
         }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
     }
 }

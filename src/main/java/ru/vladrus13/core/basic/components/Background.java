@@ -5,6 +5,8 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 
@@ -36,5 +38,15 @@ public class Background extends Frame {
         if (image != null) {
             graphics.drawImage(image, (int) start.x, (int) start.y, (int) size.x, (int) size.y, null);
         }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
     }
 }

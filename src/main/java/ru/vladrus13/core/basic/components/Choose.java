@@ -7,6 +7,7 @@ import ru.vladrus13.core.bean.Size;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -47,5 +48,10 @@ public class Choose extends Frame implements KeyTaker {
                 buttons.get(current).keyPressed(e);
                 break;
         }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
     }
 }

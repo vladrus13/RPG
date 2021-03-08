@@ -71,7 +71,7 @@ public class FontService {
     }
 
     /**
-     * Split text by length 700
+     * Split text by width
      *
      * @param text     text
      * @param font     {@link Font}
@@ -79,6 +79,7 @@ public class FontService {
      * @return array of text
      */
     public static ArrayList<String> splitByWidth(String text, Font font, int width) {
+        // TODO better
         ArrayList<String> answer = new ArrayList<>();
         int current = 0, last = 0;
         while (current != text.length()) {
