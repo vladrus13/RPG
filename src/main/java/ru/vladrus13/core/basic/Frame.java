@@ -66,22 +66,6 @@ public abstract class Frame extends Drawn implements Focus {
         recalculate();
     }
 
-    public void setStart(Point start) {
-        this.start = start;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
-    public void setRatioStart(Point ratioStart) {
-        this.ratioStart = ratioStart;
-    }
-
-    public void setRatioSize(Size ratioSize) {
-        this.ratioSize = ratioSize;
-    }
-
     public void addFrames(Frame drawn) {
         frames.add(drawn);
     }

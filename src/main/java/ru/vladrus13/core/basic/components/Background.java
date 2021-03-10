@@ -3,6 +3,7 @@ package ru.vladrus13.core.basic.components;
 import ru.vladrus13.core.basic.Frame;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
+import ru.vladrus13.graphic.Graphics;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -40,10 +41,10 @@ public class Background extends Frame {
     public void nonCheckingDraw(Graphics graphics) {
         if (color != null) {
             graphics.setColor(color);
-            graphics.fillRect((int) start.x, (int) start.y, (int) size.x, (int) size.y);
+            graphics.fillRect(start.x, start.y, size.x, size.y);
         }
         if (image != null) {
-            graphics.drawImage(image, (int) start.x, (int) start.y, (int) size.x, (int) size.y, null);
+            graphics.drawImage(image, start.x, start.y, size.x, size.y);
         }
     }
 

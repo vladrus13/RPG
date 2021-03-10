@@ -6,6 +6,7 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.services.FontService;
+import ru.vladrus13.graphic.Graphics;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -50,7 +51,7 @@ public class Text extends Frame {
     public void nonCheckingDraw(Graphics graphics) {
         graphics.setColor(color);
         graphics.setFont(font);
-        graphics.drawString(text, (int) textStart.x, (int) textStart.y);
+        graphics.drawString(text, textStart.x, textStart.y);
     }
 
     @Override

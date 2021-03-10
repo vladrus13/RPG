@@ -1,6 +1,6 @@
 package ru.vladrus13.core.basic;
 
-import java.awt.*;
+import ru.vladrus13.graphic.Graphics;
 
 public abstract class Drawn {
 

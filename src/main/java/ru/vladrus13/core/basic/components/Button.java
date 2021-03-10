@@ -3,10 +3,9 @@ package ru.vladrus13.core.basic.components;
 import ru.vladrus13.core.basic.Frame;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
+import ru.vladrus13.graphic.Graphics;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public abstract class Button extends Frame {
 
@@ -34,26 +33,21 @@ public abstract class Button extends Frame {
         this.choose = choose;
     }
 
-    @Override
-    public void recalculate() {
-        super.recalculate();
-    }
-
     public void setBackground(Background background) {
+        frames.remove(this.background);
         this.background = background;
-        // TODO REMOVE
         frames.add(background);
     }
 
     public void setBackgroundChoose(Background backgroundChoose) {
+        frames.remove(this.backgroundChoose);
         this.backgroundChoose = backgroundChoose;
-        // TODO REMOVE
         frames.add(backgroundChoose);
     }
 
     public void setText(Text text) {
+        frames.remove(this.text);
         this.text = text;
-        // TODO REMOVE
         frames.add(text);
     }
 }

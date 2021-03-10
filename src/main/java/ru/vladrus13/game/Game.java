@@ -1,11 +1,13 @@
 package ru.vladrus13.game;
 
 import ru.vladrus13.core.basic.Frame;
+import ru.vladrus13.core.basic.UpdatedFrame;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.core.services.GameService;
+import ru.vladrus13.core.utils.Writer;
 import ru.vladrus13.game.menu.Menu;
-import ru.vladrus13.game.world.World;
+import ru.vladrus13.graphic.PCGraphicsAWTImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +16,10 @@ import java.util.logging.Logger;
 
 public class Game extends JPanel implements ActionListener, MouseListener, KeyListener {
 
-    Logger logger = Logger.getLogger(Game.class.getName());
-    JFrame frame;
-    Frame current;
+    private final Logger logger = Logger.getLogger(Game.class.getName());
+    private final JFrame frame;
+    private final Frame current;
+    boolean isInterrupted = false;
 
     public Game() throws GameException {
         logger.info("Run class: Game");
@@ -40,13 +43,40 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
         });
         frame.setVisible(true);
         frame.add(this);
+        frame.addKeyListener(this);
+        frame.addMouseListener(this);
+        painter();
+    }
+
+    private void painter() {
+        // TODO make FPS better mode
+        long targetTime = 1000 / MainProperty.getInteger("window.maxFPS");
+        long previousTime = System.currentTimeMillis() - targetTime;
+        while (!isInterrupted) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - previousTime < targetTime) {
+                try {
+                    Thread.sleep(previousTime + targetTime - currentTime);
+                } catch (InterruptedException e) {
+                    Writer.printStackTrace(logger, e);
+                }
+            }
+            previousTime = currentTime;
+            repaint();
+        }
+    }
+
+    public void update(long delay) {
+        if (current instanceof UpdatedFrame) {
+            ((UpdatedFrame) current).update(delay);
+        }
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         super.paintComponents(g);
-        current.draw(g);
+        current.draw(new PCGraphicsAWTImpl(g));
     }
 
     @Override
@@ -73,6 +103,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     @Override
     public void mousePressed(MouseEvent e) {
         current.mousePressed(e);
+        repaint();
     }
 
     @Override

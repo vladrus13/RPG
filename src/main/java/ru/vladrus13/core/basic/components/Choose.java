@@ -4,8 +4,8 @@ import ru.vladrus13.core.basic.Frame;
 import ru.vladrus13.core.basic.KeyTaker;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
+import ru.vladrus13.graphic.Graphics;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class Choose extends Frame implements KeyTaker {
                 break;
             case KeyEvent.VK_DOWN:
                 buttons.get(current).setChoose(false);
-                current = (current + current - 1) % buttons.size();
+                current = (current + buttons.size() - 1) % buttons.size();
                 buttons.get(current).setChoose(true);
                 break;
             case KeyEvent.VK_ENTER:
