@@ -11,8 +11,15 @@ import java.nio.file.Path;
 public class Tile extends Image {
 
     private static final Path path = Path.of("world").resolve("tiles");
+    private boolean isWalkable = true;
 
     public Tile(Point start, Size size, int id, Frame parent) throws GameException {
         super(start, size, path.resolve(id + ".png"), parent);
+        recalculate();
+    }
+
+    public Tile setWalkable(boolean walkable) {
+        isWalkable = walkable;
+        return this;
     }
 }

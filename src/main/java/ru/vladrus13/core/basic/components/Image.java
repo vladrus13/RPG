@@ -5,7 +5,8 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.resources.ImageLoader;
-import ru.vladrus13.game.basic.ReturnKeys;
+import ru.vladrus13.game.basic.returned.ReturnEvent;
+import ru.vladrus13.game.basic.returned.ReturnInt;
 import ru.vladrus13.graphic.Graphics;
 
 import java.awt.event.KeyEvent;
@@ -29,12 +30,12 @@ public class Image extends Frame {
     }
 
     @Override
-    public int keyPressed(KeyEvent e) {
-        return ReturnKeys.NOTHING;
+    public ReturnEvent keyPressed(KeyEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     @Override
     public int mousePressed(MouseEvent e) {
-        return ReturnKeys.NOTHING;
+        return ReturnInt.NOTHING;
     }
 }

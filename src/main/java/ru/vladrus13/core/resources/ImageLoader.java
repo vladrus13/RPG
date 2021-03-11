@@ -13,7 +13,7 @@ import java.util.Map;
 public class ImageLoader {
 
     private final static Map<String, BufferedImage> images = new HashMap<>();
-    private final static Path resourcesPath = Path.of("java").resolve("resources").resolve("graphics");
+    private final static Path resourcesPath = Path.of("src").resolve("main").resolve("resources").resolve("graphic");
 
     /**
      * Return image from resources

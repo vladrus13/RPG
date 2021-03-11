@@ -3,6 +3,8 @@ package ru.vladrus13.core.basic.components;
 import ru.vladrus13.core.basic.Frame;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
+import ru.vladrus13.game.basic.returned.ReturnEvent;
+import ru.vladrus13.game.basic.returned.ReturnInt;
 import ru.vladrus13.graphic.Graphics;
 
 import java.awt.*;
@@ -49,8 +51,8 @@ public class Background extends Frame {
     }
 
     @Override
-    public int keyPressed(KeyEvent e) {
-        return 0;
+    public ReturnEvent keyPressed(KeyEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     @Override

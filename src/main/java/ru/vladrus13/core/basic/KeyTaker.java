@@ -1,7 +1,9 @@
 package ru.vladrus13.core.basic;
 
+import ru.vladrus13.game.basic.returned.ReturnEvent;
+
 import java.awt.event.KeyEvent;
 
 public interface KeyTaker {
-    int keyPressed(KeyEvent e);
+    ReturnEvent keyPressed(KeyEvent e);
 }

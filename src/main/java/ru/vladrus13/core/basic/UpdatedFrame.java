@@ -16,7 +16,7 @@ public abstract class UpdatedFrame extends Frame implements Updated {
     @Override
     public void update(long delay) {
         if (!isPause) {
-            nonCheckingPause(delay);
+            nonCheckingUpdate(delay);
         }
     }
 
@@ -25,5 +25,5 @@ public abstract class UpdatedFrame extends Frame implements Updated {
         isPause = pause;
     }
 
-    protected abstract void nonCheckingPause(long delay);
+    protected abstract void nonCheckingUpdate(long delay);
 }

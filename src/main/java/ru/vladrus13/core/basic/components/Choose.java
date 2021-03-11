@@ -4,6 +4,8 @@ import ru.vladrus13.core.basic.Frame;
 import ru.vladrus13.core.basic.KeyTaker;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
+import ru.vladrus13.game.basic.returned.ReturnEvent;
+import ru.vladrus13.game.basic.returned.ReturnInt;
 import ru.vladrus13.graphic.Graphics;
 
 import java.awt.event.KeyEvent;
@@ -30,7 +32,7 @@ public class Choose extends Frame implements KeyTaker {
     }
 
     @Override
-    public int keyPressed(KeyEvent e) {
+    public ReturnEvent keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_UP:
@@ -46,7 +48,7 @@ public class Choose extends Frame implements KeyTaker {
             case KeyEvent.VK_ENTER:
                 return buttons.get(current).keyPressed(e);
         }
-        return 0;
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     @Override

@@ -6,7 +6,10 @@ import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.core.services.GameService;
 import ru.vladrus13.core.utils.Writer;
+import ru.vladrus13.game.basic.returned.ReturnEvent;
+import ru.vladrus13.game.basic.returned.ReturnInt;
 import ru.vladrus13.game.menu.Menu;
+import ru.vladrus13.game.world.World;
 import ru.vladrus13.graphic.PCGraphicsAWTImpl;
 
 import javax.swing.*;
@@ -18,7 +21,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
     private final Logger logger = Logger.getLogger(Game.class.getName());
     private final JFrame frame;
-    private final Frame current;
+    private Frame current;
     boolean isInterrupted = false;
 
     public Game() throws GameException {
@@ -61,7 +64,8 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
                     Writer.printStackTrace(logger, e);
                 }
             }
-            previousTime = currentTime;
+            update(System.currentTimeMillis() - previousTime);
+            previousTime = System.currentTimeMillis();
             repaint();
         }
     }
@@ -89,7 +93,22 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
     @Override
     public void keyPressed(KeyEvent e) {
-        current.keyPressed(e);
+        ReturnEvent event = current.keyPressed(e);
+        if (event instanceof ReturnInt) {
+            int code = ((ReturnInt) event).getEvent();
+            switch (code) {
+                case ReturnInt.TO_WORLD:
+                    current = new World(frame.getWidth(), frame.getHeight());
+                    break;
+                case ReturnInt.TO_MENU:
+                    current = new Menu(frame.getWidth(), frame.getHeight());
+                    break;
+                case ReturnInt.END_GAME:
+                    isInterrupted = true;
+                    current = null;
+                    System.exit(0);
+            }
+        }
     }
 
     @Override

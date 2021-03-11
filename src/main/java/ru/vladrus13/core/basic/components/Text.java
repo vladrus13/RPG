@@ -6,6 +6,8 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.services.FontService;
+import ru.vladrus13.game.basic.returned.ReturnEvent;
+import ru.vladrus13.game.basic.returned.ReturnInt;
 import ru.vladrus13.graphic.Graphics;
 
 import java.awt.*;
@@ -16,8 +18,8 @@ import java.util.Collections;
 public class Text extends Frame {
 
     @Override
-    public int keyPressed(KeyEvent e) {
-        return 0;
+    public ReturnEvent keyPressed(KeyEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     @Override

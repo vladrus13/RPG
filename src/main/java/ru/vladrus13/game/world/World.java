@@ -2,33 +2,35 @@ package ru.vladrus13.game.world;
 
 import ru.vladrus13.core.basic.Drawn;
 import ru.vladrus13.core.basic.UpdatedFrame;
-import ru.vladrus13.core.basic.components.Text;
 import ru.vladrus13.core.bean.CoordinatesType;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
-import ru.vladrus13.game.basic.ReturnKeys;
+import ru.vladrus13.core.utils.Writer;
+import ru.vladrus13.game.basic.returned.ReturnEvent;
+import ru.vladrus13.game.basic.returned.ReturnInt;
+import ru.vladrus13.game.world.region.Region;
+import ru.vladrus13.game.world.region.RegionFactory;
 import ru.vladrus13.graphic.Graphics;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class World extends UpdatedFrame {
 
-    private final Text text = new Text(
-            new Point(10, 10, CoordinatesType.REAL),
-            new Size(100, 100, CoordinatesType.REAL), "REAL", "Inventory", new Size(20, 0, CoordinatesType.REAL), Color.BLACK, Text.TextAlign.CENTER, this);
+    Logger logger = Logger.getLogger(World.class.getName());
 
-    private final Text next = new Text(
-            new Point(500, 500, CoordinatesType.RATIO),
-            new Size(500, 500, CoordinatesType.RATIO), "RATIO", "Inventory", new Size(100, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, this);
-
-    public World(int width, int height) throws GameException {
+    public World(int width, int height) {
         super(new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), new ArrayList<>(), null);
-        frames.add(text);
-        frames.add(next);
+        Region region = null;
+        try {
+            region = RegionFactory.getRegion("01", this);
+        } catch (GameException e) {
+            Writer.printStackTrace(logger, e);
+        }
+        frames.add(region);
         recalculate();
     }
 
@@ -40,17 +42,17 @@ public class World extends UpdatedFrame {
     }
 
     @Override
-    public int keyPressed(KeyEvent e) {
-        return ReturnKeys.NOTHING;
+    public ReturnEvent keyPressed(KeyEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     @Override
     public int mousePressed(MouseEvent e) {
-        return ReturnKeys.NOTHING;
+        return ReturnInt.NOTHING;
     }
 
     @Override
-    protected void nonCheckingPause(long delay) {
+    protected void nonCheckingUpdate(long delay) {
 
     }
 }
