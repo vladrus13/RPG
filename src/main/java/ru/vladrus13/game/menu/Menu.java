@@ -67,7 +67,7 @@ public class Menu extends Frame {
     }
 
     @Override
-    public int mousePressed(MouseEvent e) {
+    public ReturnEvent mousePressed(MouseEvent e) {
         return focused.mousePressed(e);
     }
 }

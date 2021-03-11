@@ -35,7 +35,7 @@ public class Image extends Frame {
     }
 
     @Override
-    public int mousePressed(MouseEvent e) {
-        return ReturnInt.NOTHING;
+    public ReturnEvent mousePressed(MouseEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 }

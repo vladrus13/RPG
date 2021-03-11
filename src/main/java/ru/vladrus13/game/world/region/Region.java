@@ -48,8 +48,8 @@ public class Region extends UpdatedFrame {
     }
 
     @Override
-    public int mousePressed(MouseEvent e) {
-        return 0;
+    public ReturnEvent mousePressed(MouseEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     @Override

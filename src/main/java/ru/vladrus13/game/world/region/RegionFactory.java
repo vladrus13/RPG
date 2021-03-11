@@ -5,6 +5,7 @@ import ru.vladrus13.core.bean.CoordinatesType;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
+import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.game.world.components.Tile;
 
 import java.util.ArrayList;
@@ -41,6 +42,6 @@ public class RegionFactory {
                 {1, 0, 0, 1},
                 {1, 1, 1, 1}
         };
-        return (new Region(parent)).setTiles(getTiles(map, 32, parent));
+        return (new Region(parent)).setTiles(getTiles(map, MainProperty.getInteger("world.region.tileSize"), parent));
     }
 }

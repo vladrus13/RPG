@@ -23,8 +23,8 @@ public class Text extends Frame {
     }
 
     @Override
-    public int mousePressed(MouseEvent e) {
-        return 0;
+    public ReturnEvent mousePressed(MouseEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     public enum TextAlign {

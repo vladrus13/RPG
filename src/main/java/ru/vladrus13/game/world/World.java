@@ -47,8 +47,8 @@ public class World extends UpdatedFrame {
     }
 
     @Override
-    public int mousePressed(MouseEvent e) {
-        return ReturnInt.NOTHING;
+    public ReturnEvent mousePressed(MouseEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     @Override

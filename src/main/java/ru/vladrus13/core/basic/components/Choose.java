@@ -52,9 +52,8 @@ public class Choose extends Frame implements KeyTaker {
     }
 
     @Override
-    public int mousePressed(MouseEvent e) {
-
-        return 0;
+    public ReturnEvent mousePressed(MouseEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     public void addButton(Button button) {

@@ -26,8 +26,8 @@ public class ClassicButton extends Button {
     }
 
     @Override
-    public int mousePressed(MouseEvent e) {
-        return ReturnInt.NOTHING;
+    public ReturnEvent mousePressed(MouseEvent e) {
+        return new ReturnInt(ReturnInt.NOTHING);
     }
 
     public ClassicButton setEvent(ReturnEvent event) {
