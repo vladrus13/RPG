@@ -20,4 +20,12 @@ public class Point {
     public Point copy() {
         return new Point(x, y, coordinatesType);
     }
+
+    public Point incX(int x) {
+        return new Point(this.x + x, this.y, this.coordinatesType);
+    }
+
+    public Point incY(int y) {
+        return new Point(this.x, this.y + y, this.coordinatesType);
+    }
 }

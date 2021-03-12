@@ -22,7 +22,7 @@ public class ActorFactory {
         Map<Direction, BufferedImage> returned = new HashMap<>();
         try {
             for (Direction direction : Direction.values()) {
-                returned.put(direction, ImageLoader.load(path.resolve(direction.getCapitalize())));
+                returned.put(direction, ImageLoader.load(path.resolve(direction.getCapitalize() + ".png")));
             }
         } catch (GameException e) {
             Writer.printStackTrace(logger, e);

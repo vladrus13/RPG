@@ -82,4 +82,8 @@ public abstract class Frame extends Drawn implements Focus {
     public Size getSize() {
         return size;
     }
+
+    public void setFocused(Frame focused) {
+        this.focused = focused;
+    }
 }

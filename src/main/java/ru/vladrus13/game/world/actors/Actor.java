@@ -7,6 +7,7 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.game.basic.direction.Direction;
+import ru.vladrus13.game.world.region.Region;
 import ru.vladrus13.graphic.Graphics;
 
 import java.awt.image.BufferedImage;
@@ -15,38 +16,89 @@ import java.util.*;
 public abstract class Actor extends UpdatedFrame {
 
     private final Deque<Direction> path = new LinkedList<>();
-    private final int speed = 3;
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final String name;
-    private Direction direction = Direction.DOWN;
+    private final String resourcesName;
+    private Direction walkDirection;
+    private Direction lastDirection = Direction.DOWN;
 
     private final Map<Direction, BufferedImage> images;
 
-    public Actor(Point start, String name, Frame parent) {
+    public Actor(Point start, String name, String resourcesName, Frame parent, Region region) {
         super(start, new Size(
                         MainProperty.getInteger("world.region.tileSize"),
                         MainProperty.getInteger("world.region.tileSize"), CoordinatesType.REAL),
                 Collections.emptyList(), parent);
         this.name = name;
-        images = ActorFactory.loadActor(name);
+        this.resourcesName = resourcesName;
+        images = ActorFactory.loadActor(resourcesName);
         recalculate();
     }
 
-    private void makeMove(Direction direction) {
+    public void makeMove(Direction direction) {
         path.add(direction);
     }
 
-    private void makeMove(Collection<Direction> directions) {
+    public void makeMove(Collection<Direction> directions) {
         path.addAll(directions);
+    }
+
+    private void nextDirection() {
+        if (path.isEmpty()) {
+            walkDirection = null;
+        } else {
+            walkDirection = path.pop();
+            lastDirection = walkDirection;
+        }
     }
 
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
-        graphics.drawImage(images.get(direction), start.x, start.y, tileSize, tileSize);
+        graphics.drawImage(images.get(lastDirection), start.x, start.y, tileSize, tileSize);
     }
 
     @Override
     protected void nonCheckingUpdate(long delay) {
-
+        int speed = getSpeed();
+        if (walkDirection == null) {
+            nextDirection();
+            return;
+        }
+        switch (walkDirection) {
+            case RIGHT:
+                if (start.x % tileSize + speed >= tileSize) {
+                    start = new Point((start.x / tileSize + 1) * tileSize, start.y, start.coordinatesType);
+                    nextDirection();
+                } else {
+                    start = start.incX(speed);
+                }
+                break;
+            case LEFT:
+                if ((start.x - 1 + tileSize) % tileSize - speed < 0) {
+                    start = new Point((start.x / tileSize) * tileSize, start.y, start.coordinatesType);
+                    nextDirection();
+                } else {
+                    start = start.incX(-speed);
+                }
+                break;
+            case UP:
+                if ((start.y - 1 + tileSize) % tileSize - speed < 0) {
+                    start = new Point(start.x, (start.y / tileSize) * tileSize, start.coordinatesType);
+                    nextDirection();
+                } else {
+                    start = start.incY(-speed);
+                }
+                break;
+            case DOWN:
+                if (start.y % tileSize + speed >= tileSize) {
+                    start = new Point(start.x, (start.y / tileSize + 1) * tileSize, start.coordinatesType);
+                    nextDirection();
+                } else {
+                    start = start.incY(speed);
+                }
+                break;
+        }
     }
+
+    public abstract int getSpeed();
 }

@@ -6,6 +6,7 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.property.MainProperty;
+import ru.vladrus13.game.world.actors.Hero;
 import ru.vladrus13.game.world.components.Tile;
 
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class RegionFactory {
                 {1, 0, 0, 1},
                 {1, 1, 1, 1}
         };
-        return (new Region(parent)).setTiles(getTiles(map, MainProperty.getInteger("world.region.tileSize"), parent));
+        int tileSize = MainProperty.getInteger("world.region.tileSize");
+        Region region = (new Region(parent)).setTiles(getTiles(map, tileSize, parent));
+        Hero hero = new Hero(new Point(tileSize, tileSize, CoordinatesType.REAL), region);
+        region.setHero(hero);
+        return region;
     }
 }
