@@ -99,6 +99,10 @@ public class Region extends UpdatedFrame {
         }
     }
 
+    public void setOnStep(Event event, Point a) {
+        tiles.get((int) a.y).get((int) a.x).setOnStep(event);
+    }
+
     public World getWorld() {
         return world;
     }

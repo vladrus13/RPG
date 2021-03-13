@@ -14,6 +14,7 @@ import ru.vladrus13.game.world.components.TileFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RegionFactory {
     public static Region getRegion(int id, World parent) throws GameException {
@@ -29,13 +30,16 @@ public class RegionFactory {
 
     private static ArrayList<ArrayList<Tile>> getTiles(int[][] map, int size, Frame parent) throws GameException {
         ArrayList<ArrayList<Tile>> returned = new ArrayList<>();
-        for (int i = 0; i < map.length; i++) {
+        int maxLength = Arrays.stream(map).mapToInt(it -> it.length).max().orElseThrow();
+        for (int i = 0; i < maxLength; i++) {
             ArrayList<Tile> temp = new ArrayList<>();
-            for (int j = 0; j < map[i].length; j++) {
-                temp.add(TileFactory.get(map[i][j],
-                        new Point((long) size * i, (long) size * j, CoordinatesType.REAL),
-                        new Size(size, size, CoordinatesType.REAL),
-                        parent));
+            for (int j = 0; j < map.length; j++) {
+                if (map[j].length > i) {
+                    temp.add(TileFactory.get(map[j][i],
+                            new Point((long) size * i, (long) size * j, CoordinatesType.REAL),
+                            new Size(size, size, CoordinatesType.REAL),
+                            parent));
+                }
             }
             returned.add(temp);
         }
@@ -52,8 +56,9 @@ public class RegionFactory {
         };
         int tileSize = MainProperty.getInteger("world.region.tileSize");
         ArrayList<ArrayList<Tile>> tiles = getTiles(map, tileSize, parent);
-        tiles.get(1).get(3).setOnStep(new WorldEventTeleport(2, new Point(tileSize, tileSize), Direction.LEFT));
-        return (new Region(parent)).setTiles(tiles);
+        Region region = (new Region(parent)).setTiles(tiles);
+        region.setOnStep(new WorldEventTeleport(2, new Point(tileSize, tileSize), Direction.LEFT), new Point(1, 3));
+        return region;
     }
 
     @SuppressWarnings("unused")
@@ -72,9 +77,10 @@ public class RegionFactory {
         };
         int tileSize = MainProperty.getInteger("world.region.tileSize");
         ArrayList<ArrayList<Tile>> tiles = getTiles(map, tileSize, parent);
-        tiles.get(1).get(1).setOnStep(new WorldEventTeleport(1, new Point(tileSize, tileSize * 3L), Direction.LEFT));
-        tiles.get(5).get(1).setOnStep(new WorldEventTeleport(3, new Point(tileSize, tileSize), Direction.DOWN));
-        return (new Region(parent)).setTiles(tiles);
+        Region region = (new Region(parent)).setTiles(tiles);
+        region.setOnStep(new WorldEventTeleport(1, new Point(tileSize * 3L, tileSize), Direction.LEFT), new Point(1, 1));
+        region.setOnStep(new WorldEventTeleport(3, new Point(tileSize, tileSize), Direction.DOWN), new Point(5, 1));
+        return region;
     }
 
     @SuppressWarnings("unused")
@@ -93,7 +99,8 @@ public class RegionFactory {
         };
         int tileSize = MainProperty.getInteger("world.region.tileSize");
         ArrayList<ArrayList<Tile>> tiles = getTiles(map, tileSize, parent);
-        tiles.get(1).get(1).setOnStep(new WorldEventTeleport(2, new Point(tileSize * 5L, tileSize), Direction.UP));
+        Region region = (new Region(parent)).setTiles(tiles);
+        region.setOnStep(new WorldEventTeleport(2, new Point(tileSize, tileSize * 5L), Direction.UP), new Point(1, 1));
         return (new Region(parent)).setTiles(tiles);
     }
 }
