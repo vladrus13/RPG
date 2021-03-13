@@ -1,4 +1,4 @@
-package ru.vladrus13.game.basic.returned;
+package ru.vladrus13.game.basic.event.returned;
 
 public class ReturnInt extends ReturnEvent {
     public static final int NOTHING = 0;

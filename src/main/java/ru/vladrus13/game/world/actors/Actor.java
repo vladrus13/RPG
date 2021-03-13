@@ -7,6 +7,7 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.game.basic.direction.Direction;
+import ru.vladrus13.game.basic.direction.DirectionService;
 import ru.vladrus13.game.world.region.Region;
 import ru.vladrus13.graphic.Graphics;
 
@@ -21,6 +22,7 @@ public abstract class Actor extends UpdatedFrame {
     private final String resourcesName;
     private Direction walkDirection;
     private Direction lastDirection = Direction.DOWN;
+    private Region region;
 
     private final Map<Direction, BufferedImage> images;
 
@@ -31,6 +33,7 @@ public abstract class Actor extends UpdatedFrame {
                 Collections.emptyList(), parent);
         this.name = name;
         this.resourcesName = resourcesName;
+        this.region = region;
         images = ActorFactory.loadActor(resourcesName);
         recalculate();
     }
@@ -49,12 +52,19 @@ public abstract class Actor extends UpdatedFrame {
         } else {
             walkDirection = path.pop();
             lastDirection = walkDirection;
+            if (!region.isWalkable(DirectionService.step(start, walkDirection))) {
+                nextDirection();
+            }
         }
     }
 
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
         graphics.drawImage(images.get(lastDirection), start.x, start.y, tileSize, tileSize);
+    }
+
+    public void onStep() {
+        region.onStep(this, start);
     }
 
     @Override
@@ -68,6 +78,7 @@ public abstract class Actor extends UpdatedFrame {
             case RIGHT:
                 if (start.x % tileSize + speed >= tileSize) {
                     start = new Point((start.x / tileSize + 1) * tileSize, start.y, start.coordinatesType);
+                    onStep();
                     nextDirection();
                 } else {
                     start = start.incX(speed);
@@ -76,6 +87,7 @@ public abstract class Actor extends UpdatedFrame {
             case LEFT:
                 if ((start.x - 1 + tileSize) % tileSize - speed < 0) {
                     start = new Point((start.x / tileSize) * tileSize, start.y, start.coordinatesType);
+                    onStep();
                     nextDirection();
                 } else {
                     start = start.incX(-speed);
@@ -84,6 +96,7 @@ public abstract class Actor extends UpdatedFrame {
             case UP:
                 if ((start.y - 1 + tileSize) % tileSize - speed < 0) {
                     start = new Point(start.x, (start.y / tileSize) * tileSize, start.coordinatesType);
+                    onStep();
                     nextDirection();
                 } else {
                     start = start.incY(-speed);
@@ -92,11 +105,26 @@ public abstract class Actor extends UpdatedFrame {
             case DOWN:
                 if (start.y % tileSize + speed >= tileSize) {
                     start = new Point(start.x, (start.y / tileSize + 1) * tileSize, start.coordinatesType);
+                    onStep();
                     nextDirection();
                 } else {
                     start = start.incY(speed);
                 }
                 break;
+        }
+    }
+
+    public void teleport(Region region, Point point, Direction direction) {
+        if (region != null) {
+            setParent(region);
+            this.region = region;
+        }
+        if (point != null) {
+            start = point;
+            path.clear();
+        }
+        if (direction != null) {
+            lastDirection = direction;
         }
     }
 

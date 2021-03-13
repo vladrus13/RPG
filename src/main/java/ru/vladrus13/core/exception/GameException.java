@@ -23,4 +23,8 @@ public class GameException extends Exception {
     public GameException(String s, Exception e) {
         super(s, e);
     }
+
+    public GameException(Exception e) {
+        super(e);
+    }
 }

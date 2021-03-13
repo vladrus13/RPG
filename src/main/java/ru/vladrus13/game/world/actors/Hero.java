@@ -2,8 +2,8 @@ package ru.vladrus13.game.world.actors;
 
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.game.basic.direction.Direction;
-import ru.vladrus13.game.basic.returned.ReturnEvent;
-import ru.vladrus13.game.basic.returned.ReturnInt;
+import ru.vladrus13.game.basic.event.returned.ReturnEvent;
+import ru.vladrus13.game.basic.event.returned.ReturnInt;
 import ru.vladrus13.game.world.region.Region;
 
 import java.awt.event.KeyEvent;
