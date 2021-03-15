@@ -22,7 +22,7 @@ public abstract class Actor extends UpdatedFrame {
     private final String resourcesName;
     private Direction walkDirection;
     private Direction lastDirection = Direction.DOWN;
-    private Region region;
+    protected Region region;
 
     private final Map<Direction, BufferedImage> images;
 
@@ -64,7 +64,11 @@ public abstract class Actor extends UpdatedFrame {
     }
 
     public void onStep() {
-        region.onStep(this, start);
+
+    }
+
+    public void onTrigger() {
+
     }
 
     @Override

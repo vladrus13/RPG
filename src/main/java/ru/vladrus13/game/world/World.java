@@ -24,7 +24,7 @@ public class World extends UpdatedFrame {
 
     private final static Logger logger = Logger.getLogger(World.class.getName());
     private Region region;
-    private Hero hero;
+    private final Hero hero;
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
 
     public World(int width, int height) {
@@ -36,7 +36,7 @@ public class World extends UpdatedFrame {
         }
         hero = new Hero(new Point(tileSize, tileSize, CoordinatesType.REAL), region);
         region.setHero(hero);
-        setFocused(region);
+        addFocused(region);
         recalculate();
     }
 
@@ -47,12 +47,12 @@ public class World extends UpdatedFrame {
 
     @Override
     public ReturnEvent keyPressed(KeyEvent e) {
-        return focused.keyPressed(e);
+        return focused.getFirst().keyPressed(e);
     }
 
     @Override
     public ReturnEvent mousePressed(MouseEvent e) {
-        return focused.mousePressed(e);
+        return focused.getFirst().mousePressed(e);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class World extends UpdatedFrame {
         region.update(delay);
     }
 
-    public void regionEvent(WorldEvent event) {
+    public void worldEvent(WorldEvent event) {
         if (event instanceof WorldEventTeleport) {
             try {
                 region = RegionFactory.getRegion(((WorldEventTeleport) event).getId(), this);

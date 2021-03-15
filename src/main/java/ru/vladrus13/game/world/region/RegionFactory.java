@@ -9,12 +9,14 @@ import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.game.basic.direction.Direction;
 import ru.vladrus13.game.basic.event.region.WorldEventTeleport;
 import ru.vladrus13.game.world.World;
+import ru.vladrus13.game.world.actors.impl.Pirate;
 import ru.vladrus13.game.world.components.Tile;
 import ru.vladrus13.game.world.components.TileFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class RegionFactory {
     public static Region getRegion(int id, World parent) throws GameException {
@@ -80,6 +82,7 @@ public class RegionFactory {
         Region region = (new Region(parent)).setTiles(tiles);
         region.setOnStep(new WorldEventTeleport(1, new Point(tileSize * 3L, tileSize), Direction.LEFT), new Point(1, 1));
         region.setOnStep(new WorldEventTeleport(3, new Point(tileSize, tileSize), Direction.DOWN), new Point(5, 1));
+        region.setActors(new ArrayList<>(Collections.singletonList(new Pirate(new Point(6L * tileSize, 4L * tileSize), region, region))));
         return region;
     }
 

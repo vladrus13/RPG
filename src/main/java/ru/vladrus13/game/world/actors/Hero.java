@@ -36,6 +36,11 @@ public class Hero extends Actor {
     }
 
     @Override
+    public void onStep() {
+        region.onStep(this, start);
+    }
+
+    @Override
     public ReturnEvent mousePressed(MouseEvent e) {
         return null;
     }

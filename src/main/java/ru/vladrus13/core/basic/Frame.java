@@ -4,9 +4,13 @@ package ru.vladrus13.core.basic;
 import ru.vladrus13.core.bean.CoordinatesType;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
+import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.utils.Ratio;
 
 import java.util.Collection;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Logger;
 
 public abstract class Frame extends Drawn implements Focus {
@@ -25,7 +29,7 @@ public abstract class Frame extends Drawn implements Focus {
     protected Frame parent;
     protected final CoordinatesType startType;
     protected final CoordinatesType sizeType;
-    protected Frame focused = null;
+    protected Deque<Frame> focused = new LinkedList<>();
     protected final Logger logger = Logger.getLogger(Frame.class.getName());
 
     public Frame(Point start, Size size, Collection<Frame> frames, Frame parent) {
@@ -83,7 +87,18 @@ public abstract class Frame extends Drawn implements Focus {
         return size;
     }
 
-    public void setFocused(Frame focused) {
-        this.focused = focused;
+    public void addFocused(Frame focused) {
+        this.focused.addFirst(focused);
+    }
+
+    public void removeFocused() {
+        this.focused.removeFirst();
+    }
+
+    public void removeFocused(Frame frame) throws GameException {
+        if (this.focused.getFirst() != frame) {
+            throw new GameException("Current focused frame not equal removed");
+        }
+        removeFocused();
     }
 }

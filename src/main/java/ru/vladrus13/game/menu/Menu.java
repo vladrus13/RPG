@@ -42,7 +42,7 @@ public class Menu extends Frame {
             choose.addButton(start);
             choose.addButton(exit);
             frames.add(choose);
-            focused = choose;
+            focused.add(choose);
         } catch (GameException e) {
             Writer.printStackTrace(logger, e);
         }
@@ -63,11 +63,11 @@ public class Menu extends Frame {
 
     @Override
     public ReturnEvent keyPressed(KeyEvent e) {
-        return focused.keyPressed(e);
+        return focused.getFirst().keyPressed(e);
     }
 
     @Override
     public ReturnEvent mousePressed(MouseEvent e) {
-        return focused.mousePressed(e);
+        return focused.getFirst().mousePressed(e);
     }
 }

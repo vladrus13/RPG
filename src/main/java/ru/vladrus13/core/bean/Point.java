@@ -1,5 +1,7 @@
 package ru.vladrus13.core.bean;
 
+import java.util.Objects;
+
 public class Point {
     public final long x;
     public final long y;
@@ -27,5 +29,18 @@ public class Point {
 
     public Point incY(int y) {
         return new Point(this.x, this.y + y, this.coordinatesType);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return x == point.x && y == point.y && coordinatesType == point.coordinatesType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, coordinatesType);
     }
 }
