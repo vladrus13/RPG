@@ -7,8 +7,15 @@ import ru.vladrus13.graphic.Graphics;
 
 import java.util.ArrayList;
 
+/**
+ * Button class for graphics. Can be touched and activate
+ * @author vladrus13
+ */
 public abstract class Button extends Frame {
 
+    /**
+     * is button selected
+     */
     private boolean choose;
     private Background background;
     private Background backgroundChoose;

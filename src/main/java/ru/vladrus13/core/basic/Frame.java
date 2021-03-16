@@ -10,7 +10,6 @@ import ru.vladrus13.core.utils.Ratio;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.logging.Logger;
 
 public abstract class Frame extends Drawn implements Focus {

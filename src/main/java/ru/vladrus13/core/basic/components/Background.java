@@ -13,11 +13,29 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 
+/**
+ * Background class. You can fill it from image or color
+ * @author vladrus13
+ */
 public class Background extends Frame {
 
+    /**
+     * Is null if a color is selected
+     */
     private final BufferedImage image;
+    /**
+     * Is null if a image is selected
+     */
     private final Color color;
 
+    /**
+     * Constructor for Background with image
+     *
+     * @param start  start position
+     * @param size   size
+     * @param image  image
+     * @param parent parent for this frame
+     */
     public Background(Point start, Size size, BufferedImage image, Frame parent) {
         super(start, size, Collections.emptyList(), parent);
         this.image = image;
@@ -25,6 +43,14 @@ public class Background extends Frame {
         recalculate();
     }
 
+    /**
+     * Constructor for Background with color
+     *
+     * @param start  start position
+     * @param size   size
+     * @param color  color
+     * @param parent parent for this frame
+     */
     public Background(Point start, Size size, Color color, Frame parent) {
         super(start, size, Collections.emptyList(), parent);
         this.color = color;
@@ -32,6 +58,12 @@ public class Background extends Frame {
         recalculate();
     }
 
+    /**
+     * Parent fill background
+     *
+     * @param color  color
+     * @param parent parent
+     */
     public Background(Color color, Frame parent) {
         super(parent.getStart(), parent.getSize(), Collections.emptyList(), parent);
         this.color = color;
