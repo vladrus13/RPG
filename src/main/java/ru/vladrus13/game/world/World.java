@@ -7,8 +7,8 @@ import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.core.utils.Writer;
-import ru.vladrus13.game.basic.event.region.WorldEvent;
-import ru.vladrus13.game.basic.event.region.WorldEventTeleport;
+import ru.vladrus13.game.basic.event.world.WorldEvent;
+import ru.vladrus13.game.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.game.basic.event.returned.ReturnEvent;
 import ru.vladrus13.game.world.actors.Hero;
 import ru.vladrus13.game.world.region.Region;
@@ -60,7 +60,7 @@ public class World extends UpdatedFrame {
         region.update(delay);
     }
 
-    public void worldEvent(WorldEvent event) {
+    public void invokeWorldEvent(WorldEvent event) {
         if (event instanceof WorldEventTeleport) {
             try {
                 region = RegionFactory.getRegion(((WorldEventTeleport) event).getId(), this);

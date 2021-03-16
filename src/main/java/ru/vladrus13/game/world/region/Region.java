@@ -4,7 +4,8 @@ import ru.vladrus13.core.basic.UpdatedFrame;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.game.basic.event.Event;
-import ru.vladrus13.game.basic.event.region.WorldEvent;
+import ru.vladrus13.game.basic.event.region.RegionEvent;
+import ru.vladrus13.game.basic.event.world.WorldEvent;
 import ru.vladrus13.game.basic.event.returned.ReturnEvent;
 import ru.vladrus13.game.basic.event.returned.ReturnInt;
 import ru.vladrus13.game.world.World;
@@ -115,7 +116,7 @@ public class Region extends UpdatedFrame {
         Event event = tiles.get((int) (a.x / tileSize)).get((int) (a.y / tileSize)).onStep();
         if (event != null) {
             if (event instanceof WorldEvent) {
-                world.worldEvent((WorldEvent) event);
+                world.invokeWorldEvent((WorldEvent) event);
             }
         }
     }
@@ -126,5 +127,9 @@ public class Region extends UpdatedFrame {
 
     public World getWorld() {
         return world;
+    }
+
+    public void invokeRegionEvent(RegionEvent regionEvent) {
+        // TODO
     }
 }

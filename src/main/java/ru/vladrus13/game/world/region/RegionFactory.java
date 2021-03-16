@@ -7,7 +7,7 @@ import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.game.basic.direction.Direction;
-import ru.vladrus13.game.basic.event.region.WorldEventTeleport;
+import ru.vladrus13.game.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.game.world.World;
 import ru.vladrus13.game.world.actors.impl.Pirate;
 import ru.vladrus13.game.world.components.Tile;

@@ -1,4 +1,4 @@
-package ru.vladrus13.game.basic.event.region;
+package ru.vladrus13.game.basic.event.world;
 
 import ru.vladrus13.game.basic.event.Event;
 
