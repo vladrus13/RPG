@@ -15,6 +15,7 @@ import java.util.Collections;
 
 /**
  * Background class. You can fill it from image or color
+ *
  * @author vladrus13
  */
 public class Background extends Frame {

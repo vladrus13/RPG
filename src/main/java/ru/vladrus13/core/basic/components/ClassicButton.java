@@ -9,10 +9,27 @@ import ru.vladrus13.game.basic.event.returned.ReturnInt;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+/**
+ * Implementation of button class. Return Event if button activated. Use <b>Builder Pattern</b>
+ *
+ * @author vladrus13
+ * @see ReturnEvent
+ * @see <a href="https://en.wikipedia.org/wiki/Builder_pattern">Builder pattern</a>
+ */
 public class ClassicButton extends Button {
 
+    /**
+     * Event if button activate
+     */
     private ReturnEvent event = new ReturnInt(ReturnInt.PRESSED);
 
+    /**
+     * Classic frame constructor for button
+     *
+     * @param start  start position for button
+     * @param size   size of button
+     * @param parent parent frame
+     */
     public ClassicButton(Point start, Size size, Frame parent) {
         super(start, size, parent);
     }
@@ -30,6 +47,12 @@ public class ClassicButton extends Button {
         return new ReturnInt(ReturnInt.NOTHING);
     }
 
+    /**
+     * Set event on activate button
+     *
+     * @param event event
+     * @return this button
+     */
     public ClassicButton setEvent(ReturnEvent event) {
         this.event = event;
         return this;

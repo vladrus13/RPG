@@ -12,10 +12,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/**
+ * Class with one or more buttons embodying choise
+ * @author vladrus13
+ */
 public class Choose extends Frame implements KeyTaker {
+    /**
+     * List of buttons
+     */
     private final ArrayList<Button> buttons;
+    /**
+     * Number of current button. If button doesn't exist is zero
+     */
     private int current;
 
+    /**
+     * Standart constructor for class
+     *
+     * @param start   start position for choose
+     * @param size    size of choose class
+     * @param buttons list of buttons
+     * @param parent  parent frame
+     */
     public Choose(Point start, Size size, ArrayList<Button> buttons, Frame parent) {
         super(start, size, new ArrayList<>(buttons), parent);
         this.buttons = buttons;
@@ -56,6 +74,12 @@ public class Choose extends Frame implements KeyTaker {
         return new ReturnInt(ReturnInt.NOTHING);
     }
 
+    /**
+     * Add button to end of button list
+     *
+     * @param button button
+     * @see Button
+     */
     public void addButton(Button button) {
         addFrames(button);
         if (buttons.isEmpty()) {

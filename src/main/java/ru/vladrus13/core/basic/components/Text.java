@@ -15,6 +15,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Collections;
 
+/**
+ * Text class. Using for drawing text on screen
+ */
 public class Text extends Frame {
 
     @Override
@@ -27,17 +30,67 @@ public class Text extends Frame {
         return new ReturnInt(ReturnInt.NOTHING);
     }
 
+    /**
+     * Text align. Helper class for {@link Text}
+     */
     public enum TextAlign {
-        CENTER, LEFT, RIGHT
+        /**
+         * Center align enum
+         */
+        CENTER,
+        /**
+         * Left align enum
+         */
+        LEFT,
+        /**
+         * Right align enum
+         */
+        RIGHT
     }
 
+    /**
+     * Text
+     */
     private final String text;
+    /**
+     * Font for text
+     * @see Font
+     */
     private Font font;
+    /**
+     * Color for text
+     * @see Color
+     */
     private final Color color;
+    /**
+     * Text align
+     * @see TextAlign
+     */
     private final TextAlign textAlign;
+    /**
+     * Start position for text (lower left corner)
+     */
     private Point textStart;
+    /**
+     * Font size. Only need x-axis and type
+     */
     private final Size fontSize;
 
+    /**
+     * Classic frame constructor for Text class. The text is contained in a rectangle given by size and start
+     * @param start start position of text
+     * @param size size position of text
+     * @param text text
+     * @param nameFont name of font. An attempt will be made to find it using the FontService
+     * @param fontSize size of font. Only need x-axis and type
+     * @param color color of text.
+     * @param textAlign text aling
+     * @param parent parent frame
+     * @throws GameException if we can't load a font
+     * @see Color
+     * @see Font
+     * @see TextAlign
+     */
     public Text(Point start, Size size, String text, String nameFont, Size fontSize, Color color, TextAlign textAlign, Frame parent) throws GameException {
         super(start, size, Collections.emptyList(), parent);
         this.text = text;
