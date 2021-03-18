@@ -54,16 +54,19 @@ public class Text extends Frame {
     private final String text;
     /**
      * Font for text
+     *
      * @see Font
      */
     private Font font;
     /**
      * Color for text
+     *
      * @see Color
      */
     private final Color color;
     /**
      * Text align
+     *
      * @see TextAlign
      */
     private final TextAlign textAlign;
@@ -78,14 +81,15 @@ public class Text extends Frame {
 
     /**
      * Classic frame constructor for Text class. The text is contained in a rectangle given by size and start
-     * @param start start position of text
-     * @param size size position of text
-     * @param text text
-     * @param nameFont name of font. An attempt will be made to find it using the FontService
-     * @param fontSize size of font. Only need x-axis and type
-     * @param color color of text.
-     * @param textAlign text aling
-     * @param parent parent frame
+     *
+     * @param start     start position of text
+     * @param size      size position of text
+     * @param text      text
+     * @param nameFont  name of font. An attempt will be made to find it using the FontService
+     * @param fontSize  size of font. Only need x-axis and type
+     * @param color     color of text.
+     * @param textAlign text align
+     * @param parent    parent frame
      * @throws GameException if we can't load a font
      * @see Color
      * @see Font

@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 public class Menu extends Frame {
 
-    Logger logger = Logger.getLogger(Menu.class.getName());
+    private final Logger logger = Logger.getLogger(Menu.class.getName());
 
     public Menu(int width, int height) {
         super(new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), new ArrayList<>(), null);

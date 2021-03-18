@@ -20,7 +20,10 @@ public abstract class UpdatedFrame extends Frame implements Updated {
         }
     }
 
-    @Override
+    public boolean isPause() {
+        return isPause;
+    }
+
     public void setPause(boolean pause) {
         isPause = pause;
     }

@@ -24,7 +24,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     private Frame current;
     boolean isInterrupted = false;
 
-    public Game() throws GameException {
+    public Game() {
         logger.info("Run class: Game");
         GameService.setGame(this);
         int width = MainProperty.getInteger("window.width");

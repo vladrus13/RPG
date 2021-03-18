@@ -13,7 +13,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Class with one or more buttons embodying choise
+ * Class with one or more buttons embodying choice
+ *
  * @author vladrus13
  */
 public class Choose extends Frame implements KeyTaker {
@@ -27,7 +28,7 @@ public class Choose extends Frame implements KeyTaker {
     private int current;
 
     /**
-     * Standart constructor for class
+     * Standard constructor for class
      *
      * @param start   start position for choose
      * @param size    size of choose class

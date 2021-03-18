@@ -17,6 +17,7 @@ import java.util.Collections;
 
 /**
  * Image class. Used for just draw a image
+ *
  * @author vladrus13
  */
 public class Image extends Frame {
@@ -28,9 +29,10 @@ public class Image extends Frame {
 
     /**
      * Classic constructor for frame
-     * @param start start position for image
-     * @param size size of image
-     * @param path path FROM folder of graphic resources
+     *
+     * @param start  start position for image
+     * @param size   size of image
+     * @param path   path FROM folder of graphic resources
      * @param parent parent frame
      * @throws GameException if image can't be loaded
      */

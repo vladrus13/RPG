@@ -16,11 +16,7 @@ public class Launcher {
                 e.printStackTrace();
             }
             MainProperty.read();
-            try {
-                Game game = new Game();
-            } catch (GameException e) {
-                e.printStackTrace();
-            }
+            Game game = new Game();
         }
     }
 }
