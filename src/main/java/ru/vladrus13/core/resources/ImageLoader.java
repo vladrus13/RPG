@@ -10,9 +10,18 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Image loader
+ */
 public class ImageLoader {
 
+    /**
+     * Images
+     */
     private final static Map<String, BufferedImage> images = new HashMap<>();
+    /**
+     * Resources path
+     */
     private final static Path resourcesPath = Path.of("src").resolve("main").resolve("resources").resolve("graphic");
 
     /**

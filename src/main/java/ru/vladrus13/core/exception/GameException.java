@@ -24,6 +24,10 @@ public class GameException extends Exception {
         super(s, e);
     }
 
+    /**
+     * Constructor with just exception
+     * @param e suppressed exception
+     */
     public GameException(Exception e) {
         super(e);
     }

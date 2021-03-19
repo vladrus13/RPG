@@ -8,6 +8,7 @@ import ru.vladrus13.core.bean.CoordinatesType;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
+import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.core.utils.Writer;
 import ru.vladrus13.game.basic.event.returned.ReturnEvent;
 import ru.vladrus13.game.basic.event.returned.ReturnInt;
@@ -17,10 +18,12 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 public class Menu extends Frame {
 
+    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("internationalization.menu", MainProperty.getLocale());
     private final Logger logger = Logger.getLogger(Menu.class.getName());
 
     public Menu(int width, int height) {
@@ -32,13 +35,13 @@ public class Menu extends Frame {
             Button start = new ClassicButton(startStart.copy(), startSize.copy(), choose).setEvent(new ReturnInt(ReturnInt.TO_WORLD));
             start.setBackground(new Background(startStart, startSize, Color.BLUE, start));
             start.setBackgroundChoose(new Background(startStart, startSize, Color.RED, start));
-            start.setText(new Text(startStart, startSize, "Start", "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, start));
+            start.setText(new Text(startStart, startSize, resourceBundle.getString("start"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, start));
             Point exitStart = new Point(10, 510, CoordinatesType.RATIO);
             Size exitSize = new Size(980, 480, CoordinatesType.RATIO);
             Button exit = new ClassicButton(exitStart.copy(), exitSize.copy(), choose).setEvent(new ReturnInt(ReturnInt.END_GAME));
             exit.setBackground(new Background(exitStart, exitSize, Color.BLUE, exit));
             exit.setBackgroundChoose(new Background(exitStart, exitSize, Color.RED, exit));
-            exit.setText(new Text(exitStart, exitSize, "Exit", "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, exit));
+            exit.setText(new Text(exitStart, exitSize, resourceBundle.getString("exit"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, exit));
             choose.addButton(start);
             choose.addButton(exit);
             frames.add(choose);
@@ -49,6 +52,7 @@ public class Menu extends Frame {
         recalculate();
     }
 
+    @Override
     public void recalculate(int width, int height) {
         size = new Size(width, height, CoordinatesType.REAL);
         recalculate();
