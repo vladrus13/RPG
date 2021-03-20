@@ -1,22 +1,39 @@
 package ru.vladrus13.game.basic.direction;
 
+/**
+ * Direction enum
+ */
 public enum Direction {
+    /**
+     * Up
+     */
     UP {
         @Override
         public String getCapitalize() {
             return "Up";
         }
-    }, DOWN {
+    },
+    /**
+     * Down
+     */
+    DOWN {
         @Override
         public String getCapitalize() {
             return "Down";
         }
-    }, LEFT {
+    },
+    /**
+     * Left
+     */
+    LEFT {
         @Override
         public String getCapitalize() {
             return "Left";
         }
-    }, RIGHT {
+    }, /**
+* Right
+*/
+RIGHT {
         @Override
         public String getCapitalize() {
             return "Right";
@@ -24,5 +41,8 @@ public enum Direction {
     };
 
 
+    /**
+     * @return capitalization string of direction
+     */
     public abstract String getCapitalize();
 }
