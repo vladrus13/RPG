@@ -30,17 +30,23 @@ public class Choose extends Frame implements KeyTaker {
     /**
      * Standard constructor for class
      *
-     * @param start   start position for choose
-     * @param size    size of choose class
-     * @param buttons list of buttons
-     * @param parent  parent frame
+     * @param name   system name of frame
+     * @param start  start position for choose
+     * @param size   size of choose class
+     * @param parent parent frame
      */
-    public Choose(Point start, Size size, ArrayList<Button> buttons, Frame parent) {
-        super(start, size, new ArrayList<>(buttons), parent);
-        this.buttons = buttons;
+    public Choose(String name, Point start, Size size, Frame parent) {
+        super(name, start, size, parent);
+        this.buttons = new ArrayList<>();
         current = 0;
-        if (!buttons.isEmpty()) buttons.get(0).setChoose(true);
-        recalculate();
+        recalculateChildes();
+    }
+
+    @Override
+    public void recalculateChildes() {
+        for (Button button : buttons) {
+            button.recalculate();
+        }
     }
 
     @Override
@@ -82,7 +88,6 @@ public class Choose extends Frame implements KeyTaker {
      * @see Button
      */
     public void addButton(Button button) {
-        addFrames(button);
         if (buttons.isEmpty()) {
             button.setChoose(true);
         }

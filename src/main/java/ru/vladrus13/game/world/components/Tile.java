@@ -15,8 +15,8 @@ public class Tile extends Image {
     private boolean isWalkable = true;
     private Event onStep;
 
-    public Tile(Point start, Size size, int id, Frame parent) throws GameException {
-        super(start, size, path.resolve(id + ".png"), parent);
+    public Tile(String name, Point start, Size size, int id, Frame parent) throws GameException {
+        super(name, start, size, path.resolve(id + ".png"), parent);
         recalculate();
     }
 

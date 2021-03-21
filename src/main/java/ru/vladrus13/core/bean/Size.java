@@ -19,8 +19,9 @@ public class Size {
 
     /**
      * Constructor for size with type
-     * @param x x-axis coordinate
-     * @param y y-axis coordinate
+     *
+     * @param x               x-axis coordinate
+     * @param y               y-axis coordinate
      * @param coordinatesType type of point
      */
     public Size(long x, long y, CoordinatesType coordinatesType) {
@@ -31,6 +32,7 @@ public class Size {
 
     /**
      * Create copy of size
+     *
      * @return copy
      */
     public Size copy() {

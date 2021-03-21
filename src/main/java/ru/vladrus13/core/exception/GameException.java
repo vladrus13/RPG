@@ -26,6 +26,7 @@ public class GameException extends Exception {
 
     /**
      * Constructor with just exception
+     *
      * @param e suppressed exception
      */
     public GameException(Exception e) {

@@ -26,12 +26,13 @@ public class ClassicButton extends Button {
     /**
      * Classic frame constructor for button
      *
+     * @param name   system name of frame
      * @param start  start position for button
      * @param size   size of button
      * @param parent parent frame
      */
-    public ClassicButton(Point start, Size size, Frame parent) {
-        super(start, size, parent);
+    public ClassicButton(String name, Point start, Size size, Frame parent) {
+        super(name, start, size, parent);
     }
 
     @Override

@@ -3,8 +3,6 @@ package ru.vladrus13.core.basic;
 import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 
-import java.util.Collection;
-
 /**
  * Frame with updates
  */
@@ -17,13 +15,14 @@ public abstract class UpdatedFrame extends Frame implements Updated {
 
     /**
      * Standard frame constructor
-     * @param start start position of frame
-     * @param size frame size
-     * @param frames childes frames. For any changes, updates or redrawing, they are called for the corresponding operation
+     *
+     * @param name   system name of frame
+     * @param start  start position of frame
+     * @param size   frame size
      * @param parent parent frame
      */
-    public UpdatedFrame(Point start, Size size, Collection<Frame> frames, Frame parent) {
-        super(start, size, frames, parent);
+    public UpdatedFrame(String name, Point start, Size size, Frame parent) {
+        super(name, start, size, parent);
     }
 
     @Override
@@ -35,6 +34,7 @@ public abstract class UpdatedFrame extends Frame implements Updated {
 
     /**
      * is this frame paused, that is, it is not-updatable
+     *
      * @return paused or not
      */
     public boolean isPause() {
@@ -43,6 +43,7 @@ public abstract class UpdatedFrame extends Frame implements Updated {
 
     /**
      * Set updatable of frame
+     *
      * @param pause updatable or not
      */
     public void setPause(boolean pause) {
@@ -51,6 +52,7 @@ public abstract class UpdatedFrame extends Frame implements Updated {
 
     /**
      * Update this object with checking isPause
+     *
      * @param delay millisecond from last update for this object
      */
     protected abstract void nonCheckingUpdate(long delay);

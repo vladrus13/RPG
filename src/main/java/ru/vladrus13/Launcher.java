@@ -1,6 +1,5 @@
 package ru.vladrus13;
 
-import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.game.Game;
 

@@ -36,6 +36,7 @@ public class MainProperty {
 
     /**
      * Get property by name
+     *
      * @param s name of property
      * @return property
      */
@@ -45,6 +46,7 @@ public class MainProperty {
 
     /**
      * Get property by name in Long
+     *
      * @param s name of property
      * @return property in Long
      */
@@ -54,6 +56,7 @@ public class MainProperty {
 
     /**
      * Get property by name in Integer
+     *
      * @param s name of property
      * @return property in Integer
      */

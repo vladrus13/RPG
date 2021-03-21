@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 
 public class Hero extends Actor {
     public Hero(Point start, Region region) {
-        super(start, "Hero", "hero", region, region);
+        super("hero", start, "hero", region, region);
     }
 
     @Override
@@ -38,6 +38,10 @@ public class Hero extends Actor {
     @Override
     public void onStep() {
         region.onStep(this, start);
+    }
+
+    @Override
+    public void onTrigger() {
     }
 
     @Override

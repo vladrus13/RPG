@@ -21,8 +21,9 @@ public class Point {
 
     /**
      * Constructor for point with type
-     * @param x x-axis coordinate
-     * @param y y-axis coordinate
+     *
+     * @param x               x-axis coordinate
+     * @param y               y-axis coordinate
      * @param coordinatesType type of point
      */
     public Point(long x, long y, CoordinatesType coordinatesType) {
@@ -33,6 +34,7 @@ public class Point {
 
     /**
      * Constructor for real point
+     *
      * @param x x-axis coordinate
      * @param y y-axis coordinate
      */
@@ -44,6 +46,7 @@ public class Point {
 
     /**
      * Create copy of point
+     *
      * @return copy
      */
     public Point copy() {
@@ -52,6 +55,7 @@ public class Point {
 
     /**
      * Increase x-axis coordinate
+     *
      * @param x how much should we increase the coordinate
      * @return new point
      */
@@ -61,6 +65,7 @@ public class Point {
 
     /**
      * Increase y-axis coordinate
+     *
      * @param y how much should we increase the coordinate
      * @return new point
      */

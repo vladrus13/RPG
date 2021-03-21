@@ -30,10 +30,11 @@ public enum Direction {
         public String getCapitalize() {
             return "Left";
         }
-    }, /**
-* Right
-*/
-RIGHT {
+    },
+    /**
+     * Right
+     */
+    RIGHT {
         @Override
         public String getCapitalize() {
             return "Right";

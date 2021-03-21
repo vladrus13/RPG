@@ -10,9 +10,10 @@ import ru.vladrus13.core.bean.Size;
 public class Ratio {
     /**
      * Get real start coordinates of frame by parent and start coordinates relatively parent
+     *
      * @param startParent real start point of parent
-     * @param parentSize real size of parent
-     * @param start relatively position of parent
+     * @param parentSize  real size of parent
+     * @param start       relatively position of parent
      * @return real start coordinates
      */
     public static Point getPoint(Point startParent, Size parentSize, Point start) {
@@ -31,8 +32,9 @@ public class Ratio {
 
     /**
      * Get real size by parent size and relatively parent size
+     *
      * @param parentSize real parent size
-     * @param size relatively size
+     * @param size       relatively size
      * @return real size of child
      */
     public static Size getSize(Size parentSize, Size size) {

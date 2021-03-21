@@ -17,7 +17,6 @@ import ru.vladrus13.graphic.Graphics;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Collections;
 import java.util.logging.Logger;
 
 public class World extends UpdatedFrame {
@@ -28,7 +27,7 @@ public class World extends UpdatedFrame {
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
 
     public World(int width, int height) {
-        super(new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), Collections.emptyList(), null);
+        super("world", new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), null);
         try {
             region = RegionFactory.getRegion(1, this);
         } catch (GameException e) {
@@ -37,7 +36,7 @@ public class World extends UpdatedFrame {
         hero = new Hero(new Point(tileSize, tileSize, CoordinatesType.REAL), region);
         region.setHero(hero);
         addFocused(region);
-        recalculate();
+        recalculateChildes();
     }
 
     @Override
@@ -70,5 +69,11 @@ public class World extends UpdatedFrame {
                 Writer.printStackTrace(logger, e);
             }
         }
+    }
+
+    @Override
+    public void recalculateChildes() {
+        region.recalculate();
+        hero.recalculate();
     }
 }

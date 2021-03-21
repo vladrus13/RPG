@@ -10,8 +10,9 @@ import java.util.logging.Logger;
 public class Writer {
     /**
      * Print to logger stacktrace
+     *
      * @param logger logger
-     * @param e exception
+     * @param e      exception
      */
     public static void printStackTrace(Logger logger, Exception e) {
         StringWriter stringWriter = new StringWriter();

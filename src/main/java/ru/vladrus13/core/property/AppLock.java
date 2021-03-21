@@ -27,6 +27,7 @@ public class AppLock {
 
     /**
      * Is app in exception status
+     *
      * @return is app in exception status
      */
     public static boolean isException() {
@@ -35,6 +36,7 @@ public class AppLock {
 
     /**
      * Is app in close status
+     *
      * @return is app in close status
      */
     public static boolean isClose() {

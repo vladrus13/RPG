@@ -5,8 +5,6 @@ import ru.vladrus13.core.bean.Point;
 import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.graphic.Graphics;
 
-import java.util.ArrayList;
-
 /**
  * Button class for graphics. Can be touched and activate. Use <b>Builder pattern</b>.
  *
@@ -35,13 +33,14 @@ public abstract class Button extends Frame {
     /**
      * Constructor for button
      *
+     * @param name   system name of frame
      * @param start  start position for button
      * @param size   button size
      * @param parent parent
      */
-    public Button(Point start, Size size, Frame parent) {
-        super(start, size, new ArrayList<>(), parent);
-        recalculate();
+    public Button(String name, Point start, Size size, Frame parent) {
+        super(name, start, size, parent);
+        recalculateChildes();
     }
 
     @Override
@@ -69,9 +68,7 @@ public abstract class Button extends Frame {
      * @param background background drawn when button is not selected
      */
     public void setBackground(Background background) {
-        frames.remove(this.background);
         this.background = background;
-        frames.add(background);
     }
 
     /**
@@ -80,9 +77,20 @@ public abstract class Button extends Frame {
      * @param backgroundChoose background drawn when button is selected
      */
     public void setBackgroundChoose(Background backgroundChoose) {
-        frames.remove(this.backgroundChoose);
         this.backgroundChoose = backgroundChoose;
-        frames.add(backgroundChoose);
+    }
+
+    @Override
+    public void recalculateChildes() {
+        if (background != null) {
+            background.recalculate();
+        }
+        if (backgroundChoose != null) {
+            backgroundChoose.recalculate();
+        }
+        if (text != null) {
+            text.recalculate();
+        }
     }
 
     /**
@@ -91,8 +99,6 @@ public abstract class Button extends Frame {
      * @param text text on button
      */
     public void setText(Text text) {
-        frames.remove(this.text);
         this.text = text;
-        frames.add(text);
     }
 }

@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 
 public class Pirate extends Actor {
     public Pirate(Point start, Frame parent, Region region) {
-        super(start, "Pirate", "pirate", parent, region);
+        super("pirate", start, "pirate", parent, region);
     }
 
     @Override
@@ -26,8 +26,10 @@ public class Pirate extends Actor {
     }
 
     @Override
+    public void onStep() { }
+
+    @Override
     public void onTrigger() {
-        super.onTrigger();
         // TODO make menu
     }
 

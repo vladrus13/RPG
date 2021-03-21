@@ -14,7 +14,8 @@ public class DirectionService {
 
     /**
      * Return point after t on tile
-     * @param a previous tile
+     *
+     * @param a         previous tile
      * @param direction direction
      * @return tile after step
      */

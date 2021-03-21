@@ -12,7 +12,10 @@ import ru.vladrus13.game.world.region.Region;
 import ru.vladrus13.graphic.Graphics;
 
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Map;
 
 public abstract class Actor extends UpdatedFrame {
 
@@ -26,12 +29,12 @@ public abstract class Actor extends UpdatedFrame {
 
     private final Map<Direction, BufferedImage> images;
 
-    public Actor(Point start, String name, String resourcesName, Frame parent, Region region) {
-        super(start, new Size(
+    public Actor(String systemName, Point start, String resourcesName, Frame parent, Region region) {
+        super(systemName, start, new Size(
                         MainProperty.getInteger("world.region.tileSize"),
                         MainProperty.getInteger("world.region.tileSize"), CoordinatesType.REAL),
-                Collections.emptyList(), parent);
-        this.name = name;
+                parent);
+        this.name = resourcesName;
         this.resourcesName = resourcesName;
         this.region = region;
         images = ActorFactory.loadActor(resourcesName);
@@ -63,13 +66,9 @@ public abstract class Actor extends UpdatedFrame {
         graphics.drawImage(images.get(lastDirection), start.x, start.y, tileSize, tileSize);
     }
 
-    public void onStep() {
+    public abstract void onStep();
 
-    }
-
-    public void onTrigger() {
-
-    }
+    public abstract void onTrigger();
 
     @Override
     protected void nonCheckingUpdate(long delay) {
@@ -133,4 +132,9 @@ public abstract class Actor extends UpdatedFrame {
     }
 
     public abstract int getSpeed();
+
+    @Override
+    public void recalculateChildes() {
+
+    }
 }

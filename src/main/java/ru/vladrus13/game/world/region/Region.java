@@ -26,10 +26,10 @@ public class Region extends UpdatedFrame {
     private final World world;
     private ArrayList<Actor> actors;
 
-    public Region(World parent) {
-        super(parent.getStart(), parent.getSize(), new ArrayList<>(), parent);
+    public Region(String name, World parent) {
+        super(name, parent.getStart(), parent.getSize(), parent);
         this.world = parent;
-        recalculate();
+        recalculateChildes();
     }
 
     @Override
@@ -52,8 +52,7 @@ public class Region extends UpdatedFrame {
     }
 
     @Override
-    public void recalculate() {
-        super.recalculate();
+    public void recalculateChildes() {
         if (tiles != null) {
             for (ArrayList<Tile> it : tiles) {
                 for (Tile jt : it) {

@@ -30,14 +30,15 @@ public class Image extends Frame {
     /**
      * Classic constructor for frame
      *
+     * @param name   system name of frame
      * @param start  start position for image
      * @param size   size of image
      * @param path   path FROM folder of graphic resources
      * @param parent parent frame
      * @throws GameException if image can't be loaded
      */
-    public Image(Point start, Size size, Path path, Frame parent) throws GameException {
-        super(start, size, Collections.emptyList(), parent);
+    public Image(String name, Point start, Size size, Path path, Frame parent) throws GameException {
+        super(name, start, size, parent);
         image = ImageLoader.load(path);
     }
 
@@ -54,5 +55,10 @@ public class Image extends Frame {
     @Override
     public ReturnEvent mousePressed(MouseEvent e) {
         return new ReturnInt(ReturnInt.NOTHING);
+    }
+
+    @Override
+    public void recalculateChildes() {
+
     }
 }

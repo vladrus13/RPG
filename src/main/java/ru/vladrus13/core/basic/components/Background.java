@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.Collections;
 
 /**
  * Background class. You can fill it from image or color
@@ -32,44 +31,47 @@ public class Background extends Frame {
     /**
      * Constructor for Background with image
      *
+     * @param name   system name of frame
      * @param start  start position
      * @param size   size
      * @param image  image
      * @param parent parent for this frame
      */
-    public Background(Point start, Size size, BufferedImage image, Frame parent) {
-        super(start, size, Collections.emptyList(), parent);
+    public Background(String name, Point start, Size size, BufferedImage image, Frame parent) {
+        super(name, start, size, parent);
         this.image = image;
         color = null;
-        recalculate();
+        recalculateChildes();
     }
 
     /**
      * Constructor for Background with color
      *
+     * @param name   system name of frame
      * @param start  start position
      * @param size   size
      * @param color  color
      * @param parent parent for this frame
      */
-    public Background(Point start, Size size, Color color, Frame parent) {
-        super(start, size, Collections.emptyList(), parent);
+    public Background(String name, Point start, Size size, Color color, Frame parent) {
+        super(name, start, size, parent);
         this.color = color;
         image = null;
-        recalculate();
+        recalculateChildes();
     }
 
     /**
      * Parent fill background
      *
+     * @param name   system name of frame
      * @param color  color
      * @param parent parent
      */
-    public Background(Color color, Frame parent) {
-        super(parent.getStart(), parent.getSize(), Collections.emptyList(), parent);
+    public Background(String name, Color color, Frame parent) {
+        super(name, parent.getStart(), parent.getSize(), parent);
         this.color = color;
         this.image = null;
-        recalculate();
+        recalculateChildes();
     }
 
     @Override
@@ -91,5 +93,10 @@ public class Background extends Frame {
     @Override
     public ReturnEvent mousePressed(MouseEvent e) {
         return new ReturnInt(ReturnInt.NOTHING);
+    }
+
+    @Override
+    public void recalculateChildes() {
+
     }
 }

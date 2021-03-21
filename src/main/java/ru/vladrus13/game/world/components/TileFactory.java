@@ -21,18 +21,18 @@ public class TileFactory {
     }
 
     private static Tile get0(Point start, Size size, Frame parent) throws GameException {
-        return new Tile(start, size, 0, parent).setWalkable(true);
+        return new Tile("empty", start, size, 0, parent).setWalkable(true);
     }
 
     private static Tile get1(Point start, Size size, Frame parent) throws GameException {
-        return new Tile(start, size, 1, parent).setWalkable(false);
+        return new Tile("wall", start, size, 1, parent).setWalkable(false);
     }
 
     private static Tile get2(Point start, Size size, Frame parent) throws GameException {
-        return new Tile(start, size, 2, parent).setWalkable(true);
+        return new Tile("upper_stair", start, size, 2, parent).setWalkable(true);
     }
 
     private static Tile get3(Point start, Size size, Frame parent) throws GameException {
-        return new Tile(start, size, 3, parent).setWalkable(true);
+        return new Tile("lower_stair", start, size, 3, parent).setWalkable(true);
     }
 }

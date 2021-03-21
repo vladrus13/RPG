@@ -17,7 +17,6 @@ import ru.vladrus13.graphic.Graphics;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -25,31 +24,36 @@ public class Menu extends Frame {
 
     private final ResourceBundle resourceBundle = ResourceBundle.getBundle("internationalization.menu", MainProperty.getLocale());
     private final Logger logger = Logger.getLogger(Menu.class.getName());
+    private final Choose choose;
 
     public Menu(int width, int height) {
-        super(new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), new ArrayList<>(), null);
-        try {
+        super("menu", new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), null);
             Point startStart = new Point(10, 10, CoordinatesType.RATIO);
             Size startSize = new Size(980, 480, CoordinatesType.RATIO);
-            Choose choose = new Choose(new Point(250, 250, CoordinatesType.RATIO), new Size(500, 500, CoordinatesType.RATIO), new ArrayList<>(), this);
-            Button start = new ClassicButton(startStart.copy(), startSize.copy(), choose).setEvent(new ReturnInt(ReturnInt.TO_WORLD));
-            start.setBackground(new Background(startStart, startSize, Color.BLUE, start));
-            start.setBackgroundChoose(new Background(startStart, startSize, Color.RED, start));
-            start.setText(new Text(startStart, startSize, resourceBundle.getString("start"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, start));
+            choose = new Choose("menuChoose", new Point(250, 250, CoordinatesType.RATIO), new Size(500, 500, CoordinatesType.RATIO), this);
+        try {
+            Button start = new ClassicButton("start", startStart.copy(), startSize.copy(), choose).setEvent(new ReturnInt(ReturnInt.TO_WORLD));
+            start.setBackground(new Background("agree", startStart, startSize, Color.BLUE, start));
+            start.setBackgroundChoose(new Background("disgree", startStart, startSize, Color.RED, start));
+            start.setText(new Text("text", startStart, startSize, resourceBundle.getString("start"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, start));
             Point exitStart = new Point(10, 510, CoordinatesType.RATIO);
             Size exitSize = new Size(980, 480, CoordinatesType.RATIO);
-            Button exit = new ClassicButton(exitStart.copy(), exitSize.copy(), choose).setEvent(new ReturnInt(ReturnInt.END_GAME));
-            exit.setBackground(new Background(exitStart, exitSize, Color.BLUE, exit));
-            exit.setBackgroundChoose(new Background(exitStart, exitSize, Color.RED, exit));
-            exit.setText(new Text(exitStart, exitSize, resourceBundle.getString("exit"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, exit));
+            Button exit = new ClassicButton("exit", exitStart.copy(), exitSize.copy(), choose).setEvent(new ReturnInt(ReturnInt.END_GAME));
+            exit.setBackground(new Background("agree", exitStart, exitSize, Color.BLUE, exit));
+            exit.setBackgroundChoose(new Background("disagree", exitStart, exitSize, Color.RED, exit));
+            exit.setText(new Text("text", exitStart, exitSize, resourceBundle.getString("exit"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, exit));
             choose.addButton(start);
             choose.addButton(exit);
-            frames.add(choose);
             focused.add(choose);
         } catch (GameException e) {
             Writer.printStackTrace(logger, e);
         }
-        recalculate();
+        recalculateChildes();
+    }
+
+    @Override
+    public void recalculateChildes() {
+        choose.recalculate();
     }
 
     @Override
@@ -60,9 +64,7 @@ public class Menu extends Frame {
 
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
-        for (Drawn drawn : frames) {
-            drawn.draw(graphics);
-        }
+        choose.draw(graphics);
     }
 
     @Override

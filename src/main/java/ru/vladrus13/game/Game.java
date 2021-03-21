@@ -2,7 +2,6 @@ package ru.vladrus13.game;
 
 import ru.vladrus13.core.basic.Frame;
 import ru.vladrus13.core.basic.UpdatedFrame;
-import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.property.MainProperty;
 import ru.vladrus13.core.services.GameService;
 import ru.vladrus13.core.utils.Writer;

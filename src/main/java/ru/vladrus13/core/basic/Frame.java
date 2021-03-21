@@ -7,7 +7,6 @@ import ru.vladrus13.core.bean.Size;
 import ru.vladrus13.core.exception.GameException;
 import ru.vladrus13.core.utils.Ratio;
 
-import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.logging.Logger;
@@ -37,10 +36,6 @@ public abstract class Frame extends Drawn implements Focus {
      */
     protected final Size ratioSize;
     /**
-     * Childes frames. For any changes, updates or redrawing, they are called for the corresponding operation
-     */
-    protected final Collection<Frame> frames;
-    /**
      * Parent frame. Can be null if no parents are given
      */
     protected Frame parent;
@@ -60,16 +55,17 @@ public abstract class Frame extends Drawn implements Focus {
      * Logger class
      */
     protected final Logger logger = Logger.getLogger(Frame.class.getName());
+    protected final String name;
 
     /**
      * Standard constructor for Frame
      *
+     * @param name   system name of frame
      * @param start  start position for frame
      * @param size   frame size
-     * @param frames childes frames. For any changes, updates or redrawing, they are called for the corresponding operation
      * @param parent parent frame
      */
-    public Frame(Point start, Size size, Collection<Frame> frames, Frame parent) {
+    public Frame(String name, Point start, Size size, Frame parent) {
         if (start.coordinatesType == CoordinatesType.REAL) {
             this.start = start;
             this.ratioStart = null;
@@ -84,10 +80,11 @@ public abstract class Frame extends Drawn implements Focus {
             this.ratioSize = size;
             this.size = null;
         }
+        this.name = name;
         startType = start.coordinatesType;
         sizeType = size.coordinatesType;
-        this.frames = frames;
         this.parent = parent;
+        recalculate();
     }
 
     /**
@@ -100,10 +97,12 @@ public abstract class Frame extends Drawn implements Focus {
         if (sizeType == CoordinatesType.RATIO && parent != null) {
             size = Ratio.getSize(parent.size, ratioSize);
         }
-        for (Frame frame : frames) {
-            frame.recalculate();
-        }
     }
+
+    /**
+     * Recalculate all childes
+     */
+    public abstract void recalculateChildes();
 
     /**
      * If there are some changes in the size of the windows, then this method is called
@@ -114,15 +113,6 @@ public abstract class Frame extends Drawn implements Focus {
     public void recalculate(int width, int height) {
         size = new Size(width, height, CoordinatesType.REAL);
         recalculate();
-    }
-
-    /**
-     * Add new children frame for array of childes
-     *
-     * @param drawn new frame
-     */
-    public void addFrames(Frame drawn) {
-        frames.add(drawn);
     }
 
     /**
