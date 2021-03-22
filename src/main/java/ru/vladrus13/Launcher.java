@@ -1,7 +1,7 @@
 package ru.vladrus13;
 
-import ru.vladrus13.core.property.MainProperty;
-import ru.vladrus13.game.Game;
+import ru.vladrus13.jgraphic.property.MainProperty;
+import ru.vladrus13.rpg.Game;
 
 import java.io.IOException;
 import java.util.logging.LogManager;
