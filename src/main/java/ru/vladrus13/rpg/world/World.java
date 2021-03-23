@@ -36,6 +36,8 @@ public class World extends UpdatedFrame {
         hero = new Hero(new Point(tileSize, tileSize, CoordinatesType.REAL), region);
         region.setHero(hero);
         addFocused(region);
+        addChild(hero);
+        addChild(region);
         recalculateChildes();
     }
 
@@ -69,11 +71,5 @@ public class World extends UpdatedFrame {
                 Writer.printStackTrace(logger, e);
             }
         }
-    }
-
-    @Override
-    public void recalculateChildes() {
-        region.recalculate();
-        hero.recalculate();
     }
 }

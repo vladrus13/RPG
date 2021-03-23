@@ -30,6 +30,7 @@ public class Menu extends Frame {
         Point startStart = new Point(10, 10, CoordinatesType.RATIO);
         Size startSize = new Size(980, 480, CoordinatesType.RATIO);
         choose = new Choose("menuChoose", new Point(250, 250, CoordinatesType.RATIO), new Size(500, 500, CoordinatesType.RATIO), this);
+        addChild(choose);
         try {
             Button start = new ClassicButton("start", startStart.copy(), startSize.copy(), choose).setEvent(new ReturnInt(ReturnInt.TO_WORLD));
             start.setBackground(new Background("agree", startStart, startSize, Color.BLUE, start));
@@ -48,17 +49,6 @@ public class Menu extends Frame {
             Writer.printStackTrace(logger, e);
         }
         recalculateChildes();
-    }
-
-    @Override
-    public void recalculateChildes() {
-        choose.recalculate();
-    }
-
-    @Override
-    public void recalculate(int width, int height) {
-        size = new Size(width, height, CoordinatesType.REAL);
-        recalculate();
     }
 
     @Override
