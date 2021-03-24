@@ -34,7 +34,7 @@ public class Menu extends Frame {
         try {
             Button start = new ClassicButton("start", startStart.copy(), startSize.copy(), choose).setEvent(new ReturnInt(ReturnInt.TO_WORLD));
             start.setBackground(new Background("agree", startStart, startSize, Color.BLUE, start));
-            start.setBackgroundChoose(new Background("disgree", startStart, startSize, Color.RED, start));
+            start.setBackgroundChoose(new Background("disagree", startStart, startSize, Color.RED, start));
             start.setText(new Text("text", startStart, startSize, resourceBundle.getString("start"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, start));
             Point exitStart = new Point(10, 510, CoordinatesType.RATIO);
             Size exitSize = new Size(980, 480, CoordinatesType.RATIO);

@@ -4,6 +4,7 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
+import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.world.region.Region;
 
 import java.awt.event.KeyEvent;
@@ -29,6 +30,8 @@ public class Hero extends Actor {
             case KeyEvent.VK_DOWN:
                 makeMove(Direction.DOWN);
                 break;
+            case KeyEvent.VK_ENTER:
+                region.onActivate(DirectionService.step(start, lastDirection));
             default:
                 break;
         }

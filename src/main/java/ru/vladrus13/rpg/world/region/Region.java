@@ -13,10 +13,12 @@ import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Hero;
 import ru.vladrus13.rpg.world.components.Tile;
 import ru.vladrus13.graphic.Graphics;
+import ru.vladrus13.rpg.world.items.RegionItem;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Region extends UpdatedFrame {
 
@@ -24,7 +26,7 @@ public class Region extends UpdatedFrame {
     private Hero hero;
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final World world;
-    private ArrayList<Actor> actors;
+    private ArrayList<RegionItem> items;
 
     public Region(String name, World parent) {
         super(name, parent.getStart(), parent.getSize(), parent);
@@ -44,11 +46,6 @@ public class Region extends UpdatedFrame {
         if (hero != null) {
             hero.draw(graphics);
         }
-        if (actors != null) {
-            for (Actor actor : actors) {
-                actor.draw(graphics);
-            }
-        }
     }
 
     @Override
@@ -62,11 +59,6 @@ public class Region extends UpdatedFrame {
         }
         if (hero != null) {
             hero.recalculate();
-        }
-        if (actors != null) {
-            for (Actor actor : actors) {
-                actor.recalculate();
-            }
         }
     }
 
@@ -99,16 +91,23 @@ public class Region extends UpdatedFrame {
         addFocused(hero);
     }
 
-    public void setActors(ArrayList<Actor> actors) {
-        this.actors = actors;
+    public void setActors(Collection<Actor> actors) {
+        for (Actor actor : actors) {
+            tiles
+                    .get((int) (actor.getStart().x / tileSize))
+                    .get((int) (actor.getStart().y / tileSize)).actor = actor;
+        }
+    }
+
+    public void setItems(ArrayList<RegionItem> items) {
+        this.items = items;
     }
 
     public boolean isWalkable(Point a) {
         Point finalA = a;
         a = new Point(a.x / tileSize, a.y / tileSize, a.coordinatesType);
         if (a.x < 0 || a.y < 0 || tiles.size() <= a.x || tiles.get((int) a.x).size() <= a.y) return false;
-        return tiles.get((int) a.x).get((int) a.y).isWalkable() &&
-                (actors == null || actors.stream().noneMatch(actor -> actor.getStart().equals(finalA)));
+        return tiles.get((int) a.x).get((int) a.y).isWalkable();
     }
 
     public void onStep(Actor actor, Point a) {
@@ -118,6 +117,10 @@ public class Region extends UpdatedFrame {
                 world.invokeWorldEvent((WorldEvent) event);
             }
         }
+    }
+
+    public void onActivate(Point a) {
+
     }
 
     public void setOnStep(Event event, Point a) {
