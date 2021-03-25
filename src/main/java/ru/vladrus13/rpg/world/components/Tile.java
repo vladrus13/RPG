@@ -57,7 +57,7 @@ public class Tile extends Frame {
             actor.draw(graphics);
         }
         if (regionItem != null) {
-            // TODO regionItem.draw(graphics)
+            regionItem.draw(graphics);
         }
     }
 

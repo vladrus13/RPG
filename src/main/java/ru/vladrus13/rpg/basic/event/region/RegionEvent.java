@@ -1,4 +1,6 @@
 package ru.vladrus13.rpg.basic.event.region;
 
-public abstract class RegionEvent {
+import ru.vladrus13.jgraphic.basic.event.Event;
+
+public abstract class RegionEvent extends Event {
 }

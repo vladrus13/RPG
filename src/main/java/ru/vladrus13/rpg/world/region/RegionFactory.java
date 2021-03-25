@@ -12,6 +12,8 @@ import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.ActorFactory;
 import ru.vladrus13.rpg.world.components.Tile;
 import ru.vladrus13.rpg.world.components.TileFactory;
+import ru.vladrus13.rpg.world.items.ItemFactory;
+import ru.vladrus13.rpg.world.items.RegionItem;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -83,6 +85,7 @@ public class RegionFactory {
         region.setOnStep(new WorldEventTeleport(1, new Point(tileSize * 3L, tileSize), Direction.LEFT), new Point(1, 1));
         region.setOnStep(new WorldEventTeleport(3, new Point(tileSize, tileSize), Direction.DOWN), new Point(5, 1));
         region.setActors(new ArrayList<>(Collections.singletonList(ActorFactory.createActor("pirate", new Point(6L * tileSize, 4L * tileSize), region))));
+        region.setItems(new ArrayList<>(Collections.singletonList(new RegionItem(new Point(8L * tileSize, tileSize), region, ItemFactory.get(1)))));
         return region;
     }
 

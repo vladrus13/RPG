@@ -30,7 +30,7 @@ public class DirectionService {
             case RIGHT:
                 return new Point(a.x + tileSize, a.y, a.coordinatesType);
             default:
-                return null;
+                throw new IllegalArgumentException("Wrong type of direction: " + direction);
         }
     }
 }

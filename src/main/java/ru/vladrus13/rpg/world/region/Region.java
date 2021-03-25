@@ -10,7 +10,7 @@ import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
-import ru.vladrus13.rpg.world.actors.Hero;
+import ru.vladrus13.rpg.world.actors.impl.Hero;
 import ru.vladrus13.rpg.world.components.Tile;
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.rpg.world.items.RegionItem;
@@ -26,7 +26,6 @@ public class Region extends UpdatedFrame {
     private Hero hero;
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final World world;
-    private ArrayList<RegionItem> items;
 
     public Region(String name, World parent) {
         super(name, parent.getStart(), parent.getSize(), parent);
@@ -100,11 +99,14 @@ public class Region extends UpdatedFrame {
     }
 
     public void setItems(ArrayList<RegionItem> items) {
-        this.items = items;
+        for (RegionItem item : items) {
+            tiles
+                    .get((int) (item.getStart().x / tileSize))
+                    .get((int) (item.getStart().y / tileSize)).regionItem = item;
+        }
     }
 
     public boolean isWalkable(Point a) {
-        Point finalA = a;
         a = new Point(a.x / tileSize, a.y / tileSize, a.coordinatesType);
         if (a.x < 0 || a.y < 0 || tiles.size() <= a.x || tiles.get((int) a.x).size() <= a.y) return false;
         return tiles.get((int) a.x).get((int) a.y).isWalkable();
@@ -119,8 +121,16 @@ public class Region extends UpdatedFrame {
         }
     }
 
-    public void onActivate(Point a) {
-
+    public void onActivate(Actor actor, Point a) {
+        Tile tile = tiles.get((int) (a.x / tileSize)).get((int) (a.y / tileSize));
+        if (tile.regionItem != null) {
+            actor.inventory.addItem(tile.regionItem.item);
+            tile.regionItem = null;
+        } else {
+            if (tile.actor != null) {
+                tile.actor.onTrigger();
+            }
+        }
     }
 
     public void setOnStep(Event event, Point a) {
@@ -131,7 +141,7 @@ public class Region extends UpdatedFrame {
         return world;
     }
 
-    public void invokeRegionEvent(RegionEvent regionEvent) {
+    public void invokeRegionEvent(Actor actor, RegionEvent regionEvent) {
         // TODO
     }
 }

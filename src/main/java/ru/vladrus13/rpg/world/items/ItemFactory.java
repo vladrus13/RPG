@@ -22,7 +22,7 @@ public class ItemFactory {
 
     private final static ResourceBundle resourceBundle = ResourceBundle.getBundle("internationalization.items", MainProperty.getLocale());
 
-    public Item get(int id) throws GameException {
+    public static Item get(int id) throws GameException {
         try {
             return (Item) ItemFactory.class.getDeclaredMethod("get" + id)
                     .invoke(ItemFactory.class);
@@ -33,7 +33,7 @@ public class ItemFactory {
         }
     }
 
-    public Item get1() {
+    private static Item get1() {
         return new Item(1, resourceBundle.getString("1.name"), resourceBundle.getString("1.description"));
     }
 }

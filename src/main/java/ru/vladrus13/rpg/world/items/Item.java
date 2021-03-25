@@ -1,5 +1,7 @@
 package ru.vladrus13.rpg.world.items;
 
+import java.util.Objects;
+
 /**
  * @author vladrus13 on 24.03.2021
  **/
@@ -14,5 +16,16 @@ public class Item {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

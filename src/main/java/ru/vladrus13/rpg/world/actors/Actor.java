@@ -1,12 +1,15 @@
 package ru.vladrus13.rpg.world.actors;
 
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
+import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
+import ru.vladrus13.rpg.basic.event.region.RegionEvent;
+import ru.vladrus13.rpg.world.items.inventory.Inventory;
 import ru.vladrus13.rpg.world.region.Region;
 import ru.vladrus13.graphic.Graphics;
 
@@ -25,6 +28,8 @@ public abstract class Actor extends UpdatedFrame {
     protected Direction walkDirection;
     protected Direction lastDirection = Direction.DOWN;
     protected Region region;
+    protected RegionEvent onTrigger;
+    public Inventory inventory = new Inventory();
 
     private final Map<Direction, BufferedImage> images;
 
@@ -65,9 +70,13 @@ public abstract class Actor extends UpdatedFrame {
         graphics.drawImage(images.get(lastDirection), start.x, start.y, tileSize, tileSize);
     }
 
-    public abstract void onStep();
+    public void onStep() {
+        region.onStep(this, start);
+    }
 
-    public abstract void onTrigger();
+    public void onTrigger() {
+        region.invokeRegionEvent(this, onTrigger);
+    }
 
     @Override
     protected void nonCheckingUpdate(long delay) {

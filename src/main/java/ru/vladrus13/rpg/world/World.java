@@ -10,7 +10,7 @@ import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
-import ru.vladrus13.rpg.world.actors.Hero;
+import ru.vladrus13.rpg.world.actors.impl.Hero;
 import ru.vladrus13.rpg.world.region.Region;
 import ru.vladrus13.rpg.world.region.RegionFactory;
 import ru.vladrus13.graphic.Graphics;
