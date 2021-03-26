@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * @author vladrus13 on 24.03.2021
  **/
-public class Item {
+public abstract class Item {
     public final int id;
     public final String name;
     public final String description;
@@ -27,5 +27,13 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public static int getId() {
+        throw new UnsupportedOperationException("Can't get instance of abstract object");
+    }
+
+    public static Item getInstance() {
+        throw new UnsupportedOperationException("Can't get instance of abstract object");
     }
 }

@@ -1,17 +1,17 @@
 package ru.vladrus13.rpg.menu;
 
+import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.components.Button;
 import ru.vladrus13.jgraphic.basic.components.*;
+import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
+import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.utils.Writer;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
-import ru.vladrus13.graphic.Graphics;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

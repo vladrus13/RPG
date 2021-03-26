@@ -1,7 +1,8 @@
 package ru.vladrus13.rpg.world.actors;
 
+import ru.vladrus13.game.actors.ActorFactory;
+import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
-import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
@@ -11,7 +12,6 @@ import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.rpg.world.items.inventory.Inventory;
 import ru.vladrus13.rpg.world.region.Region;
-import ru.vladrus13.graphic.Graphics;
 
 import java.awt.image.BufferedImage;
 import java.util.Collection;
@@ -26,10 +26,11 @@ public abstract class Actor extends UpdatedFrame {
     protected final String name;
     protected final String resourcesName;
     protected Direction walkDirection;
-    protected Direction lastDirection = Direction.DOWN;
+    public Direction lastDirection = Direction.DOWN;
     protected Region region;
     protected RegionEvent onTrigger;
-    public Inventory inventory = new Inventory();
+    protected RegionEvent onStep;
+    public final Inventory inventory = new Inventory();
 
     private final Map<Direction, BufferedImage> images;
 
@@ -71,11 +72,11 @@ public abstract class Actor extends UpdatedFrame {
     }
 
     public void onStep() {
-        region.onStep(this, start);
+        if (onStep != null) region.invokeRegionEvent(onStep);
     }
 
     public void onTrigger() {
-        region.invokeRegionEvent(this, onTrigger);
+        if (onTrigger != null) region.invokeRegionEvent(onTrigger);
     }
 
     @Override
@@ -147,4 +148,8 @@ public abstract class Actor extends UpdatedFrame {
     }
 
     public abstract Actor copy();
+
+    public void setOnTrigger(RegionEvent onTrigger) {
+        this.onTrigger = onTrigger;
+    }
 }

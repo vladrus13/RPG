@@ -1,12 +1,13 @@
-package ru.vladrus13.rpg.world.actors;
+package ru.vladrus13.game.actors;
 
+import ru.vladrus13.game.actors.impl.Pirate;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.Direction;
-import ru.vladrus13.rpg.world.actors.impl.Pirate;
+import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.region.Region;
 
 import java.awt.image.BufferedImage;

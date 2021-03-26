@@ -1,10 +1,10 @@
-package ru.vladrus13.rpg.world.actors.impl;
+package ru.vladrus13.game.actors.impl;
 
-import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
-import ru.vladrus13.rpg.basic.direction.DirectionService;
+import ru.vladrus13.jgraphic.bean.Point;
+import ru.vladrus13.rpg.basic.direction.Direction;
+import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.region.Region;
 
@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 public class Hero extends Actor {
     public Hero(Point start, Region region) {
         super("hero", start, "hero", region);
+        this.onStep = new RegionEventOnStep(this);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Hero extends Actor {
                 makeMove(Direction.DOWN);
                 break;
             case KeyEvent.VK_ENTER:
-                region.onActivate(this, DirectionService.step(start, lastDirection));
+                region.onActivate(this, start);
             default:
                 break;
         }

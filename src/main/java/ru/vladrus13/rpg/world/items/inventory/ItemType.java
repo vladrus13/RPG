@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author vladrus13 on 25.03.2021
  **/
 public class ItemType {
-    public Item item;
+    public final Item item;
     public int count;
 
     public ItemType(Item item, int count) {

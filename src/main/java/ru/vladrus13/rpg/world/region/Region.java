@@ -1,18 +1,20 @@
 package ru.vladrus13.rpg.world.region;
 
+import ru.vladrus13.game.actors.impl.Hero;
+import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
-import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
+import ru.vladrus13.jgraphic.bean.Point;
+import ru.vladrus13.jgraphic.property.MainProperty;
+import ru.vladrus13.rpg.basic.direction.DirectionService;
+import ru.vladrus13.rpg.basic.event.region.RegionEvent;
+import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
-import ru.vladrus13.rpg.world.actors.impl.Hero;
 import ru.vladrus13.rpg.world.components.Tile;
-import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.rpg.world.items.RegionItem;
 
 import java.awt.event.KeyEvent;
@@ -22,13 +24,15 @@ import java.util.Collection;
 
 public class Region extends UpdatedFrame {
 
+    protected final int id;
     private ArrayList<ArrayList<Tile>> tiles;
     private Hero hero;
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final World world;
 
-    public Region(String name, World parent) {
+    public Region(int id, String name, World parent) {
         super(name, parent.getStart(), parent.getSize(), parent);
+        this.id = id;
         this.world = parent;
         recalculateChildes();
     }
@@ -112,7 +116,8 @@ public class Region extends UpdatedFrame {
         return tiles.get((int) a.x).get((int) a.y).isWalkable();
     }
 
-    public void onStep(Actor actor, Point a) {
+    public void onStep(Actor actor) {
+        Point a = actor.getStart();
         Event event = tiles.get((int) (a.x / tileSize)).get((int) (a.y / tileSize)).onStep();
         if (event != null) {
             if (event instanceof WorldEvent) {
@@ -123,12 +128,19 @@ public class Region extends UpdatedFrame {
 
     public void onActivate(Actor actor, Point a) {
         Tile tile = tiles.get((int) (a.x / tileSize)).get((int) (a.y / tileSize));
+        Point nextPoint = DirectionService.step(actor.getStart(), actor.lastDirection);
+        Tile nextTile = tiles.get((int) (nextPoint.x / tileSize)).get((int) (nextPoint.y / tileSize));
         if (tile.regionItem != null) {
             actor.inventory.addItem(tile.regionItem.item);
             tile.regionItem = null;
         } else {
-            if (tile.actor != null) {
-                tile.actor.onTrigger();
+            if (nextTile.regionItem != null) {
+                actor.inventory.addItem(nextTile.regionItem.item);
+                nextTile.regionItem = null;
+            } else {
+                if (nextTile.actor != null) {
+                    nextTile.actor.onTrigger();
+                }
             }
         }
     }
@@ -141,7 +153,9 @@ public class Region extends UpdatedFrame {
         return world;
     }
 
-    public void invokeRegionEvent(Actor actor, RegionEvent regionEvent) {
-        // TODO
+    public void invokeRegionEvent(RegionEvent regionEvent) {
+        if (regionEvent instanceof RegionEventOnStep) {
+            onStep(((RegionEventOnStep) regionEvent).actor);
+        }
     }
 }

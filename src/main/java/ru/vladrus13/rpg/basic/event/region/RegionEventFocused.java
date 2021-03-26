@@ -3,13 +3,11 @@ package ru.vladrus13.rpg.basic.event.region;
 import ru.vladrus13.jgraphic.basic.Frame;
 
 public class RegionEventFocused extends RegionEvent {
-    private final Frame focused;
+    public final Frame focused;
+    public final boolean isNew;
 
-    public RegionEventFocused(Frame focused) {
+    public RegionEventFocused(Frame focused, boolean isNew) {
         this.focused = focused;
-    }
-
-    public Frame getFocused() {
-        return focused;
+        this.isNew = isNew;
     }
 }

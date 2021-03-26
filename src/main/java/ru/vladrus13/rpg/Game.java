@@ -1,15 +1,15 @@
 package ru.vladrus13.rpg;
 
+import ru.vladrus13.graphic.PCGraphicsAWTImpl;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
+import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
+import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.services.AppService;
 import ru.vladrus13.jgraphic.utils.Writer;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
 import ru.vladrus13.rpg.menu.Menu;
 import ru.vladrus13.rpg.world.World;
-import ru.vladrus13.graphic.PCGraphicsAWTImpl;
 
 import javax.swing.*;
 import java.awt.*;

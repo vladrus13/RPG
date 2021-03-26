@@ -2,12 +2,11 @@ package ru.vladrus13.rpg.world.components;
 
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
-import ru.vladrus13.jgraphic.basic.components.Image;
+import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
-import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.items.RegionItem;
@@ -38,12 +37,11 @@ public class Tile extends Frame {
     }
 
     public boolean isWalkable() {
-        return isWalkable && actor == null && regionItem == null;
+        return isWalkable && actor == null;
     }
 
-    public Tile setOnStep(Event event) {
+    public void setOnStep(Event event) {
         this.onStep = event;
-        return this;
     }
 
     public Event onStep() {
