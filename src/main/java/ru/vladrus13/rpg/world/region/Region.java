@@ -2,14 +2,18 @@ package ru.vladrus13.rpg.world.region;
 
 import ru.vladrus13.game.actors.impl.Hero;
 import ru.vladrus13.graphic.Graphics;
+import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
 import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
 import ru.vladrus13.jgraphic.bean.Point;
+import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
+import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
+import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.world.World;
@@ -49,6 +53,9 @@ public class Region extends UpdatedFrame {
         if (hero != null) {
             hero.draw(graphics);
         }
+        for (Frame frame : childes) {
+            frame.draw(graphics);
+        }
     }
 
     @Override
@@ -62,6 +69,9 @@ public class Region extends UpdatedFrame {
         }
         if (hero != null) {
             hero.recalculate();
+        }
+        for (Frame frame : childes) {
+            frame.recalculate();
         }
     }
 
@@ -156,6 +166,18 @@ public class Region extends UpdatedFrame {
     public void invokeRegionEvent(RegionEvent regionEvent) {
         if (regionEvent instanceof RegionEventOnStep) {
             onStep(((RegionEventOnStep) regionEvent).actor);
+        }
+        if (regionEvent instanceof RegionEventFocused) {
+            if (((RegionEventFocused) regionEvent).isRemove) {
+                try {
+                    removeFocused(((RegionEventFocused) regionEvent).focused);
+                } catch (GameException e) {
+                    Writer.printStackTrace(logger, e);
+                }
+            } else {
+                addChild(((RegionEventFocused) regionEvent).focused);
+                addFocused(((RegionEventFocused) regionEvent).focused);
+            }
         }
     }
 }

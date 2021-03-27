@@ -64,7 +64,9 @@ public class World extends UpdatedFrame {
     public void invokeWorldEvent(WorldEvent event) {
         if (event instanceof WorldEventTeleport) {
             try {
+                removeFocused(region);
                 region = RegionFactory.getRegion(((WorldEventTeleport) event).getId(), this);
+                addFocused(region);
                 region.setHero(hero);
                 hero.teleport(region, ((WorldEventTeleport) event).getPoint(), ((WorldEventTeleport) event).getDirection());
             } catch (GameException e) {
