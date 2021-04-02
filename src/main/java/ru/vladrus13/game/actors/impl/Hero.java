@@ -1,7 +1,7 @@
 package ru.vladrus13.game.actors.impl;
 
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
+import ru.vladrus13.jgraphic.basic.event.Event;
+import ru.vladrus13.jgraphic.basic.event.returned.IntEvent;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
@@ -18,7 +18,7 @@ public class Hero extends Actor {
     }
 
     @Override
-    public ReturnEvent keyPressed(KeyEvent e) {
+    public Event keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 makeMove(Direction.UP);
@@ -37,11 +37,11 @@ public class Hero extends Actor {
             default:
                 break;
         }
-        return new ReturnInt(ReturnInt.NOTHING);
+        return new IntEvent(IntEvent.NOTHING);
     }
 
     @Override
-    public ReturnEvent mousePressed(MouseEvent e) {
+    public Event mousePressed(MouseEvent e) {
         return null;
     }
 

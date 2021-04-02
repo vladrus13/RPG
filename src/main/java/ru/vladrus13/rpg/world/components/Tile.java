@@ -3,7 +3,6 @@ package ru.vladrus13.rpg.world.components;
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
@@ -60,12 +59,12 @@ public class Tile extends Frame {
     }
 
     @Override
-    public ReturnEvent keyPressed(KeyEvent e) {
+    public Event keyPressed(KeyEvent e) {
         return null;
     }
 
     @Override
-    public ReturnEvent mousePressed(MouseEvent e) {
+    public Event mousePressed(MouseEvent e) {
         return null;
     }
 }

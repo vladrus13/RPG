@@ -3,8 +3,8 @@ package ru.vladrus13.rpg;
 import ru.vladrus13.graphic.PCGraphicsAWTImpl;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
+import ru.vladrus13.jgraphic.basic.event.Event;
+import ru.vladrus13.jgraphic.basic.event.returned.IntEvent;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.services.AppService;
 import ru.vladrus13.jgraphic.utils.Writer;
@@ -92,17 +92,17 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
     @Override
     public void keyPressed(KeyEvent e) {
-        ReturnEvent event = current.keyPressed(e);
-        if (event instanceof ReturnInt) {
-            int code = ((ReturnInt) event).getEvent();
+        Event event = current.keyPressed(e);
+        if (event instanceof IntEvent) {
+            int code = ((IntEvent) event).getEvent();
             switch (code) {
-                case ReturnInt.TO_WORLD:
+                case IntEvent.TO_WORLD:
                     current = new World(frame.getWidth(), frame.getHeight());
                     break;
-                case ReturnInt.TO_MENU:
+                case IntEvent.TO_MENU:
                     current = new Menu(frame.getWidth(), frame.getHeight());
                     break;
-                case ReturnInt.END_GAME:
+                case IntEvent.END_GAME:
                     isInterrupted = true;
                     current = null;
                     System.exit(0);

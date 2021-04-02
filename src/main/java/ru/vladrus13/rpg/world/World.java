@@ -4,7 +4,7 @@ import ru.vladrus13.game.actors.impl.Hero;
 import ru.vladrus13.game.regions.RegionFactory;
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
+import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
@@ -47,12 +47,12 @@ public class World extends UpdatedFrame {
     }
 
     @Override
-    public ReturnEvent keyPressed(KeyEvent e) {
+    public Event keyPressed(KeyEvent e) {
         return focused.getFirst().keyPressed(e);
     }
 
     @Override
-    public ReturnEvent mousePressed(MouseEvent e) {
+    public Event mousePressed(MouseEvent e) {
         return focused.getFirst().mousePressed(e);
     }
 

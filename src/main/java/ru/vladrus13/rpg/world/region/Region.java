@@ -5,8 +5,7 @@ import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
+import ru.vladrus13.jgraphic.basic.event.returned.IntEvent;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
@@ -76,15 +75,20 @@ public class Region extends UpdatedFrame {
     }
 
     @Override
-    public ReturnEvent keyPressed(KeyEvent e) {
+    public Event keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            return new ReturnInt(ReturnInt.TO_MENU);
+            return new IntEvent(IntEvent.TO_MENU);
         }
-        return focused.getFirst().keyPressed(e);
+        Event event = focused.getFirst().keyPressed(e);
+        if (event instanceof RegionEvent) {
+            this.invokeRegionEvent((RegionEvent) event);
+            return null;
+        }
+        return event;
     }
 
     @Override
-    public ReturnEvent mousePressed(MouseEvent e) {
+    public Event mousePressed(MouseEvent e) {
         return focused.getFirst().mousePressed(e);
     }
 
@@ -170,12 +174,21 @@ public class Region extends UpdatedFrame {
         if (regionEvent instanceof RegionEventFocused) {
             if (((RegionEventFocused) regionEvent).isRemove) {
                 try {
-                    removeFocused(((RegionEventFocused) regionEvent).focused);
+                    if (((RegionEventFocused) regionEvent).focused == null) {
+                        removeFocused();
+                    } else {
+                        removeFocused(((RegionEventFocused) regionEvent).focused);
+                    }
+                    if (((RegionEventFocused) regionEvent).drawing) {
+                        removeChild(((RegionEventFocused) regionEvent).focused);
+                    }
                 } catch (GameException e) {
                     Writer.printStackTrace(logger, e);
                 }
             } else {
-                addChild(((RegionEventFocused) regionEvent).focused);
+                if (((RegionEventFocused) regionEvent).drawing) {
+                    addChild(((RegionEventFocused) regionEvent).focused);
+                }
                 addFocused(((RegionEventFocused) regionEvent).focused);
             }
         }

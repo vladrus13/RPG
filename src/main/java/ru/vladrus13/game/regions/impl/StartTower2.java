@@ -6,8 +6,8 @@ import ru.vladrus13.game.regions.RegionFactory;
 import ru.vladrus13.jgraphic.basic.components.Choose;
 import ru.vladrus13.jgraphic.basic.components.Filler;
 import ru.vladrus13.jgraphic.basic.components.Text;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnEvent;
-import ru.vladrus13.jgraphic.basic.event.returned.ReturnInt;
+import ru.vladrus13.jgraphic.basic.event.Event;
+import ru.vladrus13.jgraphic.basic.event.returned.IntEvent;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
@@ -41,8 +41,8 @@ public class StartTower2 {
                 new Filler[]{new Filler(Color.WHITE), new Filler(Color.WHITE), new Filler(Color.WHITE)},
                 new Filler[]{new Filler(Color.LIGHT_GRAY), new Filler(Color.LIGHT_GRAY), new Filler(Color.LIGHT_GRAY)},
                 new String[]{"Hello", "Shop", "Bye"}, "Inventory", new Size(400, 0, CoordinatesType.RATIO), Color.BLACK,
-                Text.TextAlign.CENTER, new ReturnEvent[]{new ReturnInt(ReturnInt.NOTHING), new ReturnInt(ReturnInt.NOTHING), new ReturnInt(ReturnInt.NOTHING)},
-                new ReturnEvent[]{new ReturnInt(ReturnInt.NOTHING), new ReturnInt(ReturnInt.NOTHING), new ReturnInt(ReturnInt.NOTHING)}
+                Text.TextAlign.CENTER, new Event[]{new IntEvent(IntEvent.NOTHING), new IntEvent(IntEvent.NOTHING), new IntEvent(IntEvent.NOTHING)},
+                new Event[]{new IntEvent(IntEvent.NOTHING), new IntEvent(IntEvent.NOTHING), new IntEvent(IntEvent.NOTHING)}
         );
         pirate.setOnTrigger(new RegionEventFocused(pirateChoose, true, false));
         region.setActors(new ArrayList<>(Collections.singletonList(pirate)));
