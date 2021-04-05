@@ -7,8 +7,6 @@ import ru.vladrus13.jgraphic.basic.components.Background;
 import ru.vladrus13.jgraphic.basic.components.Choose;
 import ru.vladrus13.jgraphic.basic.components.Filler;
 import ru.vladrus13.jgraphic.basic.components.Text;
-import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.basic.event.returned.IntEvent;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;

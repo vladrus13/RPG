@@ -4,7 +4,7 @@ import ru.vladrus13.graphic.PCGraphicsAWTImpl;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.basic.event.returned.IntEvent;
+import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.services.AppService;
 import ru.vladrus13.jgraphic.utils.Writer;
@@ -121,7 +121,6 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
     @Override
     public void mousePressed(MouseEvent e) {
         current.mousePressed(e);
-        repaint();
     }
 
     @Override

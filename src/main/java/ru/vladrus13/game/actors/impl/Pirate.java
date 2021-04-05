@@ -1,7 +1,7 @@
 package ru.vladrus13.game.actors.impl;
 
 import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.basic.event.returned.IntEvent;
+import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.region.Region;

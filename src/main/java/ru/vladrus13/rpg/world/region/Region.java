@@ -5,7 +5,7 @@ import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.basic.event.returned.IntEvent;
+import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
