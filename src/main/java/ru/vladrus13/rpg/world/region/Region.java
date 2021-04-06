@@ -86,7 +86,9 @@ public class Region extends UpdatedFrame {
     public void callEvent(Event event) {
         if (event instanceof RegionEvent) {
             this.invokeRegionEvent((RegionEvent) event);
+            return;
         }
+        parent.callEvent(event);
     }
 
     @Override

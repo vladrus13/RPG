@@ -7,6 +7,9 @@ import ru.vladrus13.jgraphic.basic.components.Background;
 import ru.vladrus13.jgraphic.basic.components.Choose;
 import ru.vladrus13.jgraphic.basic.components.Filler;
 import ru.vladrus13.jgraphic.basic.components.Text;
+import ru.vladrus13.jgraphic.basic.event.Event;
+import ru.vladrus13.jgraphic.basic.event.impl.ChooseEvent;
+import ru.vladrus13.jgraphic.basic.event.impl.CollectionEvent;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
@@ -47,9 +50,12 @@ public class StartTower2 {
                 .setColor(Color.BLACK)
                 .setFontSize(new Size(300, 0, CoordinatesType.RATIO))
                 .setTextAlign(Text.TextAlign.CENTER);
+        CollectionEvent byeEvent = new CollectionEvent();
+        byeEvent.add(new ChooseEvent(ChooseEvent.END_CHOOSE));
         pirateChoose = Choose.getInstance("pirateChoose", 3, new Point(100, 100, CoordinatesType.RATIO),
                 new Size(800, 800, CoordinatesType.RATIO), region, new Size(800, 100, CoordinatesType.RATIO),
-                new String[]{"Hello", "Shop", "Bye"}, buttonFactory, textFactory);
+                new String[]{"Hello", "Shop", "Bye"}, new Event[]{null, null, byeEvent}, new Event[]{null, null, null}, buttonFactory, textFactory);
+
         pirate.setOnTrigger(new RegionEventFocused(pirateChoose, true, false));
         region.setActors(new ArrayList<>(Collections.singletonList(pirate)));
     }

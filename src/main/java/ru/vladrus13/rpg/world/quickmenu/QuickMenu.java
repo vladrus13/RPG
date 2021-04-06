@@ -39,7 +39,7 @@ public class QuickMenu extends Frame {
             Size buttonSize = new Size(500, 100, CoordinatesType.RATIO);
             choose1 = Choose.getInstance("quick", 2, new Point(100, 100, CoordinatesType.RATIO),
                     new Size(500, 500, CoordinatesType.RATIO), this, buttonSize.copy(),
-                    new String[]{"Game", "Exit"}, buttonFactory, textFactory);
+                    new String[]{"Game", "Exit"}, new Event[]{null, null}, new Event[]{null, null}, buttonFactory, textFactory);
         } catch (GameException e) {
             e.printStackTrace();
             choose1 = null;
@@ -58,7 +58,7 @@ public class QuickMenu extends Frame {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        ;
+
     }
 
     @Override

@@ -10,7 +10,6 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
-import ru.vladrus13.jgraphic.services.AppService;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
