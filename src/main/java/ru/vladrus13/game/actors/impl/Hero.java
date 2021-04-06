@@ -18,7 +18,7 @@ public class Hero extends Actor {
     }
 
     @Override
-    public Event keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 makeMove(Direction.UP);
@@ -37,12 +37,11 @@ public class Hero extends Actor {
             default:
                 break;
         }
-        return new IntEvent(IntEvent.NOTHING);
     }
 
     @Override
-    public Event mousePressed(MouseEvent e) {
-        return null;
+    public void mousePressed(MouseEvent e) {
+
     }
 
     @Override

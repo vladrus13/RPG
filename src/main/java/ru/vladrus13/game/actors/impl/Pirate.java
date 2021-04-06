@@ -1,7 +1,5 @@
 package ru.vladrus13.game.actors.impl;
 
-import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.region.Region;
@@ -15,13 +13,13 @@ public class Pirate extends Actor {
     }
 
     @Override
-    public Event keyPressed(KeyEvent e) {
-        return new IntEvent(IntEvent.NOTHING);
+    public void keyPressed(KeyEvent e) {
+
     }
 
     @Override
-    public Event mousePressed(MouseEvent e) {
-        return new IntEvent(IntEvent.NOTHING);
+    public void mousePressed(MouseEvent e) {
+
     }
 
     @Override

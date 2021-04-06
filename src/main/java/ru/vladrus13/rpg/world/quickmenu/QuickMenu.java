@@ -20,8 +20,9 @@ import java.awt.event.MouseEvent;
 
 public class QuickMenu extends Frame {
 
-    private final Size buttonSize = new Size(500, 100, CoordinatesType.RATIO);
     private final Choose choose;
+    private final Background background = new Background("back", new Point(0, 0, CoordinatesType.RATIO),
+            new Size(1000, 1000, CoordinatesType.RATIO), new Filler(Color.BLUE), this);
 
     public QuickMenu(String name, Frame parent) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
@@ -35,6 +36,7 @@ public class QuickMenu extends Frame {
                 .setNameFont("PixelFontGame")
                 .setColor(Color.BLACK);
         try {
+            Size buttonSize = new Size(500, 100, CoordinatesType.RATIO);
             choose1 = Choose.getInstance("quick", 2, new Point(100, 100, CoordinatesType.RATIO),
                     new Size(500, 500, CoordinatesType.RATIO), this, buttonSize.copy(),
                     new String[]{"Game", "Exit"}, buttonFactory, textFactory);
@@ -43,20 +45,24 @@ public class QuickMenu extends Frame {
             choose1 = null;
         }
         choose = choose1;
+        addChild(background);
+        addChild(choose);
     }
 
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
-
+        for (Frame child : childes) {
+            child.draw(graphics);
+        }
     }
 
     @Override
-    public Event keyPressed(KeyEvent keyEvent) {
-        return null;
+    public void keyPressed(KeyEvent keyEvent) {
+        ;
     }
 
     @Override
-    public Event mousePressed(MouseEvent mouseEvent) {
-        return null;
+    public void mousePressed(MouseEvent mouseEvent) {
+
     }
 }

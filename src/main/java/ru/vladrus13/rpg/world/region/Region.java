@@ -75,21 +75,23 @@ public class Region extends UpdatedFrame {
     }
 
     @Override
-    public Event keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            return new IntEvent(IntEvent.TO_MENU);
+            parent.callEvent(new IntEvent(IntEvent.TO_MENU));
         }
-        Event event = focused.getFirst().keyPressed(e);
-        if (event instanceof RegionEvent) {
-            this.invokeRegionEvent((RegionEvent) event);
-            return null;
-        }
-        return event;
+        focused.getFirst().keyPressed(e);
     }
 
     @Override
-    public Event mousePressed(MouseEvent e) {
-        return focused.getFirst().mousePressed(e);
+    public void callEvent(Event event) {
+        if (event instanceof RegionEvent) {
+            this.invokeRegionEvent((RegionEvent) event);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        focused.getFirst().mousePressed(e);
     }
 
     @Override

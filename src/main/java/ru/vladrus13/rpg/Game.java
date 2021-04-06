@@ -32,7 +32,7 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
         frame.setSize(width, height);
         frame.setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        current = new Menu(frame.getWidth(), frame.getHeight());
+        current = new Menu(frame.getWidth(), frame.getHeight(), this);
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -92,15 +92,18 @@ public class Game extends JPanel implements ActionListener, MouseListener, KeyLi
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Event event = current.keyPressed(e);
+        current.keyPressed(e);
+    }
+
+    public void callEvent(Event event) {
         if (event instanceof IntEvent) {
             int code = ((IntEvent) event).getEvent();
             switch (code) {
                 case IntEvent.TO_WORLD:
-                    current = new World(frame.getWidth(), frame.getHeight());
+                    current = new World(frame.getWidth(), frame.getHeight(), this);
                     break;
                 case IntEvent.TO_MENU:
-                    current = new Menu(frame.getWidth(), frame.getHeight());
+                    current = new Menu(frame.getWidth(), frame.getHeight(), this);
                     break;
                 case IntEvent.END_GAME:
                     isInterrupted = true;

@@ -12,6 +12,7 @@ import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.utils.Writer;
+import ru.vladrus13.rpg.Game;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -24,9 +25,11 @@ public class Menu extends Frame {
     private final ResourceBundle resourceBundle = ResourceBundle.getBundle("internationalization.menu", MainProperty.getLocale());
     private final Logger logger = Logger.getLogger(Menu.class.getName());
     private final Choose choose;
+    private final Game game;
 
-    public Menu(int width, int height) {
+    public Menu(int width, int height, Game game) {
         super("menu", new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), null);
+        this.game = game;
         Point startStart = new Point(10, 10, CoordinatesType.RATIO);
         Size startSize = new Size(980, 480, CoordinatesType.RATIO);
         choose = new Choose("menuChoose", new Point(250, 250, CoordinatesType.RATIO), new Size(500, 500, CoordinatesType.RATIO), this);
@@ -57,12 +60,17 @@ public class Menu extends Frame {
     }
 
     @Override
-    public Event keyPressed(KeyEvent e) {
-        return focused.getFirst().keyPressed(e);
+    public void keyPressed(KeyEvent e) {
+        focused.getFirst().keyPressed(e);
     }
 
     @Override
-    public Event mousePressed(MouseEvent e) {
-        return focused.getFirst().mousePressed(e);
+    public void mousePressed(MouseEvent e) {
+        focused.getFirst().mousePressed(e);
+    }
+
+    @Override
+    public void callEvent(Event event) {
+        game.callEvent(event);
     }
 }

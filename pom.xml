@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.github.vladrus13</groupId>
             <artifactId>JGraphic</artifactId>
-            <version>ae4ed89fd8</version>
+            <version>2e4d9735be</version>
         </dependency>
     </dependencies>
 

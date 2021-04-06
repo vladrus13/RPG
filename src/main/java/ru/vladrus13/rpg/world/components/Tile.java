@@ -59,12 +59,10 @@ public class Tile extends Frame {
     }
 
     @Override
-    public Event keyPressed(KeyEvent e) {
-        return null;
-    }
+    public void keyPressed(KeyEvent e) { }
 
     @Override
-    public Event mousePressed(MouseEvent e) {
-        return null;
+    public void mousePressed(MouseEvent e) {
+
     }
 }

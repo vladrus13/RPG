@@ -10,7 +10,9 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
+import ru.vladrus13.jgraphic.services.AppService;
 import ru.vladrus13.jgraphic.utils.Writer;
+import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.world.region.Region;
@@ -25,14 +27,16 @@ public class World extends UpdatedFrame {
     private Region region;
     private final Hero hero;
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
+    private final Game game;
 
-    public World(int width, int height) {
+    public World(int width, int height, Game game) {
         super("world", new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), null);
         try {
             region = RegionFactory.getRegion(1, this);
         } catch (GameException e) {
             Writer.printStackTrace(logger, e);
         }
+        this.game = game;
         hero = new Hero(new Point(tileSize, tileSize, CoordinatesType.REAL), region);
         region.setHero(hero);
         addFocused(region);
@@ -47,13 +51,18 @@ public class World extends UpdatedFrame {
     }
 
     @Override
-    public Event keyPressed(KeyEvent e) {
-        return focused.getFirst().keyPressed(e);
+    public void keyPressed(KeyEvent e) {
+        focused.getFirst().keyPressed(e);
     }
 
     @Override
-    public Event mousePressed(MouseEvent e) {
-        return focused.getFirst().mousePressed(e);
+    public void mousePressed(MouseEvent e) {
+        focused.getFirst().mousePressed(e);
+    }
+
+    @Override
+    public void callEvent(Event event) {
+        game.callEvent(event);
     }
 
     @Override

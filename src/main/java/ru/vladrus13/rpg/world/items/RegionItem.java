@@ -45,12 +45,12 @@ public class RegionItem extends Frame {
     }
 
     @Override
-    public Event keyPressed(KeyEvent e) {
-        return new IntEvent(IntEvent.NOTHING);
+    public void keyPressed(KeyEvent e) {
+
     }
 
     @Override
-    public Event mousePressed(MouseEvent e) {
-        return new IntEvent(IntEvent.NOTHING);
+    public void mousePressed(MouseEvent e) {
+
     }
 }
