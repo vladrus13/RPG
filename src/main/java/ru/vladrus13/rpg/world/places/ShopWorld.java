@@ -27,6 +27,9 @@ import java.util.stream.Collectors;
 public class ShopWorld extends Frame {
     public final Shop shop;
     public final Choose choose;
+    public final Background background = new Background("blue",
+            new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO),
+            new Filler(new Color(0, 0, 255, 127)), this);
 
     Function<ItemType, String> fromItemType =
             itemType -> (itemType.count == 1 ? "" : itemType.count + " ") + itemType.item.name;
@@ -67,7 +70,9 @@ public class ShopWorld extends Frame {
 
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
+        background.draw(graphics);
         choose.draw(graphics);
+        Barter current = shop.barters.get(choose.current);
 
     }
 
