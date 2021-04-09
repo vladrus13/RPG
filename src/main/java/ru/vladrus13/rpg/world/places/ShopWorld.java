@@ -64,15 +64,15 @@ public class ShopWorld extends Frame {
                 .setBackground(new Background("back",
                         new Point(0, 0, CoordinatesType.RATIO),
                         new Size(1000, 1000, CoordinatesType.RATIO),
-                        new Filler(new Color(0, 0, 0, 255)), null))
+                        new Filler(new Color(0, 0, 0, 5)), null))
                 .setChooseBackground(new Background("backChoose",
                         new Point(0, 0, CoordinatesType.RATIO),
                         new Size(1000, 1000, CoordinatesType.RATIO),
-                        new Filler(new Color(0, 0, 0, 250)), null));
+                        new Filler(new Color(0, 0, 0, 25)), null));
         TextFactory textFactory = new TextFactory()
                 .setColor(Color.BLACK)
                 .setTextAlign(Text.TextAlign.LEFT)
-                .setFontSize(new Size(800, 0, CoordinatesType.RATIO))
+                .setFontSize(new Size(32, 0, CoordinatesType.REAL))
                 .setNameFont("PixelFontGame");
         Event[] eventsKey = new Event[shop.barters.size()];
         eventsKey = shop.barters.stream()
@@ -159,7 +159,7 @@ public class ShopWorld extends Frame {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-
+        int keycode = keyEvent.getKeyCode();
     }
 
     @Override
