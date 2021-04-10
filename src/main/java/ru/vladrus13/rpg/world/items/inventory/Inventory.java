@@ -25,4 +25,21 @@ public class Inventory {
             }
         }
     }
+
+    public void addItem(ItemType itemType) {
+        for (ItemType itemTypeI : items) {
+            if (itemTypeI.item.equals(itemType.item)) {
+                itemTypeI.count += itemType.count;
+            }
+        }
+    }
+
+    public ItemType find(Item item) {
+        for (ItemType itemType : items) {
+            if (itemType.item.equals(item)) {
+                return itemType;
+            }
+        }
+        return null;
+    }
 }

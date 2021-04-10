@@ -25,7 +25,6 @@ public class World extends UpdatedFrame {
     private final static Logger logger = Logger.getLogger(World.class.getName());
     private Region region;
     private final Hero hero;
-    private final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final Game game;
 
     public World(int width, int height, Game game) {
@@ -36,6 +35,7 @@ public class World extends UpdatedFrame {
             Writer.printStackTrace(logger, e);
         }
         this.game = game;
+        int tileSize = MainProperty.getInteger("world.region.tileSize");
         hero = new Hero(new Point(tileSize, tileSize, CoordinatesType.REAL), region);
         region.setHero(hero);
         addFocused(region);
@@ -73,7 +73,9 @@ public class World extends UpdatedFrame {
         if (event instanceof WorldEventTeleport) {
             try {
                 removeFocused(region);
+                removeChild(region);
                 region = RegionFactory.getRegion(((WorldEventTeleport) event).getId(), this);
+                addChild(region);
                 addFocused(region);
                 region.setHero(hero);
                 hero.teleport(region, ((WorldEventTeleport) event).getPoint(), ((WorldEventTeleport) event).getDirection());

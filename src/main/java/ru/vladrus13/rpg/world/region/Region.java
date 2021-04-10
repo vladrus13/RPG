@@ -6,7 +6,9 @@ import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
+import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
+import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.utils.Writer;
@@ -29,12 +31,12 @@ public class Region extends UpdatedFrame {
 
     protected final int id;
     private ArrayList<ArrayList<Tile>> tiles;
-    private Hero hero;
+    public Hero hero;
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final World world;
 
     public Region(int id, String name, World parent) {
-        super(name, parent.getStart(), parent.getSize(), parent);
+        super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
         this.id = id;
         this.world = parent;
         recalculateChildes();

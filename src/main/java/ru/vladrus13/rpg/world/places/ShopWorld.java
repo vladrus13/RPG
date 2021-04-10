@@ -12,8 +12,10 @@ import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 import ru.vladrus13.rpg.basic.event.ShopEvent;
+import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.items.Item;
 import ru.vladrus13.rpg.world.items.inventory.ItemType;
+import ru.vladrus13.rpg.world.region.Region;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -28,10 +30,11 @@ public class ShopWorld extends Frame {
     public Choose choose;
     public final Background background = new Background("blue",
             new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO),
-            new Filler(new Color(0, 0, 255, 127)), this);
+            new Filler(new Color(0, 0, 255, 225)), this);
     public EmptyFrame barterIn;
     public EmptyFrame barterOut;
     public EmptyFrame out;
+    public Region region;
 
     Function<ItemType, String> fromItemType =
             itemType -> (itemType.count == 1 ? "" : itemType.count + " ") + itemType.item.name;
@@ -39,9 +42,10 @@ public class ShopWorld extends Frame {
     Function<Collection<ItemType>, String> fromCollectionItemTypes =
             itemTypes -> itemTypes.stream().map(fromItemType).collect(Collectors.joining(", "));
 
-    public ShopWorld(String name, Frame parent, Shop shop) {
+    public ShopWorld(String name, Region parent, Shop shop) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
         this.shop = shop;
+        this.region = parent;
         reShop(null);
         addChild(choose);
         addChild(background);
@@ -84,7 +88,7 @@ public class ShopWorld extends Frame {
         String[] names = new String[shop.barters.size()];
         names = shop.barters.stream()
                 .filter(barter -> barter.count > 0)
-                .map(barter -> fromCollectionItemTypes.apply(barter.from))
+                .map(barter -> barter.count + " " + fromCollectionItemTypes.apply(barter.from))
                 .collect(Collectors.toCollection(ArrayList::new))
                 .toArray(names);
         Choose choose1;
@@ -117,16 +121,15 @@ public class ShopWorld extends Frame {
             try {
                 Text name = textFactory.getInstance("name", item.name, out);
                 Text description = textFactory.getInstance("desc", item.description, out);
-                name.setFrame(new Size(300, 100, CoordinatesType.RATIO),
+                name.setFrame(new Size( 900, 100, CoordinatesType.RATIO),
                         new Point(50, 50, CoordinatesType.RATIO));
-                description.setFrame(new Size(600, 800, CoordinatesType.RATIO),
-                        new Point(360, 160, CoordinatesType.RATIO));
+                description.setFrame(new Size(900, 800, CoordinatesType.RATIO),
+                        new Point(50, 160, CoordinatesType.RATIO));
                 out.addChild(name);
                 out.addChild(description);
             } catch (GameException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -135,10 +138,10 @@ public class ShopWorld extends Frame {
         for (int i = 0; i < items.size(); i++) {
             ItemType itemType = items.get(i);
             try {
-                Text text = textFactory.getInstance("b", fromItemType.apply(itemType), emptyFrame);
+                Text text = textFactory.getInstance("button" + i, fromItemType.apply(itemType), emptyFrame);
                 text.setFrame(
-                        new Size(350, distribution[1] - distribution[0], CoordinatesType.RATIO),
-                        new Point(600, distribution[i], CoordinatesType.RATIO));
+                        new Size(900, distribution[1] - distribution[0], CoordinatesType.RATIO),
+                        new Point(50, distribution[i], CoordinatesType.RATIO));
                 emptyFrame.addChild(text);
             } catch (GameException e) {
                 e.printStackTrace();
@@ -159,7 +162,40 @@ public class ShopWorld extends Frame {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        int keycode = keyEvent.getKeyCode();
+        int keyCode = keyEvent.getKeyCode();
+        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_ENTER) {
+            choose.keyPressed(keyEvent);
+        }
+    }
+
+    @Override
+    public void callEvent(Event event) {
+        if (event instanceof ShopEvent) {
+            Barter barter = ((ShopEvent) event).barter;
+            if (barter.count > 0) {
+                for (ItemType itemType : barter.from) {
+                    ItemType founded = region.hero.inventory.find(itemType.item);
+                    if (founded == null || founded.count < itemType.count) {
+                        return;
+                    }
+                }
+                for (ItemType itemType : barter.from) {
+                    ItemType founded = region.hero.inventory.find(itemType.item);
+                    if (founded == null || founded.count < itemType.count) {
+                        return;
+                    }
+                }
+                for (ItemType itemType : barter.from) {
+                    region.hero.inventory.find(itemType.item).count -= itemType.count;
+                }
+                for (ItemType itemType : barter.to) {
+                    region.hero.inventory.addItem(itemType);
+                }
+                barter.count--;
+            }
+            return;
+        }
+        super.callEvent(event);
     }
 
     @Override
