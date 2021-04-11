@@ -20,7 +20,6 @@ import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.components.Tile;
-import ru.vladrus13.rpg.world.items.RegionItem;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -78,9 +77,6 @@ public class Region extends UpdatedFrame {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            parent.callEvent(new IntEvent(IntEvent.TO_MENU));
-        }
         focused.getFirst().keyPressed(e);
     }
 
@@ -179,17 +175,15 @@ public class Region extends UpdatedFrame {
         }
         if (regionEvent instanceof RegionEventFocused) {
             if (((RegionEventFocused) regionEvent).isRemove) {
-                try {
-                    if (((RegionEventFocused) regionEvent).focused == null) {
-                        removeFocused();
-                    } else {
-                        removeFocused(((RegionEventFocused) regionEvent).focused);
-                    }
-                    if (((RegionEventFocused) regionEvent).drawing) {
-                        removeChild(((RegionEventFocused) regionEvent).focused);
-                    }
-                } catch (GameException e) {
-                    Writer.printStackTrace(logger, e);
+                if (((RegionEventFocused) regionEvent).focused == null) {
+                    removeFocused();
+                } else {
+                    focused.remove(((RegionEventFocused) regionEvent).focused);
+                    // TODO make focused great again
+                    // removeFocused(((RegionEventFocused) regionEvent).focused);
+                }
+                if (((RegionEventFocused) regionEvent).drawing) {
+                    removeChild(((RegionEventFocused) regionEvent).focused);
                 }
             } else {
                 if (((RegionEventFocused) regionEvent).drawing) {

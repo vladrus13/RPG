@@ -24,16 +24,15 @@ import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.components.Tile;
-import ru.vladrus13.rpg.world.items.RegionItem;
-import ru.vladrus13.rpg.world.items.inventory.ItemType;
+import ru.vladrus13.rpg.world.items.inventory.Items;
 import ru.vladrus13.rpg.world.places.Barter;
 import ru.vladrus13.rpg.world.places.Shop;
-import ru.vladrus13.rpg.world.places.ShopWorld;
 import ru.vladrus13.rpg.world.region.Region;
+import ru.vladrus13.rpg.world.region.RegionItem;
+import ru.vladrus13.rpg.world.region.ShopWorld;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -48,8 +47,8 @@ public class StartTower2 {
         Choose pirateChoose;
         Shop pirateShop = new Shop(new ArrayList<>(Collections.singletonList(
                 new Barter(new ArrayList<>(Collections.singletonList(
-                        new ItemType(Sword.getInstance(), 1))),
-                        new ArrayList<>(Collections.singletonList(new ItemType(Sword.getInstance(), 1))), 5
+                        new Items(Sword.getInstance(), 1))),
+                        new ArrayList<>(Collections.singletonList(new Items(Sword.getInstance(), 1))), 5
                 ))));
         ShopWorld shopWorld = new ShopWorld("pirate", region, pirateShop);
         Size fullSize = new Size(1000, 1000, CoordinatesType.RATIO);
@@ -64,10 +63,12 @@ public class StartTower2 {
                 .setTextAlign(Text.TextAlign.CENTER);
         CollectionEvent byeEvent = new CollectionEvent();
         byeEvent.add(new ChooseEvent(ChooseEvent.END_CHOOSE));
+        CollectionEvent shopEvent = new CollectionEvent();
+        shopEvent.add(new RegionEventFocused(shopWorld, true, false));
         pirateChoose = Choose.getInstance("pirateChoose", 3, new Point(100, 100, CoordinatesType.RATIO),
                 new Size(800, 800, CoordinatesType.RATIO), region, new Size(800, 100, CoordinatesType.RATIO),
                 new String[]{"Hello", "Shop", "Bye"}, new Event[]{null,
-                        new RegionEventFocused(shopWorld, true, false), byeEvent}, new Event[]{null, null, null}, buttonFactory, textFactory);
+                        shopEvent, byeEvent}, new Event[]{null, null, null}, buttonFactory, textFactory);
 
         pirate.setOnTrigger(new RegionEventFocused(pirateChoose, true, false));
         region.setActors(new ArrayList<>(Collections.singletonList(pirate)));

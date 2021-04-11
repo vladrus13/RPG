@@ -1,4 +1,4 @@
-package ru.vladrus13.rpg.world.places;
+package ru.vladrus13.rpg.world.region;
 
 
 import ru.vladrus13.graphic.Graphics;
@@ -12,10 +12,11 @@ import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 import ru.vladrus13.rpg.basic.event.ShopEvent;
-import ru.vladrus13.rpg.world.World;
+import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
 import ru.vladrus13.rpg.world.items.Item;
-import ru.vladrus13.rpg.world.items.inventory.ItemType;
-import ru.vladrus13.rpg.world.region.Region;
+import ru.vladrus13.rpg.world.items.inventory.Items;
+import ru.vladrus13.rpg.world.places.Barter;
+import ru.vladrus13.rpg.world.places.Shop;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -35,11 +36,27 @@ public class ShopWorld extends Frame {
     public EmptyFrame barterOut;
     public EmptyFrame out;
     public Region region;
+    private final TextFactory textFactory = new TextFactory()
+            .setColor(Color.BLACK)
+            .setTextAlign(Text.TextAlign.LEFT)
+            .setFontSize(new Size(32, 0, CoordinatesType.REAL))
+            .setNameFont("PixelFontGame");
 
-    Function<ItemType, String> fromItemType =
+    ButtonFactory buttonFactory = new ButtonFactory()
+            .setBackground(new Background("back",
+                    new Point(0, 0, CoordinatesType.RATIO),
+                    new Size(1000, 1000, CoordinatesType.RATIO),
+                    new Filler(new Color(0, 0, 0, 5)), null))
+            .setChooseBackground(new Background("backChoose",
+                    new Point(0, 0, CoordinatesType.RATIO),
+                    new Size(1000, 1000, CoordinatesType.RATIO),
+                    new Filler(new Color(0, 0, 0, 25)), null));
+
+
+    Function<Items, String> fromItemType =
             itemType -> (itemType.count == 1 ? "" : itemType.count + " ") + itemType.item.name;
 
-    Function<Collection<ItemType>, String> fromCollectionItemTypes =
+    Function<Collection<Items>, String> fromCollectionItemTypes =
             itemTypes -> itemTypes.stream().map(fromItemType).collect(Collectors.joining(", "));
 
     public ShopWorld(String name, Region parent, Shop shop) {
@@ -64,20 +81,6 @@ public class ShopWorld extends Frame {
     }
 
     private void reShop(Integer currentNumber) {
-        ButtonFactory buttonFactory = new ButtonFactory()
-                .setBackground(new Background("back",
-                        new Point(0, 0, CoordinatesType.RATIO),
-                        new Size(1000, 1000, CoordinatesType.RATIO),
-                        new Filler(new Color(0, 0, 0, 5)), null))
-                .setChooseBackground(new Background("backChoose",
-                        new Point(0, 0, CoordinatesType.RATIO),
-                        new Size(1000, 1000, CoordinatesType.RATIO),
-                        new Filler(new Color(0, 0, 0, 25)), null));
-        TextFactory textFactory = new TextFactory()
-                .setColor(Color.BLACK)
-                .setTextAlign(Text.TextAlign.LEFT)
-                .setFontSize(new Size(32, 0, CoordinatesType.REAL))
-                .setNameFont("PixelFontGame");
         Event[] eventsKey = new Event[shop.barters.size()];
         eventsKey = shop.barters.stream()
                 .filter(barter -> barter.count > 0)
@@ -104,6 +107,10 @@ public class ShopWorld extends Frame {
         if (currentNumber != null) {
             choose.current = currentNumber;
         }
+        redrawBarter();
+    }
+
+    private void redrawBarter() {
         barterIn = new EmptyFrame("inB",
                 new Point(600, 50, CoordinatesType.RATIO),
                 new Size(350, 240, CoordinatesType.RATIO), this);
@@ -121,10 +128,10 @@ public class ShopWorld extends Frame {
             try {
                 Text name = textFactory.getInstance("name", item.name, out);
                 Text description = textFactory.getInstance("desc", item.description, out);
-                name.setFrame(new Size( 900, 100, CoordinatesType.RATIO),
-                        new Point(50, 50, CoordinatesType.RATIO));
-                description.setFrame(new Size(900, 800, CoordinatesType.RATIO),
-                        new Point(50, 160, CoordinatesType.RATIO));
+                name.setFrame(new Point(50, 50, CoordinatesType.RATIO),
+                        new Size(900, 100, CoordinatesType.RATIO));
+                description.setFrame(new Point(50, 160, CoordinatesType.RATIO),
+                        new Size(900, 800, CoordinatesType.RATIO));
                 out.addChild(name);
                 out.addChild(description);
             } catch (GameException e) {
@@ -133,15 +140,15 @@ public class ShopWorld extends Frame {
         }
     }
 
-    private void addTexts(EmptyFrame emptyFrame, ArrayList<ItemType> items, TextFactory textFactory) {
-        long[] distribution = distribution(Math.max(items.size(), 3), 1000);
+    private void addTexts(EmptyFrame emptyFrame, ArrayList<Items> items, TextFactory textFactory) {
+        long[] distribution = distribution(Math.max(items.size(), 3));
         for (int i = 0; i < items.size(); i++) {
-            ItemType itemType = items.get(i);
+            Items itemType = items.get(i);
             try {
                 Text text = textFactory.getInstance("button" + i, fromItemType.apply(itemType), emptyFrame);
                 text.setFrame(
-                        new Size(900, distribution[1] - distribution[0], CoordinatesType.RATIO),
-                        new Point(50, distribution[i], CoordinatesType.RATIO));
+                        new Point(50, distribution[i], CoordinatesType.RATIO),
+                        new Size(900, distribution[1] - distribution[0], CoordinatesType.RATIO));
                 emptyFrame.addChild(text);
             } catch (GameException e) {
                 e.printStackTrace();
@@ -149,9 +156,9 @@ public class ShopWorld extends Frame {
         }
     }
 
-    private long[] distribution(int count, int size) {
+    private long[] distribution(int count) {
         long[] answer = new long[count];
-        long one = size / count;
+        long one = 1000 / count;
         long current = 0;
         for (int i = 0; i < count; i++) {
             answer[i] = current;
@@ -165,6 +172,10 @@ public class ShopWorld extends Frame {
         int keyCode = keyEvent.getKeyCode();
         if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_ENTER) {
             choose.keyPressed(keyEvent);
+            redrawBarter();
+        }
+        if (keyCode == KeyEvent.VK_ESCAPE) {
+            callEvent(new RegionEventFocused(this, true, true));
         }
     }
 
@@ -173,26 +184,21 @@ public class ShopWorld extends Frame {
         if (event instanceof ShopEvent) {
             Barter barter = ((ShopEvent) event).barter;
             if (barter.count > 0) {
-                for (ItemType itemType : barter.from) {
-                    ItemType founded = region.hero.inventory.find(itemType.item);
-                    if (founded == null || founded.count < itemType.count) {
+                for (Items items : barter.from) {
+                    Items founded = region.hero.inventory.find(items.item);
+                    if (founded == null || founded.count < items.count) {
                         return;
                     }
                 }
-                for (ItemType itemType : barter.from) {
-                    ItemType founded = region.hero.inventory.find(itemType.item);
-                    if (founded == null || founded.count < itemType.count) {
-                        return;
-                    }
+                for (Items items : barter.from) {
+                    region.hero.inventory.removeItems(items);
                 }
-                for (ItemType itemType : barter.from) {
-                    region.hero.inventory.find(itemType.item).count -= itemType.count;
-                }
-                for (ItemType itemType : barter.to) {
-                    region.hero.inventory.addItem(itemType);
+                for (Items items : barter.to) {
+                    region.hero.inventory.addItem(items);
                 }
                 barter.count--;
             }
+            reShop(choose.current);
             return;
         }
         super.callEvent(event);

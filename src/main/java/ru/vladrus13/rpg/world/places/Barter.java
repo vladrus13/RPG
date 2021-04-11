@@ -1,16 +1,15 @@
 package ru.vladrus13.rpg.world.places;
 
-import ru.vladrus13.rpg.world.items.inventory.ItemType;
+import ru.vladrus13.rpg.world.items.inventory.Items;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Barter {
-    public final ArrayList<ItemType> from;
-    public final ArrayList<ItemType> to;
+    public final ArrayList<Items> from;
+    public final ArrayList<Items> to;
     public int count;
 
-    public Barter(ArrayList<ItemType> from, ArrayList<ItemType> to, int count) {
+    public Barter(ArrayList<Items> from, ArrayList<Items> to, int count) {
         this.from = from;
         this.to = to;
         this.count = count;

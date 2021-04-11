@@ -1,4 +1,4 @@
-package ru.vladrus13.rpg.world.items;
+package ru.vladrus13.rpg.world.region;
 
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
@@ -8,7 +8,7 @@ import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
-import ru.vladrus13.rpg.world.region.Region;
+import ru.vladrus13.rpg.world.items.Item;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

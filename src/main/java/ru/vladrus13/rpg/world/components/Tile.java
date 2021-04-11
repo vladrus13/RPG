@@ -8,7 +8,7 @@ import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 import ru.vladrus13.rpg.world.actors.Actor;
-import ru.vladrus13.rpg.world.items.RegionItem;
+import ru.vladrus13.rpg.world.region.RegionItem;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
