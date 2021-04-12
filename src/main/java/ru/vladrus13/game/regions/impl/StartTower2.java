@@ -2,7 +2,7 @@ package ru.vladrus13.game.regions.impl;
 
 import ru.vladrus13.game.actors.ActorFactory;
 import ru.vladrus13.game.items.ItemFactory;
-import ru.vladrus13.game.items.impl.weapons.Sword;
+import ru.vladrus13.game.items.impl.weapons.TinSword;
 import ru.vladrus13.game.regions.RegionFactory;
 import ru.vladrus13.jgraphic.basic.components.Background;
 import ru.vladrus13.jgraphic.basic.components.Choose;
@@ -47,8 +47,8 @@ public class StartTower2 {
         Choose pirateChoose;
         Shop pirateShop = new Shop(new ArrayList<>(Collections.singletonList(
                 new Barter(new ArrayList<>(Collections.singletonList(
-                        new Items(Sword.getInstance(), 1))),
-                        new ArrayList<>(Collections.singletonList(new Items(Sword.getInstance(), 1))), 5
+                        new Items(TinSword.getInstance(), 1))),
+                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
                 ))));
         ShopWorld shopWorld = new ShopWorld("pirate", region, pirateShop);
         Size fullSize = new Size(1000, 1000, CoordinatesType.RATIO);

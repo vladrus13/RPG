@@ -1,6 +1,6 @@
 package ru.vladrus13.game.items;
 
-import ru.vladrus13.game.items.impl.weapons.Sword;
+import ru.vladrus13.game.items.impl.weapons.TinSword;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.world.items.Item;
@@ -24,7 +24,7 @@ public class ItemFactory {
     private final static Class<?>[] items = new Class<?>[MAX_ID];
 
     static {
-        items[1] = Sword.class;
+        items[1] = TinSword.class;
         items[101] = Money.class;
     }
 
