@@ -1,7 +1,9 @@
 package ru.vladrus13.rpg.world.items;
 
-public class Money extends Item {
-    public Money(int id, String name, String description) {
-        super(id, name, description);
+import ru.vladrus13.game.items.ItemFactory;
+
+public abstract class Money extends Item {
+    public Money(int id) {
+        super(id, ItemFactory.getBundle(id + ".name"), ItemFactory.getBundle(id + ".description"));
     }
 }

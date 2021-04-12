@@ -1,9 +1,10 @@
 package ru.vladrus13.game.items;
 
-import ru.vladrus13.game.items.impl.Sword;
+import ru.vladrus13.game.items.impl.weapons.Sword;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.world.items.Item;
+import ru.vladrus13.rpg.world.items.Money;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
@@ -24,6 +25,7 @@ public class ItemFactory {
 
     static {
         items[1] = Sword.class;
+        items[101] = Money.class;
     }
 
     public static Item get(int id) throws GameException {

@@ -1,4 +1,4 @@
-package ru.vladrus13.game.items.impl;
+package ru.vladrus13.game.items.impl.weapons;
 
 import ru.vladrus13.rpg.world.items.Weapon;
 

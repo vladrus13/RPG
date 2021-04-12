@@ -9,6 +9,7 @@ import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 import ru.vladrus13.rpg.world.items.Item;
+import ru.vladrus13.rpg.world.items.inventory.Items;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -19,7 +20,7 @@ import java.nio.file.Path;
  * @author vladrus13 on 24.03.2021
  **/
 public class RegionItem extends Frame {
-    public final Item item;
+    public final Items item;
     public final BufferedImage bufferedImage;
     public static final Path regionItemsPath = Path.of("world").resolve("items");
 
@@ -33,8 +34,16 @@ public class RegionItem extends Frame {
         super(String.valueOf(item.id), start, new Size(
                 MainProperty.getInteger("world.region.tileSize"),
                 MainProperty.getInteger("world.region.tileSize"), CoordinatesType.REAL), region);
-        this.item = item;
+        this.item = new Items(item, 1);
         this.bufferedImage = ImageLoader.load(regionItemsPath.resolve(item.id + ".png"));
+    }
+
+    public RegionItem(Point start, Region region, Items items) throws GameException {
+        super(String.valueOf(items.item.id), start, new Size(
+                MainProperty.getInteger("world.region.tileSize"),
+                MainProperty.getInteger("world.region.tileSize"), CoordinatesType.REAL), region);
+        this.item = items;
+        this.bufferedImage = ImageLoader.load(regionItemsPath.resolve(items.item.id + ".png"));
     }
 
     @Override

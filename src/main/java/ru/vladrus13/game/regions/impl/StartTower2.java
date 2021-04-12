@@ -2,7 +2,7 @@ package ru.vladrus13.game.regions.impl;
 
 import ru.vladrus13.game.actors.ActorFactory;
 import ru.vladrus13.game.items.ItemFactory;
-import ru.vladrus13.game.items.impl.Sword;
+import ru.vladrus13.game.items.impl.weapons.Sword;
 import ru.vladrus13.game.regions.RegionFactory;
 import ru.vladrus13.jgraphic.basic.components.Background;
 import ru.vladrus13.jgraphic.basic.components.Choose;
