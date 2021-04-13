@@ -28,4 +28,8 @@ public class Items {
     public int hashCode() {
         return Objects.hash(item);
     }
+
+    public Items copy() {
+        return new Items(item.copy(), count);
+    }
 }

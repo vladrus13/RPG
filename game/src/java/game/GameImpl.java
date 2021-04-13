@@ -10,7 +10,9 @@ import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.menu.Menu;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
 
 public class GameImpl extends Game {

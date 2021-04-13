@@ -33,6 +33,7 @@ import ru.vladrus13.rpg.world.region.ShopWorld;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -45,7 +46,19 @@ public class StartTower2 {
     private static void setActors(Region region) throws GameException {
         Actor pirate = ActorFactory.createActor("pirate", new Point(6L * tileSize, 4L * tileSize), region);
         Choose pirateChoose;
-        Shop pirateShop = new Shop(new ArrayList<>(Collections.singletonList(
+        Shop pirateShop = new Shop(new ArrayList<>(Arrays.asList(
+                new Barter(new ArrayList<>(Collections.singletonList(
+                        new Items(TinSword.getInstance(), 1))),
+                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
+                ),
+                new Barter(new ArrayList<>(Collections.singletonList(
+                        new Items(TinSword.getInstance(), 1))),
+                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
+                ),
+                new Barter(new ArrayList<>(Collections.singletonList(
+                        new Items(TinSword.getInstance(), 1))),
+                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
+                ),
                 new Barter(new ArrayList<>(Collections.singletonList(
                         new Items(TinSword.getInstance(), 1))),
                         new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5

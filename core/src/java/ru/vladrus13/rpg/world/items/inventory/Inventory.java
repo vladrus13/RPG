@@ -35,7 +35,7 @@ public class Inventory {
                 return;
             }
         }
-        this.items.add(items);
+        this.items.add(items.copy());
     }
 
     public Items find(Item item) {

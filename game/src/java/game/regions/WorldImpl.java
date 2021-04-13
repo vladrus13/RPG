@@ -2,7 +2,6 @@ package game.regions;
 
 import game.actors.impl.Hero;
 import ru.vladrus13.graphic.Graphics;
-import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
@@ -23,9 +22,9 @@ import java.util.logging.Logger;
 public class WorldImpl extends World {
 
     private final static Logger logger = Logger.getLogger(World.class.getName());
-    private Region region;
     private final Hero hero;
     private final Game game;
+    private Region region;
 
     public WorldImpl(int width, int height, Game game) {
         super("world", new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), null);

@@ -1,5 +1,6 @@
 package game.items.impl.weapons;
 
+import ru.vladrus13.rpg.world.items.Item;
 import ru.vladrus13.rpg.world.items.Weapon;
 
 /**
@@ -15,6 +16,11 @@ public class TinSword extends Weapon {
 
     public static TinSword getInstance() {
         return new TinSword();
+    }
+
+    @Override
+    public Item copy() {
+        return getInstance();
     }
 
     public static int getId() {

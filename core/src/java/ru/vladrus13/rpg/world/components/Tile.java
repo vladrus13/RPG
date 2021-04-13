@@ -18,11 +18,11 @@ import java.nio.file.Path;
 public class Tile extends Frame {
 
     private static final Path path = Path.of("world").resolve("tiles");
-    private boolean isWalkable = true;
-    private Event onStep;
+    private final BufferedImage image;
     public Actor actor;
     public RegionItem regionItem;
-    private final BufferedImage image;
+    private boolean isWalkable = true;
+    private Event onStep;
 
     public Tile(String name, Point start, Size size, int id, Frame parent) throws GameException {
         super(name, start, size, parent);
@@ -30,13 +30,13 @@ public class Tile extends Frame {
         recalculate();
     }
 
+    public boolean isWalkable() {
+        return isWalkable && actor == null;
+    }
+
     public Tile setWalkable(boolean walkable) {
         isWalkable = walkable;
         return this;
-    }
-
-    public boolean isWalkable() {
-        return isWalkable && actor == null;
     }
 
     public void setOnStep(Event event) {

@@ -1,9 +1,9 @@
 package game.items;
 
+import game.items.impl.money.Coins;
 import game.items.impl.weapons.TinSword;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.rpg.world.items.Item;
-import ru.vladrus13.rpg.world.items.Money;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
@@ -21,7 +21,7 @@ public class ItemFactory {
 
     static {
         items[1] = TinSword.class;
-        items[101] = Money.class;
+        items[101] = Coins.class;
     }
 
     public static Item get(int id) throws GameException {

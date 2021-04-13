@@ -25,10 +25,10 @@ import java.util.Collection;
 public class Region extends UpdatedFrame {
 
     protected final int id;
-    private ArrayList<ArrayList<Tile>> tiles;
-    public Actor hero;
     private final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final World world;
+    public Actor hero;
+    private ArrayList<ArrayList<Tile>> tiles;
 
     public Region(int id, String name, World parent) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);

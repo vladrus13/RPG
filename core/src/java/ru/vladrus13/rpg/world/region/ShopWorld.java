@@ -28,20 +28,19 @@ import java.util.stream.Collectors;
 
 public class ShopWorld extends Frame {
     public final Shop shop;
-    public Choose choose;
     public final Background background = new Background("blue",
             new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO),
             new Filler(new Color(0, 0, 255, 225)), this);
-    public EmptyFrame barterIn;
-    public EmptyFrame barterOut;
-    public EmptyFrame out;
-    public Region region;
     private final TextFactory textFactory = new TextFactory()
             .setColor(Color.BLACK)
             .setTextAlign(Text.TextAlign.LEFT)
             .setFontSize(new Size(32, 0, CoordinatesType.REAL))
             .setNameFont("PixelFontGame");
-
+    public Choose choose;
+    public EmptyFrame barterIn;
+    public EmptyFrame barterOut;
+    public EmptyFrame out;
+    public Region region;
     ButtonFactory buttonFactory = new ButtonFactory()
             .setBackground(new Background("back",
                     new Point(0, 0, CoordinatesType.RATIO),
@@ -81,14 +80,15 @@ public class ShopWorld extends Frame {
     }
 
     private void reShop(Integer currentNumber) {
-        Event[] eventsKey = new Event[shop.barters.size()];
+        int liveCount = (int) shop.barters.stream().filter(barter -> barter.count > 0).count();
+        Event[] eventsKey = new Event[liveCount];
         eventsKey = shop.barters.stream()
                 .filter(barter -> barter.count > 0)
                 .map(ShopEvent::new)
                 .collect(Collectors.toList())
                 .toArray(eventsKey);
         Event[] eventsMouse = new Event[eventsKey.length];
-        String[] names = new String[shop.barters.size()];
+        String[] names = new String[liveCount];
         names = shop.barters.stream()
                 .filter(barter -> barter.count > 0)
                 .map(barter -> barter.count + " " + fromCollectionItemTypes.apply(barter.from))
@@ -96,7 +96,7 @@ public class ShopWorld extends Frame {
                 .toArray(names);
         Choose choose1;
         try {
-            choose1 = Choose.getInstance("shop", shop.barters.size(),
+            choose1 = Choose.getInstance("shop", liveCount,
                     new Point(50, 50, CoordinatesType.RATIO), new Size(500, 900, CoordinatesType.RATIO),
                     this, new Size(1000, 50, CoordinatesType.RATIO), names, eventsKey, eventsMouse, buttonFactory, textFactory);
         } catch (GameException e) {

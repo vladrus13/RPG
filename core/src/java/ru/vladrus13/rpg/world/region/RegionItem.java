@@ -20,9 +20,9 @@ import java.nio.file.Path;
  * @author vladrus13 on 24.03.2021
  **/
 public class RegionItem extends Frame {
+    public static final Path regionItemsPath = Path.of("world").resolve("items");
     public final Items item;
     public final BufferedImage bufferedImage;
-    public static final Path regionItemsPath = Path.of("world").resolve("items");
 
     /**
      * Standard constructor for Frame

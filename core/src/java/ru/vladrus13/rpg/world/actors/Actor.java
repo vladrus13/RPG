@@ -21,18 +21,17 @@ import java.util.Map;
 
 public abstract class Actor extends UpdatedFrame {
 
-    protected final Deque<Direction> path = new LinkedList<>();
     protected static final int tileSize = MainProperty.getInteger("world.region.tileSize");
+    public final Inventory inventory = new Inventory();
+    protected final Deque<Direction> path = new LinkedList<>();
     protected final String name;
     protected final String resourcesName;
-    protected Direction walkDirection;
+    private final Map<Direction, BufferedImage> images;
     public Direction lastDirection = Direction.DOWN;
+    protected Direction walkDirection;
     protected Region region;
     protected RegionEvent onTrigger;
     protected RegionEvent onStep;
-    public final Inventory inventory = new Inventory();
-
-    private final Map<Direction, BufferedImage> images;
 
     public Actor(String systemName, Point start, String name, Region region) {
         super(systemName, start, new Size(

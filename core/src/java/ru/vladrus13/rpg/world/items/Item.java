@@ -16,6 +16,16 @@ public abstract class Item {
         this.description = description;
     }
 
+    public static int getId() {
+        throw new UnsupportedOperationException("Can't get instance of abstract object");
+    }
+
+    public static Item getInstance() {
+        throw new UnsupportedOperationException("Can't get instance of abstract object");
+    }
+
+    public abstract Item copy();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,13 +37,5 @@ public abstract class Item {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    public static int getId() {
-        throw new UnsupportedOperationException("Can't get instance of abstract object");
-    }
-
-    public static Item getInstance() {
-        throw new UnsupportedOperationException("Can't get instance of abstract object");
     }
 }
