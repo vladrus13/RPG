@@ -32,6 +32,10 @@ public abstract class Actor extends UpdatedFrame {
     protected Region region;
     protected RegionEvent onTrigger;
     protected RegionEvent onStep;
+    protected Status standardStatus = new Status();
+    protected Status realStatus = new Status();
+    public boolean untouchable = false;
+    public int command = 0;
 
     public Actor(String systemName, Point start, String name, Region region) {
         super(systemName, start, new Size(
@@ -41,6 +45,7 @@ public abstract class Actor extends UpdatedFrame {
         this.name = name;
         this.resourcesName = systemName;
         this.region = region;
+        this.inventory.setActor(this);
         images = ActorResources.loadActor(resourcesName);
         recalculate();
     }
@@ -150,5 +155,13 @@ public abstract class Actor extends UpdatedFrame {
 
     public void setOnTrigger(RegionEvent onTrigger) {
         this.onTrigger = onTrigger;
+    }
+
+    public Status getStandardStatus() {
+        return standardStatus;
+    }
+
+    public void setRealStatus(Status realStatus) {
+        this.realStatus = realStatus;
     }
 }

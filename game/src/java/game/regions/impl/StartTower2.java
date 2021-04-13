@@ -26,7 +26,7 @@ import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.components.Tile;
 import ru.vladrus13.rpg.world.items.inventory.Items;
 import ru.vladrus13.rpg.world.places.Barter;
-import ru.vladrus13.rpg.world.places.Shop;
+import ru.vladrus13.rpg.world.places.BarterPlace;
 import ru.vladrus13.rpg.world.region.Region;
 import ru.vladrus13.rpg.world.region.RegionItem;
 import ru.vladrus13.rpg.world.region.ShopWorld;
@@ -46,7 +46,7 @@ public class StartTower2 {
     private static void setActors(Region region) throws GameException {
         Actor pirate = ActorFactory.createActor("pirate", new Point(6L * tileSize, 4L * tileSize), region);
         Choose pirateChoose;
-        Shop pirateShop = new Shop(new ArrayList<>(Arrays.asList(
+        BarterPlace pirateBarterPlace = new BarterPlace(new ArrayList<>(Arrays.asList(
                 new Barter(new ArrayList<>(Collections.singletonList(
                         new Items(TinSword.getInstance(), 1))),
                         new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
@@ -63,7 +63,7 @@ public class StartTower2 {
                         new Items(TinSword.getInstance(), 1))),
                         new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
                 ))));
-        ShopWorld shopWorld = new ShopWorld("pirate", region, pirateShop);
+        ShopWorld shopWorld = new ShopWorld("pirate", region, pirateBarterPlace);
         Size fullSize = new Size(1000, 1000, CoordinatesType.RATIO);
         Point fullStart = new Point(0, 0, CoordinatesType.RATIO);
         ButtonFactory buttonFactory = new ButtonFactory()

@@ -8,6 +8,7 @@ import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.property.MainProperty;
+import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
@@ -118,7 +119,7 @@ public class Region extends UpdatedFrame {
         for (RegionItem item : items) {
             tiles
                     .get((int) (item.getStart().x / tileSize))
-                    .get((int) (item.getStart().y / tileSize)).regionItem = item;
+                    .get((int) (item.getStart().y / tileSize)).regionItems.add(item);
         }
     }
 
@@ -128,9 +129,19 @@ public class Region extends UpdatedFrame {
         return tiles.get((int) a.x).get((int) a.y).isWalkable();
     }
 
+    public void moveActor(Actor actor, Point before, Point after, Direction direction) {
+        actor.teleport(this, after, direction);
+        getTile(before).actor = null;
+        getTile(after).actor = actor;
+    }
+
+    public Tile getTile(Point point) {
+        return tiles.get((int) (point.x / tileSize)).get((int) (point.y / tileSize));
+    }
+
     public void onStep(Actor actor) {
         Point a = actor.getStart();
-        Event event = tiles.get((int) (a.x / tileSize)).get((int) (a.y / tileSize)).onStep();
+        Event event = getTile(a).onStep();
         if (event != null) {
             if (event instanceof WorldEvent) {
                 world.invokeWorldEvent((WorldEvent) event);
@@ -139,16 +150,14 @@ public class Region extends UpdatedFrame {
     }
 
     public void onActivate(Actor actor, Point a) {
-        Tile tile = tiles.get((int) (a.x / tileSize)).get((int) (a.y / tileSize));
+        Tile tile = getTile(a);
         Point nextPoint = DirectionService.step(actor.getStart(), actor.lastDirection);
-        Tile nextTile = tiles.get((int) (nextPoint.x / tileSize)).get((int) (nextPoint.y / tileSize));
-        if (tile.regionItem != null) {
-            actor.inventory.addItem(tile.regionItem.item);
-            tile.regionItem = null;
+        Tile nextTile = getTile(nextPoint);
+        if (!tile.regionItems.isEmpty()) {
+            actor.inventory.addItems(tile.regionItems.removeFirst().item);
         } else {
-            if (nextTile.regionItem != null) {
-                actor.inventory.addItem(nextTile.regionItem.item);
-                nextTile.regionItem = null;
+            if (!nextTile.regionItems.isEmpty()) {
+                actor.inventory.addItems(nextTile.regionItems.removeFirst().item);
             } else {
                 if (nextTile.actor != null) {
                     nextTile.actor.onTrigger();
@@ -175,8 +184,6 @@ public class Region extends UpdatedFrame {
                     removeFocused();
                 } else {
                     focused.remove(((RegionEventFocused) regionEvent).focused);
-                    // TODO make focused great again
-                    // removeFocused(((RegionEventFocused) regionEvent).focused);
                 }
                 if (((RegionEventFocused) regionEvent).drawing) {
                     removeChild(((RegionEventFocused) regionEvent).focused);

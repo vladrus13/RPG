@@ -1,5 +1,7 @@
 package ru.vladrus13.rpg.world.items.inventory;
 
+import ru.vladrus13.rpg.world.actors.Actor;
+import ru.vladrus13.rpg.world.actors.Status;
 import ru.vladrus13.rpg.world.items.Item;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
  **/
 public class Inventory {
     public final ArrayList<Items> items;
+    public Actor actor;
 
     public Inventory(ArrayList<Items> items) {
         this.items = items;
@@ -19,16 +22,10 @@ public class Inventory {
     }
 
     public void addItem(Item item) {
-        for (Items items : this.items) {
-            if (items.item.equals(item)) {
-                items.count++;
-                return;
-            }
-        }
-        items.add(new Items(item, 1));
+        addItems(new Items(item, 1));
     }
 
-    public void addItem(Items items) {
+    public void addItems(Items items) {
         for (Items itemsI : this.items) {
             if (itemsI.item.equals(items.item)) {
                 itemsI.count += items.count;
@@ -36,6 +33,7 @@ public class Inventory {
             }
         }
         this.items.add(items.copy());
+        reloadActor();
     }
 
     public Items find(Item item) {
@@ -48,15 +46,7 @@ public class Inventory {
     }
 
     public void removeItem(Item item) {
-        for (Items items : this.items) {
-            if (items.item.equals(item)) {
-                items.count--;
-                if (items.count <= 0) {
-                    this.items.remove(items);
-                }
-                return;
-            }
-        }
+        removeItems(new Items(item, 1));
     }
 
     public void removeItems(Items item) {
@@ -69,5 +59,19 @@ public class Inventory {
                 return;
             }
         }
+        reloadActor();
+    }
+
+    public void reloadActor() {
+        if (actor == null) return;
+        Status newStatus = actor.getStandardStatus().copy();
+        for (Items items : this.items) {
+            items.item.update(newStatus);
+        }
+        actor.setRealStatus(newStatus);
+    }
+
+    public void setActor(Actor actor) {
+        this.actor = actor;
     }
 }

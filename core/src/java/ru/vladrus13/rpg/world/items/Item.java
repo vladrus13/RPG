@@ -1,5 +1,7 @@
 package ru.vladrus13.rpg.world.items;
 
+import ru.vladrus13.rpg.world.actors.Status;
+
 import java.util.Objects;
 
 /**
@@ -37,5 +39,8 @@ public abstract class Item {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void update(Status status) {
     }
 }

@@ -16,7 +16,7 @@ import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
 import ru.vladrus13.rpg.world.items.Item;
 import ru.vladrus13.rpg.world.items.inventory.Items;
 import ru.vladrus13.rpg.world.places.Barter;
-import ru.vladrus13.rpg.world.places.Shop;
+import ru.vladrus13.rpg.world.places.BarterPlace;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,7 +27,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ShopWorld extends Frame {
-    public final Shop shop;
+    public final BarterPlace barterPlace;
     public final Background background = new Background("blue",
             new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO),
             new Filler(new Color(0, 0, 255, 225)), this);
@@ -58,9 +58,9 @@ public class ShopWorld extends Frame {
     Function<Collection<Items>, String> fromCollectionItemTypes =
             itemTypes -> itemTypes.stream().map(fromItemType).collect(Collectors.joining(", "));
 
-    public ShopWorld(String name, Region parent, Shop shop) {
+    public ShopWorld(String name, Region parent, BarterPlace barterPlace) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
-        this.shop = shop;
+        this.barterPlace = barterPlace;
         this.region = parent;
         reShop(null);
         addChild(choose);
@@ -80,16 +80,16 @@ public class ShopWorld extends Frame {
     }
 
     private void reShop(Integer currentNumber) {
-        int liveCount = (int) shop.barters.stream().filter(barter -> barter.count > 0).count();
+        int liveCount = (int) barterPlace.barters.stream().filter(barter -> barter.count > 0).count();
         Event[] eventsKey = new Event[liveCount];
-        eventsKey = shop.barters.stream()
+        eventsKey = barterPlace.barters.stream()
                 .filter(barter -> barter.count > 0)
                 .map(ShopEvent::new)
                 .collect(Collectors.toList())
                 .toArray(eventsKey);
         Event[] eventsMouse = new Event[eventsKey.length];
         String[] names = new String[liveCount];
-        names = shop.barters.stream()
+        names = barterPlace.barters.stream()
                 .filter(barter -> barter.count > 0)
                 .map(barter -> barter.count + " " + fromCollectionItemTypes.apply(barter.from))
                 .collect(Collectors.toCollection(ArrayList::new))
@@ -120,7 +120,7 @@ public class ShopWorld extends Frame {
         out = new EmptyFrame("out",
                 new Point(600, 500, CoordinatesType.RATIO),
                 new Size(350, 450, CoordinatesType.RATIO), this);
-        Barter current = shop.barters.get(choose.current);
+        Barter current = barterPlace.barters.get(choose.current);
         addTexts(barterIn, current.from, textFactory);
         addTexts(barterOut, current.to, textFactory);
         if (current.to.size() == 1) {
@@ -194,7 +194,7 @@ public class ShopWorld extends Frame {
                     region.hero.inventory.removeItems(items);
                 }
                 for (Items items : barter.to) {
-                    region.hero.inventory.addItem(items);
+                    region.hero.inventory.addItems(items);
                 }
                 barter.count--;
             }

@@ -14,13 +14,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Tile extends Frame {
 
     private static final Path path = Path.of("world").resolve("tiles");
     private final BufferedImage image;
     public Actor actor;
-    public RegionItem regionItem;
+    public LinkedList<RegionItem> regionItems = new LinkedList<>();
     private boolean isWalkable = true;
     private Event onStep;
 
@@ -31,7 +33,7 @@ public class Tile extends Frame {
     }
 
     public boolean isWalkable() {
-        return isWalkable && actor == null;
+        return isWalkable && (actor == null || actor.untouchable);
     }
 
     public Tile setWalkable(boolean walkable) {
@@ -53,7 +55,7 @@ public class Tile extends Frame {
         if (actor != null) {
             actor.draw(graphics);
         }
-        if (regionItem != null) {
+        for (RegionItem regionItem : regionItems) {
             regionItem.draw(graphics);
         }
     }
