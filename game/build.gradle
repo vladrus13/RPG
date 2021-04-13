@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'ru.vladrus13'
+version '1.0-BETA'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+compileJava {
+    doFirst {
+        options.compilerArgs += [
+                '--module-path', classpath.asPath
+        ]
+        classpath += files()
+    }
+}
+
+sourceSets {
+    main.java.srcDirs = ['src/java']
+    main.resources.srcDirs = ['../resources']
+}
+
+dependencies {
+    implementation 'com.github.vladrus13:JGraphic:5ea241480b'
+    compile project(':core')
+}
+
+application {
+    mainModule = 'game'
+    mainClass = 'game.Launcher'
+}

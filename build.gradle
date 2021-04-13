@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+sourceCompatibility = '13'
+targetCompatibility = '13'
+
+group 'ru.vladrus13'
+version '1.1-BETA'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.vladrus13:JGraphic:5ea241480b'
+    implementation project(":core")
+    implementation project(":game")
+}
