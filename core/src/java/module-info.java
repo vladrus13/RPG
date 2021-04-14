@@ -15,4 +15,5 @@ module ru.vladrus13.rpg {
     requires transitive java.logging;
     requires ru.vladrus13.jgraphic;
     requires java.desktop;
+    requires org.json;
 }

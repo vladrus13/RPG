@@ -25,5 +25,6 @@ sourceSets {
 }
 
 dependencies {
+    implementation group: 'org.json', name: 'json', version: '20210307'
     implementation 'com.github.vladrus13:JGraphic:5ea241480b'
 }

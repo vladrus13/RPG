@@ -10,6 +10,7 @@ import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.rpg.resources.ActorResources;
+import ru.vladrus13.rpg.saves.Savable;
 import ru.vladrus13.rpg.world.items.inventory.Inventory;
 import ru.vladrus13.rpg.world.region.Region;
 
@@ -19,7 +20,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Map;
 
-public abstract class Actor extends UpdatedFrame {
+public abstract class Actor extends UpdatedFrame implements Savable {
 
     protected static final int tileSize = MainProperty.getInteger("world.region.tileSize");
     public final Inventory inventory = new Inventory();
@@ -163,5 +164,10 @@ public abstract class Actor extends UpdatedFrame {
 
     public void setRealStatus(Status realStatus) {
         this.realStatus = realStatus;
+    }
+
+    @Override
+    public String toSaveString() {
+        return
     }
 }

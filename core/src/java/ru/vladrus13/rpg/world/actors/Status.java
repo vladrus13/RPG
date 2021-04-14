@@ -1,6 +1,9 @@
 package ru.vladrus13.rpg.world.actors;
 
-public class Status {
+import org.json.JSONObject;
+import ru.vladrus13.rpg.saves.Savable;
+
+public class Status implements Savable {
     public int hp;
     public int mp;
     public int attack;
@@ -19,5 +22,19 @@ public class Status {
 
     public Status copy() {
         return new Status(hp, mp, attack);
+    }
+
+    @Override
+    public String toSaveString() {
+        return toJSON().toString();
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject returned = new JSONObject();
+        returned.put("hp", hp);
+        returned.put("mp", mp);
+        returned.put("attack", attack);
+        return returned;
     }
 }

@@ -1,5 +1,8 @@
 package ru.vladrus13.rpg.world.items.inventory;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import ru.vladrus13.rpg.saves.Savable;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Status;
 import ru.vladrus13.rpg.world.items.Item;
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 /**
  * @author vladrus13 on 25.03.2021
  **/
-public class Inventory {
+public class Inventory implements Savable {
     public final ArrayList<Items> items;
     public Actor actor;
 
@@ -73,5 +76,21 @@ public class Inventory {
 
     public void setActor(Actor actor) {
         this.actor = actor;
+    }
+
+    @Override
+    public String toSaveString() {
+        return toJSON().toString();
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONArray returned = new JSONArray();
+        for (Items items : this.items) {
+            returned.put(items.toJSON());
+        }
+        JSONObject object = new JSONObject();
+        object.put("array", returned);
+        return object;
     }
 }
