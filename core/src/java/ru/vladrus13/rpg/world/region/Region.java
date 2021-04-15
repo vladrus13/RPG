@@ -151,7 +151,7 @@ public class Region extends UpdatedFrame {
 
     public void onActivate(Actor actor, Point a) {
         Tile tile = getTile(a);
-        Point nextPoint = DirectionService.step(actor.getStart(), actor.lastDirection);
+        Point nextPoint = DirectionService.step(actor.getStart(), actor.direction);
         Tile nextTile = getTile(nextPoint);
         if (!tile.regionItems.isEmpty()) {
             actor.inventory.addItems(tile.regionItems.removeFirst().item);

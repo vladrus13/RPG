@@ -12,6 +12,8 @@ module ru.vladrus13.rpg {
     exports ru.vladrus13.rpg.world.places;
     exports ru.vladrus13.rpg.world.items;
     exports ru.vladrus13.rpg.resources;
+    exports ru.vladrus13.rpg.saves;
+    exports ru.vladrus13.rpg.world.factory;
     requires transitive java.logging;
     requires ru.vladrus13.jgraphic;
     requires java.desktop;

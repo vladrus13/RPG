@@ -5,13 +5,13 @@ import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
+import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.region.Region;
 
@@ -27,15 +27,16 @@ public class WorldImpl extends World {
     private Region region;
 
     public WorldImpl(int width, int height, Game game) {
-        super("world", new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), null);
+        super(width, height);
         try {
-            region = RegionFactory.getRegion(1, this);
+            region = RegionFactoryImpl.getRegion(1, this);
         } catch (GameException e) {
             Writer.printStackTrace(logger, e);
         }
         this.game = game;
         int tileSize = MainProperty.getInteger("world.region.tileSize");
         hero = new Hero(new Point(tileSize, tileSize, CoordinatesType.REAL), region);
+        SaveHolder.setHero(hero);
         region.setHero(hero);
         addFocused(region);
         addChild(hero);
@@ -73,7 +74,7 @@ public class WorldImpl extends World {
             try {
                 removeFocused(region);
                 removeChild(region);
-                region = RegionFactory.getRegion(((WorldEventTeleport) event).getId(), this);
+                region = RegionFactoryImpl.getRegion(((WorldEventTeleport) event).getId(), this);
                 addChild(region);
                 addFocused(region);
                 region.setHero(hero);

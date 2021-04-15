@@ -1,9 +1,9 @@
 package game.regions.impl;
 
-import game.actors.ActorFactory;
-import game.items.ItemFactory;
+import game.actors.ActorFactoryImpl;
+import game.items.ItemFactoryImpl;
 import game.items.impl.weapons.TinSword;
-import game.regions.RegionFactory;
+import game.regions.RegionFactoryImpl;
 import ru.vladrus13.jgraphic.basic.components.Background;
 import ru.vladrus13.jgraphic.basic.components.Choose;
 import ru.vladrus13.jgraphic.basic.components.Filler;
@@ -21,9 +21,11 @@ import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
+import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.components.Tile;
+import ru.vladrus13.rpg.world.factory.ItemFactory;
 import ru.vladrus13.rpg.world.items.inventory.Items;
 import ru.vladrus13.rpg.world.places.Barter;
 import ru.vladrus13.rpg.world.places.BarterPlace;
@@ -32,6 +34,7 @@ import ru.vladrus13.rpg.world.region.RegionItem;
 import ru.vladrus13.rpg.world.region.ShopWorld;
 
 import java.awt.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,7 +47,7 @@ public class StartTower2 {
     private final static int tileSize = MainProperty.getInteger("world.region.tileSize");
 
     private static void setActors(Region region) throws GameException {
-        Actor pirate = ActorFactory.createActor("pirate", new Point(6L * tileSize, 4L * tileSize), region);
+        Actor pirate = ActorFactoryImpl.createActor("pirate", new Point(6L * tileSize, 4L * tileSize), region);
         Choose pirateChoose;
         BarterPlace pirateBarterPlace = new BarterPlace(new ArrayList<>(Arrays.asList(
                 new Barter(new ArrayList<>(Collections.singletonList(
@@ -82,9 +85,10 @@ public class StartTower2 {
                 new Size(800, 800, CoordinatesType.RATIO), region, new Size(800, 100, CoordinatesType.RATIO),
                 new String[]{"Hello", "Shop", "Bye"}, new Event[]{null,
                         shopEvent, byeEvent}, new Event[]{null, null, null}, buttonFactory, textFactory);
-
+        SaveHolder.setVariable(region, "created", "1");
         pirate.setOnTrigger(new RegionEventFocused(pirateChoose, true, false));
         region.setActors(new ArrayList<>(Collections.singletonList(pirate)));
+        SaveHolder.save(Path.of("../resources/saves/quicksave.save"));
     }
 
     private static void setOnStep(Region region) {
@@ -109,7 +113,7 @@ public class StartTower2 {
                 {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
-        ArrayList<ArrayList<Tile>> tiles = RegionFactory.getTiles(map, tileSize, parent);
+        ArrayList<ArrayList<Tile>> tiles = RegionFactoryImpl.getTiles(map, tileSize, parent);
         Region region = (new Region(2, "2", parent)).setTiles(tiles);
         setOnStep(region);
         setItems(region);

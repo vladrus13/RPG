@@ -12,16 +12,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class ActorFactory {
+public class ActorFactoryImpl {
 
-    private final static Logger logger = Logger.getLogger(ActorFactory.class.getName());
+    private final static Logger logger = Logger.getLogger(ActorFactoryImpl.class.getName());
 
     private final static Map<String, Actor> actors = new HashMap<>();
+
+    static {
+
+    }
 
     public static Actor createActor(String systemName, Point start, Region region) throws GameException {
         String methodName = "create" + systemName.substring(0, 1).toUpperCase() + systemName.substring(1);
         try {
-            return (Actor) ActorFactory.class.getDeclaredMethod(methodName, Point.class, Region.class).invoke(ActorFactory.class, start, region);
+            return (Actor) ActorFactoryImpl.class.getDeclaredMethod(methodName, Point.class, Region.class).invoke(ActorFactoryImpl.class, start, region);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             throw new GameException(e);
         }

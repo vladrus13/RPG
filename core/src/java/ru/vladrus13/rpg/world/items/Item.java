@@ -1,17 +1,18 @@
 package ru.vladrus13.rpg.world.items;
 
-import org.json.JSONObject;
 import ru.vladrus13.rpg.saves.Savable;
+import ru.vladrus13.rpg.saves.SaveConstante;
 import ru.vladrus13.rpg.world.actors.Status;
 
 import java.util.Objects;
 
-/**
- * @author vladrus13 on 24.03.2021
- **/
-public abstract class Item implements Savable {
+@Savable(implemented = false)
+public abstract class Item {
+    @SaveConstante(name = "id", constructor = 0)
     public final int id;
+    @SaveConstante(name = "name", constructor = 1)
     public final String name;
+    @SaveConstante(name = "description", constructor = 2)
     public final String description;
 
     public Item(int id, String name, String description) {
@@ -44,15 +45,5 @@ public abstract class Item implements Savable {
     }
 
     public void update(Status status) {
-    }
-
-    @Override
-    public String toSaveString() {
-        return String.valueOf(id);
-    }
-
-    @Override
-    public JSONObject toJSON() {
-        return new JSONObject(id);
     }
 }

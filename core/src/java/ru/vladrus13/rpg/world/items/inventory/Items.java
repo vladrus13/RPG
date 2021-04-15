@@ -1,7 +1,7 @@
 package ru.vladrus13.rpg.world.items.inventory;
 
-import org.json.JSONObject;
 import ru.vladrus13.rpg.saves.Savable;
+import ru.vladrus13.rpg.saves.SaveConstante;
 import ru.vladrus13.rpg.world.items.Item;
 
 import java.util.Objects;
@@ -9,8 +9,11 @@ import java.util.Objects;
 /**
  * @author vladrus13 on 25.03.2021
  **/
-public class Items implements Savable {
+@Savable(implemented = false)
+public class Items {
+    @SaveConstante(name = "item", constructor = 0)
     public final Item item;
+    @SaveConstante(name = "count", constructor = 1)
     public int count;
 
     public Items(Item item, int count) {
@@ -33,18 +36,5 @@ public class Items implements Savable {
 
     public Items copy() {
         return new Items(item.copy(), count);
-    }
-
-    @Override
-    public String toSaveString() {
-        return item.toSaveString();
-    }
-
-    @Override
-    public JSONObject toJSON() {
-        JSONObject returned = new JSONObject();
-        returned.put("item", item.toJSON());
-        returned.put("count", count);
-        return returned;
     }
 }

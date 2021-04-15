@@ -12,6 +12,7 @@ import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.rpg.resources.ActorResources;
 import ru.vladrus13.rpg.saves.Savable;
+import ru.vladrus13.rpg.saves.SaveConstante;
 import ru.vladrus13.rpg.world.items.inventory.Inventory;
 import ru.vladrus13.rpg.world.region.Region;
 
@@ -21,23 +22,36 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Map;
 
-public abstract class Actor extends UpdatedFrame implements Savable {
-
+@Savable(implemented = true)
+public abstract class Actor extends UpdatedFrame {
     protected static final int tileSize = MainProperty.getInteger("world.region.tileSize");
-    public final Inventory inventory = new Inventory();
+    @SaveConstante(name = "inventory")
+    public Inventory inventory = new Inventory();
     protected final Deque<Direction> path = new LinkedList<>();
+    @SaveConstante(name = "realName", constructor = 1)
     protected final String name;
+    @SaveConstante(name = "name", constructor = 1)
     protected final String resourcesName;
     private final Map<Direction, BufferedImage> images;
-    public Direction lastDirection = Direction.DOWN;
+    @SaveConstante(name = "direction")
+    public Direction direction = Direction.DOWN;
     protected Direction walkDirection;
     protected Region region;
     protected RegionEvent onTrigger;
     protected RegionEvent onStep;
+    @SaveConstante(name = "standard_status")
     protected Status standardStatus = new Status();
+    @SaveConstante(name = "real_status")
     protected Status realStatus = new Status();
     public boolean untouchable = false;
     public int command = 0;
+
+    public Actor(JSONObject jsonObject) {
+        this(jsonObject.getString("name"),
+                new Point(jsonObject.getJSONObject("start").getLong("x"), jsonObject.getJSONObject("start").getLong("y")),
+                jsonObject.getString("realName"), null);
+
+    }
 
     public Actor(String systemName, Point start, String name, Region region) {
         super(systemName, start, new Size(
@@ -65,7 +79,7 @@ public abstract class Actor extends UpdatedFrame implements Savable {
             walkDirection = null;
         } else {
             walkDirection = path.pop();
-            lastDirection = walkDirection;
+            direction = walkDirection;
             if (!region.isWalkable(DirectionService.step(start, walkDirection))) {
                 nextDirection();
             }
@@ -74,7 +88,7 @@ public abstract class Actor extends UpdatedFrame implements Savable {
 
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
-        graphics.drawImage(images.get(lastDirection), start.x, start.y, tileSize, tileSize);
+        graphics.drawImage(images.get(direction), start.x, start.y, tileSize, tileSize);
     }
 
     public void onStep() {
@@ -142,7 +156,7 @@ public abstract class Actor extends UpdatedFrame implements Savable {
             path.clear();
         }
         if (direction != null) {
-            lastDirection = direction;
+            this.direction = direction;
         }
     }
 
@@ -167,31 +181,7 @@ public abstract class Actor extends UpdatedFrame implements Savable {
         this.realStatus = realStatus;
     }
 
-    @Override
-    public String toSaveString() {
-        return toJSON().toString();
-    }
-
-    @Override
-    public JSONObject toJSON() {
-        JSONObject returned = new JSONObject();
-        returned.put("name", resourcesName);
-
-        {
-            JSONObject point = new JSONObject();
-            point.put("x", start.x);
-            point.put("y", start.y);
-            returned.put("start", point);
-        }
-        {
-            JSONObject sizeJSON = new JSONObject();
-            sizeJSON.put("x", size.x);
-            sizeJSON.put("y", size.y);
-            returned.put("start", sizeJSON);
-        }
-        returned.put("direction", lastDirection.toJSON());
-        returned.put("standard_status", standardStatus.toJSON());
-        returned.put("real_status", realStatus.toJSON());
-        return returned;
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }

@@ -1,11 +1,15 @@
 package ru.vladrus13.rpg.world.actors;
 
-import org.json.JSONObject;
 import ru.vladrus13.rpg.saves.Savable;
+import ru.vladrus13.rpg.saves.SaveConstante;
 
-public class Status implements Savable {
+@Savable(implemented = false)
+public class Status {
+    @SaveConstante(name = "hp", constructor = 0)
     public int hp;
+    @SaveConstante(name = "mp", constructor = 1)
     public int mp;
+    @SaveConstante(name = "attack", constructor = 2)
     public int attack;
 
     public Status() {
@@ -22,19 +26,5 @@ public class Status implements Savable {
 
     public Status copy() {
         return new Status(hp, mp, attack);
-    }
-
-    @Override
-    public String toSaveString() {
-        return toJSON().toString();
-    }
-
-    @Override
-    public JSONObject toJSON() {
-        JSONObject returned = new JSONObject();
-        returned.put("hp", hp);
-        returned.put("mp", mp);
-        returned.put("attack", attack);
-        return returned;
     }
 }

@@ -5,16 +5,26 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Variables implements Savable {
+@Savable(implemented = false)
+public class Variables {
+    @SaveConstante(name = "variables", setNameFunction = "setVariables")
     public Map<String, String> variables = new HashMap<>();
 
-    @Override
-    public String toSaveString() {
-        return toJSON().toString();
+    public String get(String key) {
+        return variables.get(key);
     }
 
-    @Override
-    public JSONObject toJSON() {
-        return new JSONObject(variables);
+    public long getLong(String key) {
+        return Long.parseLong(variables.get(key));
+    }
+
+    public int getInt(String key) {
+        return Integer.parseInt(variables.get(key));
+    }
+
+    public void setVariables(JSONObject jsonObject) {
+        for (String key : jsonObject.keySet()) {
+            variables.put(key, jsonObject.getString(key));
+        }
     }
 }

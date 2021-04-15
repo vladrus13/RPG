@@ -1,12 +1,9 @@
 package ru.vladrus13.rpg.basic.direction;
 
-import org.json.JSONObject;
-import ru.vladrus13.rpg.saves.Savable;
-
 /**
  * Direction enum
  */
-public enum Direction implements Savable {
+public enum Direction {
     /**
      * Up
      */
@@ -44,20 +41,8 @@ public enum Direction implements Savable {
         }
     };
 
-
     /**
      * @return capitalization string of direction
      */
     public abstract String getCapitalize();
-
-
-    @Override
-    public String toSaveString() {
-        return this.getCapitalize();
-    }
-
-    @Override
-    public JSONObject toJSON() {
-        return new JSONObject(this.getCapitalize());
-    }
 }

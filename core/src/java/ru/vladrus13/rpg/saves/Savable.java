@@ -1,9 +1,12 @@
 package ru.vladrus13.rpg.saves;
 
-import org.json.JSONObject;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 
-public interface Savable {
-    String toSaveString();
-
-    JSONObject toJSON();
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Savable {
+    boolean implemented();
 }

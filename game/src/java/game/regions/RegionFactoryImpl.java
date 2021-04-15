@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RegionFactory {
+public class RegionFactoryImpl {
 
     private final static int MAX_ID = 1000;
 
