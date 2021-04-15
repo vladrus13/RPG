@@ -1,5 +1,6 @@
 package ru.vladrus13.rpg.saves;
 
+import org.json.JSONObject;
 import ru.vladrus13.rpg.world.actors.Actor;
 
 import java.util.HashMap;
@@ -11,6 +12,14 @@ public class Save implements Savable {
 
     @Override
     public String toSaveString() {
-        return null;
+        return toJSON().toString();
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("hero", hero);
+        jsonObject.put("variables", regionsData);
+        return jsonObject;
     }
 }

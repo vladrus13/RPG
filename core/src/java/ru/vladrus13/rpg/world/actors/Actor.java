@@ -1,5 +1,6 @@
 package ru.vladrus13.rpg.world.actors;
 
+import org.json.JSONObject;
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
@@ -168,6 +169,29 @@ public abstract class Actor extends UpdatedFrame implements Savable {
 
     @Override
     public String toSaveString() {
-        return
+        return toJSON().toString();
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject returned = new JSONObject();
+        returned.put("name", resourcesName);
+
+        {
+            JSONObject point = new JSONObject();
+            point.put("x", start.x);
+            point.put("y", start.y);
+            returned.put("start", point);
+        }
+        {
+            JSONObject sizeJSON = new JSONObject();
+            sizeJSON.put("x", size.x);
+            sizeJSON.put("y", size.y);
+            returned.put("start", sizeJSON);
+        }
+        returned.put("direction", lastDirection.toJSON());
+        returned.put("standard_status", standardStatus.toJSON());
+        returned.put("real_status", realStatus.toJSON());
+        return returned;
     }
 }
