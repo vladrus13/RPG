@@ -2,17 +2,21 @@ package ru.vladrus13.rpg.world.actors;
 
 import org.json.JSONObject;
 import ru.vladrus13.graphic.Graphics;
+import ru.vladrus13.jgraphic.App;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.property.MainProperty;
+import ru.vladrus13.jgraphic.services.AppService;
+import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.rpg.resources.ActorResources;
 import ru.vladrus13.rpg.saves.Savable;
 import ru.vladrus13.rpg.saves.SaveConstante;
+import ru.vladrus13.rpg.world.factory.ActorFactory;
 import ru.vladrus13.rpg.world.items.inventory.Inventory;
 import ru.vladrus13.rpg.world.region.Region;
 
@@ -24,14 +28,16 @@ import java.util.Map;
 
 @Savable(implemented = true)
 public abstract class Actor extends UpdatedFrame {
+    @SaveConstante(name = "id")
+    protected final int id;
     protected static final int tileSize = MainProperty.getInteger("world.region.tileSize");
     @SaveConstante(name = "inventory")
     public Inventory inventory = new Inventory();
     protected final Deque<Direction> path = new LinkedList<>();
-    @SaveConstante(name = "realName", constructor = 1)
-    protected final String name;
     @SaveConstante(name = "name", constructor = 1)
-    protected final String resourcesName;
+    protected final String name;
+    @SaveConstante(name = "systemName", constructor = 1)
+    protected final String systemName;
     private final Map<Direction, BufferedImage> images;
     @SaveConstante(name = "direction")
     public Direction direction = Direction.DOWN;
@@ -46,23 +52,26 @@ public abstract class Actor extends UpdatedFrame {
     public boolean untouchable = false;
     public int command = 0;
 
-    public Actor(JSONObject jsonObject) {
-        this(jsonObject.getString("name"),
-                new Point(jsonObject.getJSONObject("start").getLong("x"), jsonObject.getJSONObject("start").getLong("y")),
-                jsonObject.getString("realName"), null);
-
+    public static Actor getInstance(JSONObject jsonObject) {
+        return ActorFactory.createActor(jsonObject.getInt("id"), new Point(jsonObject.getJSONObject("start").getLong("x"), jsonObject.getJSONObject("start").getLong("y")),
+                ((Game) AppService.getApp()).getCurrentWorld().getCurrentRegion());
     }
 
-    public Actor(String systemName, Point start, String name, Region region) {
-        super(systemName, start, new Size(
+    public Map<String, Object> getPrivateFields() {
+        return Map.of("start", start.copy());
+    }
+
+    public Actor(int id, String systemName, Point start, String name, Region region) {
+        super("actor" + id, start, new Size(
                         MainProperty.getInteger("world.region.tileSize"),
                         MainProperty.getInteger("world.region.tileSize"), CoordinatesType.REAL),
                 region);
+        this.id = id;
+        this.systemName = systemName;
         this.name = name;
-        this.resourcesName = systemName;
         this.region = region;
         this.inventory.setActor(this);
-        images = ActorResources.loadActor(resourcesName);
+        images = ActorResources.loadActor(systemName);
         recalculate();
     }
 

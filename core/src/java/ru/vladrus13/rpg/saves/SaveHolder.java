@@ -3,6 +3,7 @@ package ru.vladrus13.rpg.saves;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.world.actors.Actor;
@@ -86,16 +87,36 @@ public class SaveHolder {
                 type.isAssignableFrom(int.class);
     }
 
-    private static Object getSimple(Object object, Class<?> type) {
+    private static JSONObject getSimple(Object object, Class<?> type) {
         if (!isSimple(type)) {
             throw new IllegalStateException("Can't get simple from: " + type.getName());
         }
-        return object;
+        return new JSONObject(object);
     }
 
     public static JSONObject recursiveJSON(Object object) throws IllegalAccessException {
         Class<?> eClass = object.getClass();
         JSONObject jsonObject = new JSONObject();
+        if (eClass.isAssignableFrom(Point.class)) {
+            jsonObject.put("x", ((Point) object).x);
+            jsonObject.put("y", ((Point) object).y);
+            return jsonObject;
+        }
+        if (isSimple(eClass)) {
+            return getSimple(object, eClass);
+        }
+        if (Arrays.stream(eClass.getMethods()).anyMatch(method -> method.getName().equals("getPrivateFields"))) {
+            try {
+                Method method = eClass.getMethod("getPrivateFields");
+                @SuppressWarnings("unchecked")
+                Map <String, Object> result = (Map<String, Object>) method.invoke(object);
+                for (Map.Entry<String, Object> entry : result.entrySet()) {
+                    jsonObject.put(entry.getKey(), recursiveJSON(entry.getValue()));
+                }
+            } catch (NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
         while (!eClass.isInstance(Object.class)) {
             for (Field field : eClass.getDeclaredFields()) {
                 field.setAccessible(true);
@@ -161,6 +182,13 @@ public class SaveHolder {
                             jsonObject.put(name, ((Direction) field.get(object)).getCapitalize());
                             continue;
                         }
+                        if (field.getType().isAssignableFrom(Point.class)) {
+                            JSONObject point = new JSONObject();
+                            Point real = (Point) field.get(object);
+                            point.put("x", real.x);
+                            point.put("y", real.y);
+                            jsonObject.put(name, real);
+                        }
                         throw new IllegalStateException("Can't save type: " + field.getType().getName());
                     }
                 }
@@ -184,10 +212,10 @@ public class SaveHolder {
             Object newInstance = null;
             if (savable.implemented()) {
                 try {
-                    Constructor<?> constructor = clazz.getConstructor(JSONObject.class);
-                    constructor.setAccessible(true);
-                    newInstance = constructor.newInstance(object);
-                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    Method method = clazz.getMethod("getInstance", JSONObject.class);
+                    method.setAccessible(true);
+                    newInstance = method.invoke(clazz, object);
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                     Writer.printStackTrace(logger, e);
                 }
             } else {
@@ -244,7 +272,9 @@ public class SaveHolder {
             if (isSimple(clazz)) {
                 return getSimple(object, clazz);
             }
-
+            if (clazz.isInstance(Point.class)) {
+                return new Point(object.getLong("x"), object.getLong("y"));
+            }
             throw new IllegalStateException("Can't read type: " + clazz.getName());
         }
     }

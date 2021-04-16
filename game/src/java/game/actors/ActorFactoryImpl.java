@@ -1,38 +1,42 @@
 package game.actors;
 
+import game.actors.impl.Hero;
 import game.actors.impl.Pirate;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.rpg.resources.ActorResources;
 import ru.vladrus13.rpg.world.actors.Actor;
+import ru.vladrus13.rpg.world.factory.ActorFactory;
 import ru.vladrus13.rpg.world.region.Region;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
 public class ActorFactoryImpl {
 
-    private final static Logger logger = Logger.getLogger(ActorFactoryImpl.class.getName());
+    private final static int MAX_ID = 1000;
 
-    private final static Map<String, Actor> actors = new HashMap<>();
+    public static Method[] actors;
 
-    static {
-
-    }
-
-    public static Actor createActor(String systemName, Point start, Region region) throws GameException {
-        String methodName = "create" + systemName.substring(0, 1).toUpperCase() + systemName.substring(1);
+    public static void init() {
         try {
-            return (Actor) ActorFactoryImpl.class.getDeclaredMethod(methodName, Point.class, Region.class).invoke(ActorFactoryImpl.class, start, region);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            throw new GameException(e);
+            actors = new Method[MAX_ID];
+            actors[1] = ActorFactoryImpl.class.getDeclaredMethod("createHero", Point.class, Region.class);
+            actors[2] = ActorFactoryImpl.class.getDeclaredMethod("createPirate", Point.class, Region.class);
+            ActorFactory.actors = actors;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
     }
 
-    @SuppressWarnings("unused")
-    private static Pirate createPirate(Point start, Region region) {
-        return new Pirate(start, region, ActorResources.getResourcesBundle("pirate.name"));
+    public static Hero createHero(Point start, Region region) {
+        return new Hero(start, region, ActorResources.getResourcesBundle("1.name"));
+    }
+
+    public static Pirate createPirate(Point start, Region region) {
+        return new Pirate(start, region, ActorResources.getResourcesBundle("2.name"));
     }
 }

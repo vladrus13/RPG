@@ -25,6 +25,7 @@ import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.components.Tile;
+import ru.vladrus13.rpg.world.factory.ActorFactory;
 import ru.vladrus13.rpg.world.factory.ItemFactory;
 import ru.vladrus13.rpg.world.items.inventory.Items;
 import ru.vladrus13.rpg.world.places.Barter;
@@ -47,7 +48,7 @@ public class StartTower2 {
     private final static int tileSize = MainProperty.getInteger("world.region.tileSize");
 
     private static void setActors(Region region) throws GameException {
-        Actor pirate = ActorFactoryImpl.createActor("pirate", new Point(6L * tileSize, 4L * tileSize), region);
+        Actor pirate = ActorFactory.createActor(2, new Point(6L * tileSize, 4L * tileSize), region);
         Choose pirateChoose;
         BarterPlace pirateBarterPlace = new BarterPlace(new ArrayList<>(Arrays.asList(
                 new Barter(new ArrayList<>(Collections.singletonList(

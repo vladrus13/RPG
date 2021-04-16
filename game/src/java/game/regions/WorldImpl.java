@@ -13,6 +13,7 @@ import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.World;
+import ru.vladrus13.rpg.world.factory.ActorFactory;
 import ru.vladrus13.rpg.world.region.Region;
 
 import java.awt.event.KeyEvent;
@@ -35,7 +36,7 @@ public class WorldImpl extends World {
         }
         this.game = game;
         int tileSize = MainProperty.getInteger("world.region.tileSize");
-        hero = new Hero(new Point(tileSize, tileSize, CoordinatesType.REAL), region);
+        hero = (Hero) ActorFactory.createActor(1, new Point(tileSize, tileSize, CoordinatesType.REAL), region);
         SaveHolder.setHero(hero);
         region.setHero(hero);
         addFocused(region);
@@ -83,5 +84,10 @@ public class WorldImpl extends World {
                 Writer.printStackTrace(logger, e);
             }
         }
+    }
+
+    @Override
+    public Region getCurrentRegion() {
+        return region;
     }
 }

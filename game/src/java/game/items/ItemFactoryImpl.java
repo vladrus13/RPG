@@ -15,7 +15,7 @@ public class ItemFactoryImpl {
 
     private final static Class<?>[] items = new Class<?>[MAX_ID];
 
-    static {
+    public static void init() {
         items[1] = TinSword.class;
         items[101] = Coins.class;
         ItemFactory.items = items;

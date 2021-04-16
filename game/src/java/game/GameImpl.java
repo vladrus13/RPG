@@ -1,5 +1,7 @@
 package game;
 
+import game.actors.ActorFactoryImpl;
+import game.items.ItemFactoryImpl;
 import game.regions.WorldImpl;
 import ru.vladrus13.graphic.PCGraphicsAWTImpl;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
@@ -8,6 +10,7 @@ import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.menu.Menu;
+import ru.vladrus13.rpg.world.World;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,6 +25,8 @@ public class GameImpl extends Game {
     public GameImpl() {
         super(MainProperty.getInteger("window.width"), MainProperty.getInteger("window.height"));
         current = new Menu(frame.getWidth(), frame.getHeight(), this);
+        ActorFactoryImpl.init();
+        ItemFactoryImpl.init();
         painter();
     }
 
@@ -74,6 +79,14 @@ public class GameImpl extends Game {
     }
 
     @Override
+    public World getCurrentWorld() {
+        if (current instanceof World) {
+            return (World) current;
+        }
+        return null;
+    }
+
+    @Override
     public void keyReleased(KeyEvent e) {
     }
 
@@ -97,4 +110,6 @@ public class GameImpl extends Game {
     @Override
     public void mouseExited(MouseEvent e) {
     }
+
+
 }

@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 
 public class Pirate extends Actor {
     public Pirate(Point start, Region region, String name) {
-        super("pirate", start, name, region);
+        super(2, "pirate", start, name, region);
     }
 
     @Override

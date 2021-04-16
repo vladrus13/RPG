@@ -10,8 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class Hero extends Actor {
-    public Hero(Point start, Region region) {
-        super("hero", start, "hero", region);
+    public Hero(Point start, Region region, String name) {
+        super(1, "hero", start, name, region);
         this.onStep = new RegionEventOnStep(this);
     }
 
@@ -49,6 +49,6 @@ public class Hero extends Actor {
 
     @Override
     public Actor copy() {
-        return new Hero(start.copy(), region);
+        return new Hero(start.copy(), region, name);
     }
 }
