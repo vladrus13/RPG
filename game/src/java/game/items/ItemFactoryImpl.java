@@ -2,12 +2,7 @@ package game.items;
 
 import game.items.impl.money.Coins;
 import game.items.impl.weapons.TinSword;
-import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.rpg.world.factory.ItemFactory;
-import ru.vladrus13.rpg.world.items.Item;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Logger;
 
 public class ItemFactoryImpl {
 

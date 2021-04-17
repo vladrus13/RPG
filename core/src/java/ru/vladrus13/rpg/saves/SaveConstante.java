@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface SaveConstante {
     String name();
+
     int constructor() default -1;
+
     String setNameFunction() default "";
 }

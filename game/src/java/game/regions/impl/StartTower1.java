@@ -28,7 +28,7 @@ public class StartTower1 {
         ArrayList<ArrayList<Tile>> tiles = RegionFactoryImpl.getTiles(map, tileSize, parent);
         Region region = (new Region(1, "1", parent)).setTiles(tiles);
         region.setOnStep(new WorldEventTeleport(2, new Point(tileSize, tileSize), Direction.LEFT), new Point(1, 3));
-        SaveHolder.setVariable(region, "created", "1");
+        SaveHolder.save.set(region, "created", "1");
         return region;
     }
 }

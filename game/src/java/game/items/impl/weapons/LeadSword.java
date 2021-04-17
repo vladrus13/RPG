@@ -18,12 +18,12 @@ public class LeadSword extends Weapon {
         return new LeadSword();
     }
 
+    public static int getId() {
+        return staticId;
+    }
+
     @Override
     public Item copy() {
         return getInstance();
-    }
-
-    public static int getId() {
-        return staticId;
     }
 }

@@ -1,14 +1,17 @@
 package ru.vladrus13.rpg.world.items.inventory;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import ru.vladrus13.rpg.saves.Savable;
 import ru.vladrus13.rpg.saves.SaveConstante;
+import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Status;
 import ru.vladrus13.rpg.world.items.Item;
 
 import java.util.ArrayList;
 
-@Savable(implemented = false)
+@Savable(implemented = true)
 public class Inventory {
     @SaveConstante(name = "items", constructor = 0)
     public final ArrayList<Items> items;
@@ -20,6 +23,18 @@ public class Inventory {
 
     public Inventory() {
         this.items = new ArrayList<>();
+    }
+
+    public static Inventory getInstance(Object object) {
+        if (!(object instanceof JSONObject)) {
+            throw new IllegalArgumentException("Inventory must be instanced from JSONObject");
+        }
+        JSONArray jsonArray = ((JSONObject) object).getJSONArray("items");
+        ArrayList<Items> items = new ArrayList<>();
+        for (Object jsonObject : jsonArray) {
+            items.add((Items) SaveHolder.recursiveSet(jsonObject, Items.class));
+        }
+        return new Inventory(items);
     }
 
     public void addItem(Item item) {

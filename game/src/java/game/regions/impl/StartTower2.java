@@ -1,7 +1,5 @@
 package game.regions.impl;
 
-import game.actors.ActorFactoryImpl;
-import game.items.ItemFactoryImpl;
 import game.items.impl.weapons.TinSword;
 import game.regions.RegionFactoryImpl;
 import ru.vladrus13.jgraphic.basic.components.Background;
@@ -86,7 +84,7 @@ public class StartTower2 {
                 new Size(800, 800, CoordinatesType.RATIO), region, new Size(800, 100, CoordinatesType.RATIO),
                 new String[]{"Hello", "Shop", "Bye"}, new Event[]{null,
                         shopEvent, byeEvent}, new Event[]{null, null, null}, buttonFactory, textFactory);
-        SaveHolder.setVariable(region, "created", "1");
+        SaveHolder.save.set(region, "created", "1");
         pirate.setOnTrigger(new RegionEventFocused(pirateChoose, true, false));
         region.setActors(new ArrayList<>(Collections.singletonList(pirate)));
         SaveHolder.save(Path.of("../resources/saves/quicksave.save"));

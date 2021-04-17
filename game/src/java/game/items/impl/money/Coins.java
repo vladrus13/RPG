@@ -15,12 +15,12 @@ public class Coins extends Money {
         return new Coins();
     }
 
+    public static int getId() {
+        return staticId;
+    }
+
     @Override
     public Item copy() {
         return getInstance();
-    }
-
-    public static int getId() {
-        return staticId;
     }
 }

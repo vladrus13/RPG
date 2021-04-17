@@ -27,4 +27,8 @@ public class Variables {
             variables.put(key, jsonObject.getString(key));
         }
     }
+
+    public void set(String key, String value) {
+        variables.put(key, value);
+    }
 }

@@ -1,24 +1,40 @@
 package ru.vladrus13.rpg.world.items;
 
+import org.json.JSONObject;
+import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.saves.Savable;
 import ru.vladrus13.rpg.saves.SaveConstante;
 import ru.vladrus13.rpg.world.actors.Status;
+import ru.vladrus13.rpg.world.factory.ItemFactory;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
-@Savable(implemented = false)
+@Savable(implemented = true)
 public abstract class Item {
-    @SaveConstante(name = "id", constructor = 0)
+    private static final Logger logger = Logger.getLogger(Item.class.getName());
+    @SaveConstante(name = "id", constructor = 1)
     public final int id;
-    @SaveConstante(name = "name", constructor = 1)
     public final String name;
-    @SaveConstante(name = "description", constructor = 2)
     public final String description;
 
     public Item(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public static Item getInstance(Object object) {
+        if (!(object instanceof JSONObject)) {
+            throw new IllegalArgumentException("Inventory must be instanced from JSONObject");
+        }
+        try {
+            return ItemFactory.get(((JSONObject) object).getInt("id"));
+        } catch (GameException e) {
+            Writer.printStackTrace(logger, e);
+        }
+        return null;
     }
 
     public static int getId() {

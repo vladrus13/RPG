@@ -2,14 +2,12 @@ package ru.vladrus13.rpg.world.actors;
 
 import org.json.JSONObject;
 import ru.vladrus13.graphic.Graphics;
-import ru.vladrus13.jgraphic.App;
+import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.property.MainProperty;
-import ru.vladrus13.jgraphic.services.AppService;
-import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
@@ -28,19 +26,20 @@ import java.util.Map;
 
 @Savable(implemented = true)
 public abstract class Actor extends UpdatedFrame {
-    @SaveConstante(name = "id")
-    protected final int id;
     protected static final int tileSize = MainProperty.getInteger("world.region.tileSize");
-    @SaveConstante(name = "inventory")
-    public Inventory inventory = new Inventory();
+    @SaveConstante(name = "id", constructor = 1)
+    protected final int id;
     protected final Deque<Direction> path = new LinkedList<>();
-    @SaveConstante(name = "name", constructor = 1)
     protected final String name;
     @SaveConstante(name = "systemName", constructor = 1)
     protected final String systemName;
     private final Map<Direction, BufferedImage> images;
+    @SaveConstante(name = "inventory")
+    public Inventory inventory = new Inventory();
     @SaveConstante(name = "direction")
     public Direction direction = Direction.DOWN;
+    public boolean untouchable = false;
+    public int command = 0;
     protected Direction walkDirection;
     protected Region region;
     protected RegionEvent onTrigger;
@@ -49,17 +48,6 @@ public abstract class Actor extends UpdatedFrame {
     protected Status standardStatus = new Status();
     @SaveConstante(name = "real_status")
     protected Status realStatus = new Status();
-    public boolean untouchable = false;
-    public int command = 0;
-
-    public static Actor getInstance(JSONObject jsonObject) {
-        return ActorFactory.createActor(jsonObject.getInt("id"), new Point(jsonObject.getJSONObject("start").getLong("x"), jsonObject.getJSONObject("start").getLong("y")),
-                ((Game) AppService.getApp()).getCurrentWorld().getCurrentRegion());
-    }
-
-    public Map<String, Object> getPrivateFields() {
-        return Map.of("start", start.copy());
-    }
 
     public Actor(int id, String systemName, Point start, String name, Region region) {
         super("actor" + id, start, new Size(
@@ -73,6 +61,19 @@ public abstract class Actor extends UpdatedFrame {
         this.inventory.setActor(this);
         images = ActorResources.loadActor(systemName);
         recalculate();
+    }
+
+    public static Actor getInstance(Object object) {
+        if (!(object instanceof JSONObject)) {
+            throw new IllegalArgumentException("Actor must be instanced from JSONObject");
+        }
+        JSONObject jsonObject = (JSONObject) object;
+        return ActorFactory.createActor(jsonObject.getInt("id"), new Point(jsonObject.getJSONObject("start").getLong("x"), jsonObject.getJSONObject("start").getLong("y")),
+                null);
+    }
+
+    public Map<String, Object> getPrivateFields() {
+        return Map.of("start", start.copy());
     }
 
     public void makeMove(Direction direction) {
@@ -110,6 +111,9 @@ public abstract class Actor extends UpdatedFrame {
 
     @Override
     protected void nonCheckingUpdate(long delay) {
+        if (region == null) {
+            return;
+        }
         int speed = getSpeed();
         if (walkDirection == null) {
             nextDirection();
@@ -192,5 +196,10 @@ public abstract class Actor extends UpdatedFrame {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public void setParent(Region region) {
+        this.setParent((Frame) region);
+        this.region = region;
     }
 }

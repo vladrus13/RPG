@@ -2,7 +2,6 @@ package game;
 
 import game.actors.ActorFactoryImpl;
 import game.items.ItemFactoryImpl;
-import game.regions.WorldImpl;
 import ru.vladrus13.graphic.PCGraphicsAWTImpl;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.event.Event;

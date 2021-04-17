@@ -1,23 +1,21 @@
-package game.regions;
+package game;
 
 import game.actors.impl.Hero;
+import game.regions.RegionFactoryImpl;
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.bean.CoordinatesType;
-import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.exception.GameException;
-import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.World;
-import ru.vladrus13.rpg.world.factory.ActorFactory;
 import ru.vladrus13.rpg.world.region.Region;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 public class WorldImpl extends World {
@@ -29,15 +27,16 @@ public class WorldImpl extends World {
 
     public WorldImpl(int width, int height, Game game) {
         super(width, height);
+        SaveHolder.loadQuickSave();
         try {
-            region = RegionFactoryImpl.getRegion(1, this);
+            Integer floor = SaveHolder.save.getInt("floor");
+            region = RegionFactoryImpl.getRegion(floor == null ? 1 : floor, this);
         } catch (GameException e) {
             Writer.printStackTrace(logger, e);
         }
         this.game = game;
-        int tileSize = MainProperty.getInteger("world.region.tileSize");
-        hero = (Hero) ActorFactory.createActor(1, new Point(tileSize, tileSize, CoordinatesType.REAL), region);
-        SaveHolder.setHero(hero);
+        hero = (Hero) SaveHolder.save.hero;
+        hero.setParent(region);
         region.setHero(hero);
         addFocused(region);
         addChild(hero);
@@ -47,12 +46,16 @@ public class WorldImpl extends World {
 
     @Override
     public void nonCheckingDraw(Graphics graphics) {
-        region.draw(graphics);
+        if (region != null) {
+            region.draw(graphics);
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        focused.getFirst().keyPressed(e);
+        if (!focused.isEmpty()) {
+            focused.getFirst().keyPressed(e);
+        }
     }
 
     @Override
@@ -80,6 +83,8 @@ public class WorldImpl extends World {
                 addFocused(region);
                 region.setHero(hero);
                 hero.teleport(region, ((WorldEventTeleport) event).getPoint(), ((WorldEventTeleport) event).getDirection());
+                SaveHolder.save.set("floor", String.valueOf(region.id));
+                SaveHolder.quickSave();
             } catch (GameException e) {
                 Writer.printStackTrace(logger, e);
             }

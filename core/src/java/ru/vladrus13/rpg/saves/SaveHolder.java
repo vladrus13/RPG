@@ -15,68 +15,24 @@ import java.io.IOException;
 import java.lang.reflect.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.Annotation;
 import java.util.*;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class SaveHolder {
-    public static Save save;
     private static final Logger logger = Logger.getLogger(SaveHolder.class.getName());
+    public static Save save;
 
     public static Save getSave() {
         return save;
-    }
-
-    public static void newSave() {
-        save = new Save();
     }
 
     public static void setSave(Save save) {
         SaveHolder.save = save;
     }
 
-    public static Variables getVariables(Region region) {
-        return save.regionsData.get(region.name);
-    }
-
-    public static String get(Region region, String key) {
-        Variables variables = getVariables(region);
-        if (variables == null) {
-            return null;
-        }
-        return variables.variables.get(key);
-    }
-
-    public Long getLong(Region region, String key) {
-        String ret = get(region, key);
-        if (ret == null) {
-            return null;
-        }
-        return Long.parseLong(ret);
-    }
-
-    public Integer getInt(Region region, String key) {
-        String ret = get(region, key);
-        if (ret == null) {
-            return null;
-        }
-        return Integer.parseInt(ret);
-    }
-
-    public static void setVariable(Region region, String key, String value) {
-        Variables variables = getVariables(region);
-        if (variables == null) {
-            save.regionsData.put(region.name, new Variables());
-        }
-        variables = getVariables(region);
-        variables.variables.put(key, value);
-    }
-
-    public static void setHero(Actor hero) {
-        save.hero = hero;
+    public static void newSave() {
+        save = new Save();
     }
 
     private static boolean isSimple(Class<?> type) {
@@ -87,11 +43,18 @@ public class SaveHolder {
                 type.isAssignableFrom(int.class);
     }
 
-    private static JSONObject getSimple(Object object, Class<?> type) {
+    private static JSONObject getSimpleJSON(Object object, Class<?> type) {
         if (!isSimple(type)) {
             throw new IllegalStateException("Can't get simple from: " + type.getName());
         }
         return new JSONObject(object);
+    }
+
+    private static Object getSimple(Object object, Class<?> type) {
+        if (!isSimple(type)) {
+            throw new IllegalStateException("Can't get simple from: " + type.getName());
+        }
+        return object;
     }
 
     public static JSONObject recursiveJSON(Object object) throws IllegalAccessException {
@@ -103,13 +66,13 @@ public class SaveHolder {
             return jsonObject;
         }
         if (isSimple(eClass)) {
-            return getSimple(object, eClass);
+            return getSimpleJSON(object, eClass);
         }
         if (Arrays.stream(eClass.getMethods()).anyMatch(method -> method.getName().equals("getPrivateFields"))) {
             try {
                 Method method = eClass.getMethod("getPrivateFields");
                 @SuppressWarnings("unchecked")
-                Map <String, Object> result = (Map<String, Object>) method.invoke(object);
+                Map<String, Object> result = (Map<String, Object>) method.invoke(object);
                 for (Map.Entry<String, Object> entry : result.entrySet()) {
                     jsonObject.put(entry.getKey(), recursiveJSON(entry.getValue()));
                 }
@@ -179,7 +142,7 @@ public class SaveHolder {
                             continue;
                         }
                         if (field.getType().isAssignableFrom(Direction.class)) {
-                            jsonObject.put(name, ((Direction) field.get(object)).getCapitalize());
+                            jsonObject.put(name, ((Direction) field.get(object)).toString());
                             continue;
                         }
                         if (field.getType().isAssignableFrom(Point.class)) {
@@ -206,13 +169,17 @@ public class SaveHolder {
         }
     }
 
-    public static Object recursiveSet(JSONObject object, Class<?> clazz) {
+    public static Object recursiveSet(Object object, Class<?> clazz) {
         if (Arrays.stream(clazz.getAnnotations()).anyMatch(it -> it instanceof Savable)) {
+            if (!(object instanceof JSONObject)) {
+                throw new IllegalArgumentException("Readen object can't be not JSONObject, if current class is Savable");
+            }
+            JSONObject jsonObject = (JSONObject) object;
             Savable savable = clazz.getAnnotation(Savable.class);
             Object newInstance = null;
             if (savable.implemented()) {
                 try {
-                    Method method = clazz.getMethod("getInstance", JSONObject.class);
+                    Method method = clazz.getMethod("getInstance", Object.class);
                     method.setAccessible(true);
                     newInstance = method.invoke(clazz, object);
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -220,22 +187,28 @@ public class SaveHolder {
                 }
             } else {
                 Map<Integer, Object> constructorFields = new HashMap<>();
+                Map<Integer, Class<?>> constructorTypes = new HashMap<>();
                 for (Field field : clazz.getDeclaredFields()) {
                     if (Arrays.stream(field.getAnnotations()).anyMatch(it -> it instanceof SaveConstante)) {
                         SaveConstante saveConstante = field.getAnnotation(SaveConstante.class);
                         if (saveConstante.constructor() == -1) continue;
-                        Object part = recursiveSet(object.getJSONObject(saveConstante.name()), field.getType());
+                        Object part = recursiveSet(jsonObject.get(saveConstante.name()), field.getType());
                         constructorFields.put(saveConstante.constructor(), part);
+                        constructorTypes.put(saveConstante.constructor(), field.getType());
                     }
                 }
                 Object[] constructors = constructorFields
                         .entrySet()
                         .stream()
                         .sorted(Comparator.comparingInt(Map.Entry::getKey))
+                        .map(Map.Entry::getValue)
                         .toArray();
                 Class<?>[] classesConstructors = new Class<?>[constructors.length];
-                classesConstructors = Arrays.stream(constructors)
-                        .map(Object::getClass)
+                classesConstructors = constructorTypes
+                        .entrySet()
+                        .stream()
+                        .sorted(Comparator.comparingInt(Map.Entry::getKey))
+                        .map(Map.Entry::getValue)
                         .collect(Collectors.toCollection(ArrayList::new))
                         .toArray(classesConstructors);
                 try {
@@ -252,15 +225,16 @@ public class SaveHolder {
                 if (Arrays.stream(field.getAnnotations()).anyMatch(it -> it instanceof SaveConstante)) {
                     SaveConstante saveConstante = field.getAnnotation(SaveConstante.class);
                     if (saveConstante.constructor() != -1) continue;
+                    field.setAccessible(true);
                     if (saveConstante.setNameFunction().isEmpty()) {
                         try {
-                            field.set(newInstance, recursiveSet(object.getJSONObject(saveConstante.name()), field.getType()));
+                            field.set(newInstance, recursiveSet(jsonObject.get(saveConstante.name()), field.getType()));
                         } catch (IllegalAccessException e) {
                             Writer.printStackTrace(logger, e);
                         }
                     } else {
                         try {
-                            clazz.getMethod(saveConstante.setNameFunction(), JSONObject.class).invoke(newInstance, object.getJSONObject(saveConstante.name()));
+                            clazz.getMethod(saveConstante.setNameFunction(), JSONObject.class).invoke(newInstance, jsonObject.getJSONObject(saveConstante.name()));
                         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                             Writer.printStackTrace(logger, e);
                         }
@@ -272,8 +246,19 @@ public class SaveHolder {
             if (isSimple(clazz)) {
                 return getSimple(object, clazz);
             }
-            if (clazz.isInstance(Point.class)) {
-                return new Point(object.getLong("x"), object.getLong("y"));
+            if (clazz.isAssignableFrom(Point.class)) {
+                if (!(object instanceof JSONObject)) {
+                    throw new IllegalArgumentException("Readen object can't be not JSONObject, if current class is Point");
+                }
+                JSONObject jsonObject = (JSONObject) object;
+                return new Point(jsonObject.getLong("x"), jsonObject.getLong("y"));
+            }
+            if (clazz.isAssignableFrom(Direction.class)) {
+                if (!(object instanceof String)) {
+                    throw new IllegalArgumentException("Readen object can't be not String, if current class is Direction");
+                }
+                String str = (String) object;
+                return Direction.valueOf(str);
             }
             throw new IllegalStateException("Can't read type: " + clazz.getName());
         }
@@ -286,5 +271,13 @@ public class SaveHolder {
         } catch (IOException e) {
             Writer.printStackTrace(logger, e);
         }
+    }
+
+    public static void loadQuickSave() {
+        load(Path.of("../resources/saves/quicksave.save"));
+    }
+
+    public static void quickSave() {
+        save(Path.of("../resources/saves/quicksave.save"));
     }
 }
