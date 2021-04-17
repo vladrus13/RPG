@@ -14,8 +14,11 @@ module ru.vladrus13.rpg {
     exports ru.vladrus13.rpg.resources;
     exports ru.vladrus13.rpg.saves;
     exports ru.vladrus13.rpg.world.factory;
+    exports ru.vladrus13.rpg.world.ai;
+    exports ru.vladrus13.rpg.world.ai.command;
+
     requires transitive java.logging;
-    requires ru.vladrus13.jgraphic;
+    requires transitive ru.vladrus13.jgraphic;
     requires java.desktop;
     requires org.json;
 }

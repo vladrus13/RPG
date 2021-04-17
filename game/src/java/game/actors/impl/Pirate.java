@@ -22,6 +22,10 @@ public class Pirate extends Actor {
 
     }
 
+    public void onTrigger() {
+        if (onTrigger != null) region.invokeRegionEvent(onTrigger);
+    }
+
     @Override
     public int getSpeed() {
         return 3;

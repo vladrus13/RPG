@@ -1,0 +1,80 @@
+package ru.vladrus13.rpg.world.actors;
+
+import ru.vladrus13.graphic.Graphics;
+import ru.vladrus13.jgraphic.bean.Point;
+import ru.vladrus13.rpg.basic.direction.DirectionService;
+import ru.vladrus13.rpg.world.ai.WarZoneAI;
+import ru.vladrus13.rpg.world.ai.command.AttackCommand;
+import ru.vladrus13.rpg.world.ai.command.Command;
+import ru.vladrus13.rpg.world.ai.command.StepCommand;
+import ru.vladrus13.rpg.world.ai.command.WaitCommand;
+import ru.vladrus13.rpg.world.region.WarZone;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+public abstract class Enemy extends Actor {
+
+    private WarZoneAI warZoneAI;
+    public long time = 0;
+
+    public Enemy(int id, String systemName, Point start, String name, WarZone region) {
+        super(id, systemName, start, name, region);
+    }
+
+    @Override
+    public void draw(Graphics graphics) {
+        super.draw(graphics);
+        int pixelsHP = tileSize * realStatus.hp / realStatus.maxHP;
+        graphics.setColor(new Color(100, 0, 0));
+        graphics.fillRect(start.x, start.y, tileSize, tileSize / 4);
+        graphics.setColor(new Color(255, 0, 0));
+        graphics.fillRect(start.x, start.y, pixelsHP, tileSize / 4);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) { }
+
+    @Override
+    public void mousePressed(MouseEvent e) { }
+
+    public void setWarZoneAI(WarZoneAI warZoneAI) {
+        this.warZoneAI = warZoneAI;
+    }
+
+    @Override
+    protected void nonCheckingUpdate(long delay) {
+        super.nonCheckingUpdate(delay);
+        time -= delay;
+        if (time <= 0) {
+            onFree();
+        }
+    }
+
+    public void onFree() {
+        Command command = warZoneAI.getCommand((WarZone) region, this);
+        if (command instanceof AttackCommand) {
+            ((AttackCommand) command).to.onDamage(this.realStatus.attack);
+            time += 1000;
+            return;
+        }
+        if (command instanceof WaitCommand) {
+            time += ((WaitCommand) command).time;
+            return;
+        }
+        if (command instanceof StepCommand) {
+            direction = ((StepCommand) command).move;
+            if (region.isWalkable(DirectionService.step(start, direction))) {
+                makeMove(direction);
+            }
+            return;
+        }
+        throw new IllegalArgumentException("Unknown command");
+    }
+
+    @Override
+    public void onStep() {
+        onFree();
+    }
+}

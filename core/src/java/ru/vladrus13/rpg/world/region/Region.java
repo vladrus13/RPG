@@ -11,6 +11,7 @@ import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
+import ru.vladrus13.rpg.basic.event.region.RegionEventDie;
 import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
@@ -129,14 +130,17 @@ public class Region extends UpdatedFrame {
         return tiles.get((int) a.x).get((int) a.y).isWalkable();
     }
 
-    public void moveActor(Actor actor, Point before, Point after, Direction direction) {
-        actor.teleport(this, after, direction);
+    public void moveActor(Actor actor, Point before, Point after) {
         getTile(before).actor = null;
         getTile(after).actor = actor;
     }
 
     public Tile getTile(Point point) {
         return tiles.get((int) (point.x / tileSize)).get((int) (point.y / tileSize));
+    }
+
+    public Actor getActor(Point point) {
+        return getTile(point).actor;
     }
 
     public void onStep(Actor actor) {
@@ -194,6 +198,9 @@ public class Region extends UpdatedFrame {
                 }
                 addFocused(((RegionEventFocused) regionEvent).focused);
             }
+        }
+        if (regionEvent instanceof RegionEventDie) {
+            getTile(((RegionEventDie) regionEvent).position).actor = null;
         }
     }
 }

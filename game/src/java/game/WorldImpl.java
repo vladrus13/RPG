@@ -12,6 +12,7 @@ import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.region.Region;
+import ru.vladrus13.rpg.world.region.WarZone;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -83,7 +84,9 @@ public class WorldImpl extends World {
                 addFocused(region);
                 region.setHero(hero);
                 hero.teleport(region, ((WorldEventTeleport) event).getPoint(), ((WorldEventTeleport) event).getDirection());
-                SaveHolder.save.set("floor", String.valueOf(region.id));
+                if (!(region instanceof WarZone)) {
+                    SaveHolder.save.set("floor", String.valueOf(region.id));
+                }
                 SaveHolder.quickSave();
             } catch (GameException e) {
                 Writer.printStackTrace(logger, e);

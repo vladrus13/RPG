@@ -11,6 +11,7 @@ import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
+import ru.vladrus13.rpg.basic.event.region.RegionEventDie;
 import ru.vladrus13.rpg.resources.ActorResources;
 import ru.vladrus13.rpg.saves.Savable;
 import ru.vladrus13.rpg.saves.SaveConstante;
@@ -45,9 +46,8 @@ public abstract class Actor extends UpdatedFrame {
     protected RegionEvent onTrigger;
     protected RegionEvent onStep;
     @SaveConstante(name = "standard_status")
-    protected Status standardStatus = new Status();
-    @SaveConstante(name = "real_status")
-    protected Status realStatus = new Status();
+    protected Status standardStatus;
+    protected Status realStatus;
 
     public Actor(int id, String systemName, Point start, String name, Region region) {
         super("actor" + id, start, new Size(
@@ -92,6 +92,8 @@ public abstract class Actor extends UpdatedFrame {
             direction = walkDirection;
             if (!region.isWalkable(DirectionService.step(start, walkDirection))) {
                 nextDirection();
+            } else {
+                region.moveActor(this, start, DirectionService.step(start, walkDirection));
             }
         }
     }
@@ -102,11 +104,9 @@ public abstract class Actor extends UpdatedFrame {
     }
 
     public void onStep() {
-        if (onStep != null) region.invokeRegionEvent(onStep);
     }
 
     public void onTrigger() {
-        if (onTrigger != null) region.invokeRegionEvent(onTrigger);
     }
 
     @Override
@@ -201,5 +201,16 @@ public abstract class Actor extends UpdatedFrame {
     public void setParent(Region region) {
         this.setParent((Frame) region);
         this.region = region;
+    }
+
+    public void updateStatus() {
+        inventory.reloadActor();
+    }
+
+    public void onDamage(int damage) {
+        this.realStatus.hp -= damage;
+        if (realStatus.hp <= 0) {
+            callEvent(new RegionEventDie(this, start));
+        }
     }
 }

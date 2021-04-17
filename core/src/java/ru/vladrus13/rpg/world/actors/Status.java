@@ -11,20 +11,17 @@ public class Status {
     public int mp;
     @SaveConstante(name = "attack", constructor = 2)
     public int attack;
+    @SaveConstante(name = "maxHP", constructor = 3)
+    public int maxHP;
 
-    public Status() {
-        this.hp = 1;
-        this.attack = 0;
-        this.mp = 0;
-    }
-
-    public Status(int hp, int mp, int attack) {
+    public Status(int hp, int mp, int attack, int maxHP) {
         this.hp = hp;
         this.mp = mp;
         this.attack = attack;
+        this.maxHP = maxHP;
     }
 
     public Status copy() {
-        return new Status(hp, mp, attack);
+        return new Status(hp, mp, attack, maxHP);
     }
 }

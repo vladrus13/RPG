@@ -7,9 +7,10 @@
     "hero": {
         "systemName": "hero",
         "standard_status": {
+            "maxHP": 100,
             "mp": 0,
             "attack": 0,
-            "hp": 1
+            "hp": 100
         },
         "start": {
             "x": 32,
@@ -20,12 +21,7 @@
             "item": {"id": 1},
             "count": 26
         }]},
-        "direction": "DOWN",
-        "real_status": {
-            "mp": 0,
-            "attack": 0,
-            "hp": 1
-        }
+        "direction": "DOWN"
     },
-    "global": {"variables": {"floor": "3"}}
+    "global": {"variables": {"floor": "2"}}
 }
