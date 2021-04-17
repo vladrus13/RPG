@@ -2,7 +2,6 @@ package ru.vladrus13.rpg.world.actors;
 
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.world.ai.WarZoneAI;
 import ru.vladrus13.rpg.world.ai.command.AttackCommand;
 import ru.vladrus13.rpg.world.ai.command.Command;
@@ -34,10 +33,12 @@ public abstract class Enemy extends Actor {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) { }
+    public void keyPressed(KeyEvent e) {
+    }
 
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {
+    }
 
     public void setWarZoneAI(WarZoneAI warZoneAI) {
         this.warZoneAI = warZoneAI;
@@ -47,7 +48,7 @@ public abstract class Enemy extends Actor {
     protected void nonCheckingUpdate(long delay) {
         super.nonCheckingUpdate(delay);
         time -= delay;
-        if (time <= 0) {
+        if (time <= 0 && walkDirection == null) {
             onFree();
         }
     }
@@ -55,6 +56,7 @@ public abstract class Enemy extends Actor {
     public void onFree() {
         Command command = warZoneAI.getCommand((WarZone) region, this);
         if (command instanceof AttackCommand) {
+            logger.info("Damage actor from " + start.toString());
             ((AttackCommand) command).to.onDamage(this.realStatus.attack);
             time += 1000;
             return;
@@ -64,10 +66,7 @@ public abstract class Enemy extends Actor {
             return;
         }
         if (command instanceof StepCommand) {
-            direction = ((StepCommand) command).move;
-            if (region.isWalkable(DirectionService.step(start, direction))) {
-                makeMove(direction);
-            }
+            makeMove(((StepCommand) command).move);
             return;
         }
         throw new IllegalArgumentException("Unknown command");

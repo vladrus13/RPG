@@ -95,6 +95,13 @@ public class Region extends UpdatedFrame {
     @Override
     protected void nonCheckingUpdate(long delay) {
         hero.update(delay);
+        for (ArrayList<Tile> it : tiles) {
+            for (Tile jt : it) {
+                if (jt.actor != null) {
+                    jt.actor.update(delay);
+                }
+            }
+        }
     }
 
     public Region setTiles(ArrayList<ArrayList<Tile>> tiles) {

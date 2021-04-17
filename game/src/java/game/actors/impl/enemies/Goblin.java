@@ -4,24 +4,24 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Enemy;
 import ru.vladrus13.rpg.world.actors.Status;
-import ru.vladrus13.rpg.world.ai.WaitAI;
+import ru.vladrus13.rpg.world.ai.RandomAI;
 import ru.vladrus13.rpg.world.region.WarZone;
 
-public class Dummy extends Enemy {
-    public Dummy(Point start, String name, WarZone region) {
-        super(10, "dummy", start, name, region);
-        this.standardStatus = new Status(100, 0, 0, 100);
+public class Goblin extends Enemy {
+    public Goblin(Point start, String name, WarZone region) {
+        super(11, "goblin", start, name, region);
+        this.standardStatus = new Status(50, 0, 10, 50);
         updateStatus();
-        this.setWarZoneAI(new WaitAI());
+        setWarZoneAI(new RandomAI());
     }
 
     @Override
     public int getSpeed() {
-        return 0;
+        return 1;
     }
 
     @Override
     public Actor copy() {
-        return new Dummy(start.copy(), name, (WarZone) region);
+        return null;
     }
 }

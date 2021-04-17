@@ -25,7 +25,10 @@ public class StartTower3 {
     public static void setActors(Region region) {
         ArrayList<Actor> actors = new ArrayList<>();
         for (int i = 1; i <= 8; i++) {
-            actors.add(ActorFactory.createActor(10, new Point((long) i * tileSize, 6 * tileSize), region));
+            actors.add(ActorFactory.createActor(10, new Point((long) i * tileSize, 5L * tileSize), region));
+        }
+        for (int i = 2; i <= 8; i += 2) {
+            actors.add(ActorFactory.createActor(11, new Point((long) i * tileSize, 7L * tileSize), region));
         }
         region.setActors(actors);
     }
