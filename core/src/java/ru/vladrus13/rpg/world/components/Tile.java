@@ -51,6 +51,9 @@ public class Tile extends Frame {
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
         graphics.drawImage(image, start.x, start.y, size.x, size.y);
+    }
+
+    public void drawIn(Graphics graphics) {
         if (actor != null) {
             actor.draw(graphics);
         }

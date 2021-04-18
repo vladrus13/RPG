@@ -210,8 +210,8 @@ public abstract class Actor extends UpdatedFrame {
     public void onDamage(int damage) {
         this.realStatus.hp -= damage;
         if (realStatus.hp <= 0) {
+            logger.info("Actor: " + this + " get DIE");
             callEvent(new RegionEventDie(this, start));
-            logger.info("Get " + damage + " damage");
         }
     }
 }

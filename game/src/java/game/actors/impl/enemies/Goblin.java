@@ -10,6 +10,7 @@ import ru.vladrus13.rpg.world.region.WarZone;
 public class Goblin extends Enemy {
     public Goblin(Point start, String name, WarZone region) {
         super(11, "goblin", start, name, region);
+        command = 1;
         this.standardStatus = new Status(50, 0, 10, 50);
         updateStatus();
         setWarZoneAI(new RandomAI());

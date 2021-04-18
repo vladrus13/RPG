@@ -10,6 +10,7 @@ import ru.vladrus13.rpg.world.ai.command.StepCommand;
 import ru.vladrus13.rpg.world.region.WarZone;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class RandomAI extends WarZoneAI {
 

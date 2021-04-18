@@ -17,6 +17,7 @@ import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
+import ru.vladrus13.rpg.world.actors.Enemy;
 import ru.vladrus13.rpg.world.components.Tile;
 
 import java.awt.event.KeyEvent;
@@ -47,9 +48,11 @@ public class Region extends UpdatedFrame {
                     jt.draw(graphics);
                 }
             }
-        }
-        if (hero != null) {
-            hero.draw(graphics);
+            for (ArrayList<Tile> it : tiles) {
+                for (Tile jt : it) {
+                    jt.drawIn(graphics);
+                }
+            }
         }
         for (Frame frame : childes) {
             frame.draw(graphics);
@@ -64,9 +67,6 @@ public class Region extends UpdatedFrame {
                     jt.recalculate();
                 }
             }
-        }
-        if (hero != null) {
-            hero.recalculate();
         }
         for (Frame frame : childes) {
             frame.recalculate();
@@ -94,13 +94,19 @@ public class Region extends UpdatedFrame {
 
     @Override
     protected void nonCheckingUpdate(long delay) {
-        hero.update(delay);
+        boolean isHero = false;
         for (ArrayList<Tile> it : tiles) {
             for (Tile jt : it) {
                 if (jt.actor != null) {
                     jt.actor.update(delay);
+                    if (!(jt.actor instanceof Enemy)) {
+                        isHero = true;
+                    }
                 }
             }
+        }
+        if (!isHero) {
+            logger.warning("Can't find hero");
         }
     }
 
@@ -112,22 +118,19 @@ public class Region extends UpdatedFrame {
 
     public void setHero(Actor hero) {
         this.hero = hero;
+        getTile(hero.getStart()).actor = hero;
         addFocused(hero);
     }
 
     public void setActors(Collection<Actor> actors) {
         for (Actor actor : actors) {
-            tiles
-                    .get((int) (actor.getStart().x / tileSize))
-                    .get((int) (actor.getStart().y / tileSize)).actor = actor;
+            getTile(actor.getStart()).actor = actor;
         }
     }
 
     public void setItems(ArrayList<RegionItem> items) {
         for (RegionItem item : items) {
-            tiles
-                    .get((int) (item.getStart().x / tileSize))
-                    .get((int) (item.getStart().y / tileSize)).regionItems.add(item);
+            getTile(item.getStart()).regionItems.add(item);
         }
     }
 
@@ -138,6 +141,12 @@ public class Region extends UpdatedFrame {
     }
 
     public void moveActor(Actor actor, Point before, Point after) {
+        if (getActor(before) == null) {
+            throw new IllegalStateException("Can't move non-existing actor");
+        }
+        if (getActor(after) != null && !getActor(after).untouchable) {
+            throw new IllegalStateException("Can't move to existing actor");
+        }
         getTile(before).actor = null;
         getTile(after).actor = actor;
     }

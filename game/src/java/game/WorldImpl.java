@@ -82,8 +82,8 @@ public class WorldImpl extends World {
                 region = RegionFactoryImpl.getRegion(((WorldEventTeleport) event).getId(), this);
                 addChild(region);
                 addFocused(region);
-                region.setHero(hero);
                 hero.teleport(region, ((WorldEventTeleport) event).getPoint(), ((WorldEventTeleport) event).getDirection());
+                region.setHero(hero);
                 if (!(region instanceof WarZone)) {
                     SaveHolder.save.set("floor", String.valueOf(region.id));
                 }
