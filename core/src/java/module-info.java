@@ -16,6 +16,7 @@ module ru.vladrus13.rpg {
     exports ru.vladrus13.rpg.world.factory;
     exports ru.vladrus13.rpg.world.ai;
     exports ru.vladrus13.rpg.world.ai.command;
+    exports ru.vladrus13.rpg.world.quickmenu;
 
     requires transitive java.logging;
     requires transitive ru.vladrus13.jgraphic;

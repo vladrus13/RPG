@@ -4,6 +4,7 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
+import ru.vladrus13.rpg.basic.event.world.WorldEventGameOver;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Status;
 import ru.vladrus13.rpg.world.region.Region;
@@ -72,5 +73,14 @@ public class Hero extends Actor {
     @Override
     public Actor copy() {
         return new Hero(start.copy(), region, name);
+    }
+
+    @Override
+    public void onDamage(int damage) {
+        this.realStatus.hp -= damage;
+        logger.info("Hero get " + damage + " damage. " + realStatus.hp + "/" + realStatus.maxHP + ".");
+        if (realStatus.hp <= 0) {
+            callEvent(new WorldEventGameOver());
+        }
     }
 }

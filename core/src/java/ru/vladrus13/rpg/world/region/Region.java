@@ -216,6 +216,9 @@ public class Region extends UpdatedFrame {
             }
         }
         if (regionEvent instanceof RegionEventDie) {
+            if (getTile(((RegionEventDie) regionEvent).position).actor != ((RegionEventDie) regionEvent).died) {
+                throw new IllegalStateException("Can't remove another actor");
+            }
             getTile(((RegionEventDie) regionEvent).position).actor = null;
         }
     }

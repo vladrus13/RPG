@@ -54,11 +54,11 @@ public abstract class Enemy extends Actor {
     }
 
     public void onFree() {
+        time = 0;
         Command command = warZoneAI.getCommand((WarZone) region, this);
         if (command instanceof AttackCommand) {
-            logger.info("Damage actor from " + start.toString());
-            ((AttackCommand) command).to.onDamage(this.realStatus.attack);
             time += 1000;
+            ((AttackCommand) command).to.onDamage(this.realStatus.attack);
             return;
         }
         if (command instanceof WaitCommand) {
