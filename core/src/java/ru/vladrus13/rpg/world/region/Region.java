@@ -8,7 +8,6 @@ import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.property.MainProperty;
-import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDie;

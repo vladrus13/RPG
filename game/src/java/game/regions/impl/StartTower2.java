@@ -19,7 +19,6 @@ import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
-import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.components.Tile;
@@ -33,7 +32,6 @@ import ru.vladrus13.rpg.world.region.RegionItem;
 import ru.vladrus13.rpg.world.region.ShopWorld;
 
 import java.awt.*;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

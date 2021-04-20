@@ -15,8 +15,8 @@ import java.awt.event.MouseEvent;
 
 public abstract class Enemy extends Actor {
 
-    private WarZoneAI warZoneAI;
     public long time = 0;
+    private WarZoneAI warZoneAI;
 
     public Enemy(int id, String systemName, Point start, String name, WarZone region) {
         super(id, systemName, start, name, region);

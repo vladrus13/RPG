@@ -6,6 +6,8 @@ import ru.vladrus13.jgraphic.resources.ImageLoader;
 
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ImageTable {
     public final Path path;
@@ -37,5 +39,17 @@ public class ImageTable {
 
     public BufferedImage get(int width, int height) {
         return images[height][width];
+    }
+
+    public BufferedImage get(int count) {
+        return images[count / images[0].length][count % images[0].length];
+    }
+
+    public ArrayList<BufferedImage> getAll() {
+        ArrayList<BufferedImage> returned = new ArrayList<>(images[0].length * images.length);
+        for (BufferedImage[] it : images) {
+            returned.addAll(Arrays.asList(it));
+        }
+        return returned;
     }
 }

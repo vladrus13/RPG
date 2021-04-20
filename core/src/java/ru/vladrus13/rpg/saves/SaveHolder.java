@@ -6,8 +6,6 @@ import org.json.JSONTokener;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.Direction;
-import ru.vladrus13.rpg.world.actors.Actor;
-import ru.vladrus13.rpg.world.region.Region;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
