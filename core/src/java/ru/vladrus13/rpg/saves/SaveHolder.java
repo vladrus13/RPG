@@ -140,7 +140,7 @@ public class SaveHolder {
                             continue;
                         }
                         if (field.getType().isAssignableFrom(Direction.class)) {
-                            jsonObject.put(name, ((Direction) field.get(object)).toString());
+                            jsonObject.put(name, field.get(object).toString());
                             continue;
                         }
                         if (field.getType().isAssignableFrom(Point.class)) {

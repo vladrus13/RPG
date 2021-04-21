@@ -20,10 +20,6 @@ import java.awt.event.MouseEvent;
 
 public class QuickMenu extends Frame {
 
-    private final Choose choose;
-    private final Background background = new Background("back", new Point(0, 0, CoordinatesType.RATIO),
-            new Size(1000, 1000, CoordinatesType.RATIO), new Filler(Color.BLUE), this);
-
     public QuickMenu(String name, Frame parent) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
         Choose choose1;
@@ -44,7 +40,9 @@ public class QuickMenu extends Frame {
             e.printStackTrace();
             choose1 = null;
         }
-        choose = choose1;
+        Choose choose = choose1;
+        Background background = new Background("back", new Point(0, 0, CoordinatesType.RATIO),
+                new Size(1000, 1000, CoordinatesType.RATIO), new Filler(Color.BLUE), this);
         addChild(background);
         addChild(choose);
     }

@@ -5,7 +5,10 @@
         "3": {"variables": {"created": "1"}}
     },
     "hero": {
-        "abilities": {},
+        "abilities": {
+            "Splash": {"id": 1},
+            "Heal": {"id": 2}
+        },
         "systemName": "hero",
         "standard_status": {
             "maxHP": 100,

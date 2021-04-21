@@ -17,8 +17,8 @@ import java.util.logging.Logger;
 
 public class RandomAI extends WarZoneAI {
 
-    Random random = new Random();
     private final Logger logger = Logger.getLogger(RandomAI.class.getName());
+    Random random = new Random();
 
     @Override
     public Command getCommand(WarZone warZone, Actor actor) {

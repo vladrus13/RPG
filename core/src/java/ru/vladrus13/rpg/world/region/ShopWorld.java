@@ -12,7 +12,7 @@ import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 import ru.vladrus13.rpg.basic.event.ShopEvent;
-import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
+import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.world.items.Item;
 import ru.vladrus13.rpg.world.items.inventory.Items;
 import ru.vladrus13.rpg.world.places.Barter;
@@ -175,7 +175,7 @@ public class ShopWorld extends Frame {
             redrawBarter();
         }
         if (keyCode == KeyEvent.VK_ESCAPE) {
-            callEvent(new RegionEventFocused(this, true, true));
+            callEvent(new RegionEventDrawing(this, true, true, true));
         }
     }
 

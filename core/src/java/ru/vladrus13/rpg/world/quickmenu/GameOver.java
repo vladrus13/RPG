@@ -10,7 +10,7 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.GameException;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
-import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
+import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -49,7 +49,7 @@ public class GameOver extends UpdatedFrame {
     protected void nonCheckingUpdate(long delay) {
         counter -= delay;
         if (counter < 0) {
-            callEvent(new RegionEventFocused(this, true, true));
+            callEvent(new RegionEventDrawing(this, true, true, true));
             callEvent(new IntEvent(IntEvent.TO_MENU));
         }
     }

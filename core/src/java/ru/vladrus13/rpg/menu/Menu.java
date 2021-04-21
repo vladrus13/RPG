@@ -22,8 +22,6 @@ import java.util.logging.Logger;
 
 public class Menu extends Frame {
 
-    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("internationalization.menu", MainProperty.getLocale());
-    private final Logger logger = Logger.getLogger(Menu.class.getName());
     private final Choose choose;
     private final Game game;
 
@@ -38,6 +36,7 @@ public class Menu extends Frame {
             Button start = new ClassicButton("start", startStart.copy(), startSize.copy(), choose).setEventKey(new IntEvent(IntEvent.TO_WORLD));
             start.setBackground(new Background("agree", startStart, startSize, new Filler(Color.BLUE), start));
             start.setBackgroundChoose(new Background("disagree", startStart, startSize, new Filler(Color.RED), start));
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("internationalization.menu", MainProperty.getLocale());
             start.setText(new Text("text", startStart, startSize, resourceBundle.getString("start"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, start));
             Point exitStart = new Point(10, 510, CoordinatesType.RATIO);
             Size exitSize = new Size(980, 480, CoordinatesType.RATIO);
@@ -49,6 +48,7 @@ public class Menu extends Frame {
             choose.addButton(exit);
             focused.add(choose);
         } catch (GameException e) {
+            Logger logger = Logger.getLogger(Menu.class.getName());
             Writer.printStackTrace(logger, e);
         }
         recalculateChildes();

@@ -11,7 +11,7 @@ import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDie;
-import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
+import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
 import ru.vladrus13.rpg.world.World;
@@ -31,7 +31,7 @@ public class Region extends UpdatedFrame {
     private final World world;
     public Actor hero;
     private ArrayList<ArrayList<Tile>> tiles;
-    private ArrayList<UpdatedFrame> updatedFrames = new ArrayList<>();
+    private final ArrayList<UpdatedFrame> updatedFrames = new ArrayList<>();
 
     public Region(int id, String name, World parent) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
@@ -201,27 +201,31 @@ public class Region extends UpdatedFrame {
         if (regionEvent instanceof RegionEventOnStep) {
             onStep(((RegionEventOnStep) regionEvent).actor);
         }
-        if (regionEvent instanceof RegionEventFocused) {
-            RegionEventFocused regionEventFocused = (RegionEventFocused) regionEvent;
-            if (regionEventFocused.isRemove) {
-                if (regionEventFocused.focused == null) {
-                    removeFocused();
-                } else {
-                    focused.remove(regionEventFocused.focused);
+        if (regionEvent instanceof RegionEventDrawing) {
+            RegionEventDrawing regionEventDrawing = (RegionEventDrawing) regionEvent;
+            if (regionEventDrawing.isRemove) {
+                if (regionEventDrawing.isFocused) {
+                    if (regionEventDrawing.frame == null) {
+                        removeFocused();
+                    } else {
+                        focused.remove(regionEventDrawing.frame);
+                    }
                 }
-                if (regionEventFocused.drawing) {
-                    removeChild(regionEventFocused.focused);
+                if (regionEventDrawing.drawing) {
+                    removeChild(regionEventDrawing.frame);
                 }
-                if (regionEventFocused.focused instanceof UpdatedFrame) {
-                    updatedFrames.add((UpdatedFrame) regionEventFocused.focused);
+                if (regionEventDrawing.frame instanceof UpdatedFrame) {
+                    updatedFrames.remove((UpdatedFrame) regionEventDrawing.frame);
                 }
             } else {
-                if (regionEventFocused.drawing) {
-                    addChild(regionEventFocused.focused);
+                if (regionEventDrawing.drawing) {
+                    addChild(regionEventDrawing.frame);
                 }
-                addFocused(regionEventFocused.focused);
-                if (regionEventFocused.focused instanceof UpdatedFrame) {
-                    updatedFrames.remove((UpdatedFrame) regionEventFocused.focused);
+                if (regionEventDrawing.isFocused) {
+                    addFocused(regionEventDrawing.frame);
+                }
+                if (regionEventDrawing.frame instanceof UpdatedFrame) {
+                    updatedFrames.add((UpdatedFrame) regionEventDrawing.frame);
                 }
             }
         }

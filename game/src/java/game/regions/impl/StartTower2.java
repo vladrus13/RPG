@@ -17,7 +17,7 @@ import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
-import ru.vladrus13.rpg.basic.event.region.RegionEventFocused;
+import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
@@ -77,12 +77,12 @@ public class StartTower2 {
         CollectionEvent byeEvent = new CollectionEvent();
         byeEvent.add(new ChooseEvent(ChooseEvent.END_CHOOSE));
         CollectionEvent shopEvent = new CollectionEvent();
-        shopEvent.add(new RegionEventFocused(shopWorld, true, false));
+        shopEvent.add(new RegionEventDrawing(shopWorld, true, false, true));
         pirateChoose = Choose.getInstance("pirateChoose", 3, new Point(100, 100, CoordinatesType.RATIO),
                 new Size(800, 800, CoordinatesType.RATIO), region, new Size(800, 100, CoordinatesType.RATIO),
                 new String[]{"Hello", "Shop", "Bye"}, new Event[]{null,
                         shopEvent, byeEvent}, new Event[]{null, null, null}, buttonFactory, textFactory);
-        pirate.setOnTrigger(new RegionEventFocused(pirateChoose, true, false));
+        pirate.setOnTrigger(new RegionEventDrawing(pirateChoose, true, false, true));
         region.setActors(new ArrayList<>(Collections.singletonList(pirate)));
     }
 

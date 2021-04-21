@@ -2,10 +2,7 @@ package game.abilities;
 
 import game.abilities.impl.Heal;
 import game.abilities.impl.Splash;
-import game.items.impl.money.Coins;
-import game.items.impl.weapons.TinSword;
 import ru.vladrus13.rpg.world.factory.AbilityFactory;
-import ru.vladrus13.rpg.world.factory.ItemFactory;
 
 public class AbilityFactoryImpl {
     private final static int MAX_ID = 1000;
