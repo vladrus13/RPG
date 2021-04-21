@@ -43,10 +43,12 @@ public class AnimationFrame extends UpdatedFrame {
     protected void nonCheckingDraw(Graphics graphics) {
         if (filler.getBufferedImage() != null) {
             graphics.drawImage(filler.getBufferedImage(), start.x, start.y, size.x, size.y);
+            return;
         }
         if (filler.getColor() != null) {
             graphics.setColor(filler.getColor());
             graphics.fillRect(start.x, start.y, size.x, size.y);
+            return;
         }
         throw new IllegalStateException("Can't draw anything");
     }

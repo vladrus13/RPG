@@ -1,22 +1,35 @@
 package game.actors.impl;
 
 import ru.vladrus13.jgraphic.bean.Point;
+import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEventGameOver;
+import ru.vladrus13.rpg.world.actors.AbilityActor;
+import ru.vladrus13.rpg.world.actors.AbilitySelf;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Status;
+import ru.vladrus13.rpg.world.factory.AbilityFactory;
 import ru.vladrus13.rpg.world.region.Region;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class Hero extends Actor {
     public Hero(Point start, Region region, String name) {
         super(1, "hero", start, name, region);
         this.onStep = new RegionEventOnStep(this);
         this.standardStatus = new Status(100, 0, 10, 100);
+        try {
+            this.abilities = new HashMap<>(Map.of("Splash", AbilityFactory.get(1), "Heal", AbilityFactory.get(2)));
+        } catch (GameException e) {
+            Writer.printStackTrace(Logger.getLogger(Hero.class.getName()), e);
+        }
         updateStatus();
     }
 
@@ -38,6 +51,8 @@ public class Hero extends Actor {
             case KeyEvent.VK_ENTER:
                 region.onActivate(this, start);
                 break;
+            case KeyEvent.VK_H:
+                ((AbilitySelf) abilities.get("Heal")).activate(this, region);
             default:
                 break;
         }
@@ -57,7 +72,7 @@ public class Hero extends Actor {
             case MouseEvent.BUTTON1:
                 Actor actor = region.getActor(DirectionService.step(start, direction));
                 if (actor != null) {
-                    actor.onDamage(this.realStatus.attack);
+                    ((AbilityActor) abilities.get("Splash")).activate(this, actor, region);
                 }
                 break;
             default:
@@ -76,7 +91,7 @@ public class Hero extends Actor {
     }
 
     @Override
-    public void onDamage(int damage) {
+    public void onPhysical(int damage) {
         this.realStatus.hp -= damage;
         logger.info("Hero get " + damage + " damage. " + realStatus.hp + "/" + realStatus.maxHP + ".");
         if (realStatus.hp <= 0) {

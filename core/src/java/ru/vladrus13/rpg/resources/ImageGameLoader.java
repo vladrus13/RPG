@@ -19,6 +19,10 @@ public class ImageGameLoader {
         return images.get(path).get(width, height);
     }
 
+    public static ImageTable load(Path path) {
+        return images.get(path);
+    }
+
     public static void upload(Path path, Size size) {
         if (!images.containsKey(path)) {
             try {

@@ -31,6 +31,7 @@ public class Region extends UpdatedFrame {
     private final World world;
     public Actor hero;
     private ArrayList<ArrayList<Tile>> tiles;
+    private ArrayList<UpdatedFrame> updatedFrames = new ArrayList<>();
 
     public Region(int id, String name, World parent) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
@@ -106,6 +107,9 @@ public class Region extends UpdatedFrame {
         }
         if (!isHero) {
             logger.warning("Can't find hero");
+        }
+        for (UpdatedFrame frame : updatedFrames) {
+            frame.update(delay);
         }
     }
 
@@ -198,20 +202,27 @@ public class Region extends UpdatedFrame {
             onStep(((RegionEventOnStep) regionEvent).actor);
         }
         if (regionEvent instanceof RegionEventFocused) {
-            if (((RegionEventFocused) regionEvent).isRemove) {
-                if (((RegionEventFocused) regionEvent).focused == null) {
+            RegionEventFocused regionEventFocused = (RegionEventFocused) regionEvent;
+            if (regionEventFocused.isRemove) {
+                if (regionEventFocused.focused == null) {
                     removeFocused();
                 } else {
-                    focused.remove(((RegionEventFocused) regionEvent).focused);
+                    focused.remove(regionEventFocused.focused);
                 }
-                if (((RegionEventFocused) regionEvent).drawing) {
-                    removeChild(((RegionEventFocused) regionEvent).focused);
+                if (regionEventFocused.drawing) {
+                    removeChild(regionEventFocused.focused);
+                }
+                if (regionEventFocused.focused instanceof UpdatedFrame) {
+                    updatedFrames.add((UpdatedFrame) regionEventFocused.focused);
                 }
             } else {
-                if (((RegionEventFocused) regionEvent).drawing) {
-                    addChild(((RegionEventFocused) regionEvent).focused);
+                if (regionEventFocused.drawing) {
+                    addChild(regionEventFocused.focused);
                 }
-                addFocused(((RegionEventFocused) regionEvent).focused);
+                addFocused(regionEventFocused.focused);
+                if (regionEventFocused.focused instanceof UpdatedFrame) {
+                    updatedFrames.remove((UpdatedFrame) regionEventFocused.focused);
+                }
             }
         }
         if (regionEvent instanceof RegionEventDie) {

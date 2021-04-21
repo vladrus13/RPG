@@ -1,5 +1,6 @@
 package game;
 
+import game.abilities.AbilityFactoryImpl;
 import game.actors.ActorFactoryImpl;
 import game.items.ItemFactoryImpl;
 import ru.vladrus13.graphic.PCGraphicsAWTImpl;
@@ -26,6 +27,7 @@ public class GameImpl extends Game {
         current = new Menu(frame.getWidth(), frame.getHeight(), this);
         ActorFactoryImpl.init();
         ItemFactoryImpl.init();
+        AbilityFactoryImpl.init();
         painter();
     }
 

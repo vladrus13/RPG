@@ -5,6 +5,7 @@
         "3": {"variables": {"created": "1"}}
     },
     "hero": {
+        "abilities": {},
         "systemName": "hero",
         "standard_status": {
             "maxHP": 100,
