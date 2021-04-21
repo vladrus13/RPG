@@ -29,7 +29,7 @@ public class Splash extends AbilityActor {
         }
         Path path = Path.of("world").resolve("animations").resolve("Splash.png");
         ImageGameLoader.upload(path, new Size(192, 192, CoordinatesType.REAL));
-        Animation animation = new Animation("heal", to.getStart().incX(-10).incY(-10), new Size(52, 52, CoordinatesType.REAL), region, ImageGameLoader.load(path), 100);
+        Animation animation = new Animation("heal", to.getStart().copy(), to.getSize().copy(), region, ImageGameLoader.load(path), 100);
         region.callEvent(new RegionEventDrawing(animation, true, false, false));
     }
 

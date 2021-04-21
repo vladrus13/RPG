@@ -27,7 +27,7 @@ import java.util.Collection;
 public class Region extends UpdatedFrame {
 
     public final int id;
-    private final int tileSize = MainProperty.getInteger("world.region.tileSize");
+    protected final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final World world;
     public Actor hero;
     private ArrayList<ArrayList<Tile>> tiles;
