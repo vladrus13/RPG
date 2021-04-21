@@ -23,9 +23,9 @@
         "id": 1,
         "inventory": {"items": [{
             "item": {"id": 1},
-            "count": 27
+            "count": 28
         }]},
-        "direction": "DOWN"
+        "direction": "LEFT"
     },
     "global": {"variables": {"floor": "2"}}
 }
