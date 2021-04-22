@@ -29,9 +29,9 @@ public class Region extends UpdatedFrame {
     public final int id;
     protected final int tileSize = MainProperty.getInteger("world.region.tileSize");
     private final World world;
+    private final ArrayList<UpdatedFrame> updatedFrames = new ArrayList<>();
     public Actor hero;
     private ArrayList<ArrayList<Tile>> tiles;
-    private final ArrayList<UpdatedFrame> updatedFrames = new ArrayList<>();
 
     public Region(int id, String name, World parent) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);

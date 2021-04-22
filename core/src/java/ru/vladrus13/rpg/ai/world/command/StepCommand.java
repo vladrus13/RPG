@@ -1,4 +1,4 @@
-package ru.vladrus13.rpg.world.ai.command;
+package ru.vladrus13.rpg.ai.world.command;
 
 import ru.vladrus13.rpg.basic.direction.Direction;
 

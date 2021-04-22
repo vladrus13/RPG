@@ -14,8 +14,7 @@ module ru.vladrus13.rpg {
     exports ru.vladrus13.rpg.resources;
     exports ru.vladrus13.rpg.saves;
     exports ru.vladrus13.rpg.world.factory;
-    exports ru.vladrus13.rpg.world.ai;
-    exports ru.vladrus13.rpg.world.ai.command;
+    exports ru.vladrus13.rpg.ai.world.command;
     exports ru.vladrus13.rpg.world.quickmenu;
     exports ru.vladrus13.rpg.basic.animation;
 

@@ -1,4 +1,4 @@
-package ru.vladrus13.rpg.world.ai.command;
+package ru.vladrus13.rpg.ai.world.command;
 
 public class WaitCommand extends Command {
     public int time;

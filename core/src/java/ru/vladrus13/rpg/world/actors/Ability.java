@@ -15,6 +15,8 @@ public abstract class Ability {
 
     @SaveConstante(name = "id", constructor = 1)
     public int id = -1;
+    public long coolDown;
+    public long current = 0;
 
     public static Ability getInstance() {
         throw new UnsupportedOperationException("Can't get instance from abstract class");

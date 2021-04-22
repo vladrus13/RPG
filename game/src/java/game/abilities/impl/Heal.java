@@ -16,6 +16,7 @@ public class Heal extends AbilitySelf {
 
     public Heal() {
         id = 2;
+        coolDown = 5000;
     }
 
     public static Ability getInstance() {

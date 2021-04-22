@@ -4,7 +4,7 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Enemy;
 import ru.vladrus13.rpg.world.actors.Status;
-import ru.vladrus13.rpg.world.ai.RandomAI;
+import ru.vladrus13.rpg.ai.world.command.RandomAI;
 import ru.vladrus13.rpg.world.region.WarZone;
 
 public class Goblin extends Enemy {

@@ -16,6 +16,7 @@ public class Splash extends AbilityActor {
 
     public Splash() {
         id = 1;
+        coolDown = 400;
     }
 
     public static Ability getInstance() {

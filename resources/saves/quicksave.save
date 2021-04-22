@@ -25,7 +25,7 @@
             "item": {"id": 1},
             "count": 28
         }]},
-        "direction": "LEFT"
+        "direction": "DOWN"
     },
     "global": {"variables": {"floor": "2"}}
 }

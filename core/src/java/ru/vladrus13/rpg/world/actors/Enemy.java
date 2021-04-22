@@ -2,11 +2,11 @@ package ru.vladrus13.rpg.world.actors;
 
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.rpg.world.ai.WarZoneAI;
-import ru.vladrus13.rpg.world.ai.command.AttackCommand;
-import ru.vladrus13.rpg.world.ai.command.Command;
-import ru.vladrus13.rpg.world.ai.command.StepCommand;
-import ru.vladrus13.rpg.world.ai.command.WaitCommand;
+import ru.vladrus13.rpg.ai.world.command.WarZoneAI;
+import ru.vladrus13.rpg.ai.world.command.AttackCommand;
+import ru.vladrus13.rpg.ai.world.command.Command;
+import ru.vladrus13.rpg.ai.world.command.StepCommand;
+import ru.vladrus13.rpg.ai.world.command.WaitCommand;
 import ru.vladrus13.rpg.world.region.WarZone;
 
 import java.awt.*;

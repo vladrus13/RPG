@@ -1,4 +1,4 @@
-package ru.vladrus13.rpg.world.ai;
+package ru.vladrus13.rpg.ai.world.command;
 
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.exception.GameException;
@@ -6,9 +6,6 @@ import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.world.actors.Actor;
-import ru.vladrus13.rpg.world.ai.command.AttackCommand;
-import ru.vladrus13.rpg.world.ai.command.Command;
-import ru.vladrus13.rpg.world.ai.command.StepCommand;
 import ru.vladrus13.rpg.world.factory.AbilityFactory;
 import ru.vladrus13.rpg.world.region.WarZone;
 
