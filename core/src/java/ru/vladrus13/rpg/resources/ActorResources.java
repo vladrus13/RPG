@@ -33,6 +33,16 @@ public class ActorResources {
         return returned;
     }
 
+    public static BufferedImage loadActorFace(String name) {
+        Path path = actorsPath.resolve(name);
+        try {
+            return ImageLoader.load(path.resolve("face.png"));
+        } catch (GameException e) {
+            Writer.printStackTrace(logger, e);
+        }
+        return null;
+    }
+
     public static String getResourcesBundle(String get) {
         return resourceBundle.getString(get);
     }

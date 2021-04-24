@@ -29,7 +29,7 @@ public abstract class Actor extends UpdatedFrame {
     @SaveConstante(name = "id", constructor = 1)
     protected final int id;
     protected final Deque<Direction> path = new LinkedList<>();
-    protected final String name;
+    public final String name;
     @SaveConstante(name = "systemName", constructor = 1)
     protected final String systemName;
     private final Map<Direction, BufferedImage> images;

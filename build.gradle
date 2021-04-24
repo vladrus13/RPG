@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.vladrus13:JGraphic:5ea241480b'
+    implementation 'com.github.vladrus13:JGraphic:94f7ccac91'
     implementation project(":core")
     implementation project(":game")
 }
