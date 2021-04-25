@@ -31,7 +31,7 @@ public class Dialog extends Frame {
     public Dialog(Frame parent) {
         super("dialog", new Point(0, 625, CoordinatesType.RATIO), new Size(1000, 375, CoordinatesType.RATIO), parent);
         background = new Background("background",
-                new Point(0, 0, CoordinatesType.REAL), new Size(1000, 1000, CoordinatesType.RATIO),
+                new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO),
                 new Filler(new Color(0, 0, 0, 100)), this);
     }
 
@@ -72,11 +72,11 @@ public class Dialog extends Frame {
         text = null;
         name = null;
         imageActor = null;
-        DialogBean dialogBean = dialogBeans.remove();
+        DialogBean dialogBean = dialogBeans.element();
         text = new Text("text", new Point(10, 250, CoordinatesType.RATIO), new Size(980, 750, CoordinatesType.RATIO),
                 dialogBean.text, "WriterFont", new Size(100, 0, CoordinatesType.RATIO), Color.WHITE, Text.TextAlign.LEFT, this);
         name = new Text("name-text", new Point(10, 10, CoordinatesType.RATIO), new Size(500, 100, CoordinatesType.RATIO),
-                dialogBean.actor.name, "WriterFont", new Size(500, 0, CoordinatesType.RATIO), dialogBean.nameColor, Text.TextAlign.LEFT, this);
+                dialogBean.actor.name, "WriterFont", new Size(1000, 0, CoordinatesType.RATIO), dialogBean.nameColor, Text.TextAlign.LEFT, this);
         if (false) {
             imageActor = new Background("face", new Point(750, 0, CoordinatesType.RATIO), new Size(250, 250, CoordinatesType.RATIO),
                     new Filler(ActorResources.loadActorFace(dialogBean.actor.name)), this);

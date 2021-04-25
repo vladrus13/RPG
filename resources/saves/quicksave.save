@@ -18,14 +18,14 @@
         },
         "start": {
             "x": 32,
-            "y": 32
+            "y": 160
         },
         "id": 1,
         "inventory": {"items": [{
             "item": {"id": 1},
             "count": 28
         }]},
-        "direction": "DOWN"
+        "direction": "UP"
     },
     "global": {"variables": {"floor": "2"}}
 }
