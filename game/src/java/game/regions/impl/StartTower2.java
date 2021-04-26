@@ -19,6 +19,7 @@ import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
+import ru.vladrus13.rpg.dialog.Dialog;
 import ru.vladrus13.rpg.dialog.DialogBean;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
@@ -31,7 +32,6 @@ import ru.vladrus13.rpg.world.places.BarterPlace;
 import ru.vladrus13.rpg.world.region.Region;
 import ru.vladrus13.rpg.world.region.RegionItem;
 import ru.vladrus13.rpg.world.region.ShopWorld;
-import ru.vladrus13.rpg.dialog.Dialog;
 
 import java.awt.*;
 import java.util.ArrayList;

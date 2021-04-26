@@ -26,10 +26,10 @@ import java.util.*;
 @Savable(implemented = true)
 public abstract class Actor extends UpdatedFrame {
     protected static final int tileSize = MainProperty.getInteger("world.region.tileSize");
+    public final String name;
     @SaveConstante(name = "id", constructor = 1)
     protected final int id;
     protected final Deque<Direction> path = new LinkedList<>();
-    public final String name;
     @SaveConstante(name = "systemName", constructor = 1)
     protected final String systemName;
     private final Map<Direction, BufferedImage> images;
