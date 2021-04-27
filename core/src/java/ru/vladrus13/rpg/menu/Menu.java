@@ -9,7 +9,7 @@ import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.Game;
@@ -47,7 +47,7 @@ public class Menu extends Frame {
             choose.addButton(start);
             choose.addButton(exit);
             focused.add(choose);
-        } catch (GameException e) {
+        } catch (AppException e) {
             Logger logger = Logger.getLogger(Menu.class.getName());
             Writer.printStackTrace(logger, e);
         }

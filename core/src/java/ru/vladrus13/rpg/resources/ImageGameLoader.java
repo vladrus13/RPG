@@ -1,7 +1,7 @@
 package ru.vladrus13.rpg.resources;
 
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
 
 import java.awt.image.BufferedImage;
@@ -27,7 +27,7 @@ public class ImageGameLoader {
         if (!images.containsKey(path)) {
             try {
                 images.put(path, new ImageTable(path, size));
-            } catch (GameException e) {
+            } catch (AppException e) {
                 Writer.printStackTrace(logger, e);
             }
         }

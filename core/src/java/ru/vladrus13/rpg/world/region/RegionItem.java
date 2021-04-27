@@ -5,7 +5,7 @@ import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 import ru.vladrus13.rpg.world.items.Item;
@@ -30,7 +30,7 @@ public class RegionItem extends Frame {
      * @param start  start position for frame
      * @param region region frame
      */
-    public RegionItem(Point start, Region region, Item item) throws GameException {
+    public RegionItem(Point start, Region region, Item item) throws AppException {
         super(String.valueOf(item.id), start, new Size(
                 MainProperty.getInteger("world.region.tileSize"),
                 MainProperty.getInteger("world.region.tileSize"), CoordinatesType.REAL), region);
@@ -38,7 +38,7 @@ public class RegionItem extends Frame {
         this.bufferedImage = ImageLoader.load(regionItemsPath.resolve(item.id + ".png"));
     }
 
-    public RegionItem(Point start, Region region, Items items) throws GameException {
+    public RegionItem(Point start, Region region, Items items) throws AppException {
         super(String.valueOf(items.item.id), start, new Size(
                 MainProperty.getInteger("world.region.tileSize"),
                 MainProperty.getInteger("world.region.tileSize"), CoordinatesType.REAL), region);

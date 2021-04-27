@@ -1,7 +1,7 @@
 package ru.vladrus13.rpg.world.items;
 
 import org.json.JSONObject;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.saves.Savable;
 import ru.vladrus13.rpg.saves.SaveConstante;
@@ -31,7 +31,7 @@ public abstract class Item {
         }
         try {
             return ItemFactory.get(((JSONObject) object).getInt("id"));
-        } catch (GameException e) {
+        } catch (AppException e) {
             Writer.printStackTrace(logger, e);
         }
         return null;

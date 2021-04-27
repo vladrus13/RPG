@@ -18,6 +18,7 @@ public class StatusWindow extends Frame {
     private final Background full;
     private final Background health;
     private final WarZone warZone;
+    private AbilitiesTable abilitiesTable;
 
     /**
      * Standard frame constructor
@@ -35,6 +36,10 @@ public class StatusWindow extends Frame {
 
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
+        if (abilitiesTable == null) {
+            this.abilitiesTable = new AbilitiesTable("abilitry_table", this, warZone.hero.abilities);
+        }
+        abilitiesTable.draw(graphics);
         int pixelsHP = 490 * warZone.hero.realStatus.hp / warZone.hero.realStatus.maxHP;
         health.setFrame(null, new Size(pixelsHP, 300, CoordinatesType.RATIO));
         full.draw(graphics);

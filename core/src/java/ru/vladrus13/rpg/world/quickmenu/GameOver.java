@@ -8,7 +8,7 @@ import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 
@@ -37,7 +37,7 @@ public class GameOver extends UpdatedFrame {
         try {
             text1 = textFactory.getInstance("gameOverText", "GAME OVER", this);
             text1.setFrame(new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO));
-        } catch (GameException e) {
+        } catch (AppException e) {
             e.printStackTrace();
             text1 = null;
         }

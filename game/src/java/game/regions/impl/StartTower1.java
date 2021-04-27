@@ -2,7 +2,7 @@ package game.regions.impl;
 
 import game.regions.RegionFactoryImpl;
 import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @author vladrus13 on 26.03.2021
  **/
 public class StartTower1 {
-    public static Region getInstance(World parent) throws GameException {
+    public static Region getInstance(World parent) throws AppException {
         int[][] map = {
                 {1, 1, 1, 1, 1},
                 {1, 0, 0, 2, 1},

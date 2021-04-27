@@ -12,7 +12,7 @@ import ru.vladrus13.jgraphic.basic.event.impl.CollectionEvent;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 import ru.vladrus13.jgraphic.property.MainProperty;
@@ -45,7 +45,7 @@ public class StartTower2 {
 
     private final static int tileSize = MainProperty.getInteger("world.region.tileSize");
 
-    private static void setActors(Region region) throws GameException {
+    private static void setActors(Region region) throws AppException {
         Actor pirate = ActorFactory.createActor(2, new Point(6L * tileSize, 4L * tileSize), region);
         Choose pirateChoose;
         BarterPlace pirateBarterPlace = new BarterPlace(new ArrayList<>(Arrays.asList(
@@ -98,11 +98,11 @@ public class StartTower2 {
         region.setOnStep(new WorldEventTeleport(3, new Point(tileSize, tileSize), Direction.DOWN), new Point(5, 1));
     }
 
-    private static void setItems(Region region) throws GameException {
+    private static void setItems(Region region) throws AppException {
         region.setItems(new ArrayList<>(Collections.singletonList(new RegionItem(new Point(8L * tileSize, tileSize), region, ItemFactory.get(1)))));
     }
 
-    public static Region getInstance(World parent) throws GameException {
+    public static Region getInstance(World parent) throws AppException {
         int[][] map = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 3, 0, 0, 0, 1, 1, 1, 0, 1},

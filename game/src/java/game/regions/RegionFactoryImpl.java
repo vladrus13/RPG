@@ -7,7 +7,7 @@ import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.components.Tile;
 import ru.vladrus13.rpg.world.components.TileFactory;
@@ -29,17 +29,17 @@ public class RegionFactoryImpl {
         regions[3] = StartTower3.class;
     }
 
-    public static Region getRegion(int id, World parent) throws GameException {
+    public static Region getRegion(int id, World parent) throws AppException {
         try {
             return (Region) regions[id].getMethod("getInstance", World.class).invoke(regions[id], parent);
         } catch (NoSuchMethodException e) {
-            throw new GameException("No region with id: " + id);
+            throw new AppException("No region with id: " + id);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new GameException(e);
+            throw new AppException(e);
         }
     }
 
-    public static ArrayList<ArrayList<Tile>> getTiles(int[][] map, int size, Frame parent) throws GameException {
+    public static ArrayList<ArrayList<Tile>> getTiles(int[][] map, int size, Frame parent) throws AppException {
         ArrayList<ArrayList<Tile>> returned = new ArrayList<>();
         int maxLength = Arrays.stream(map).mapToInt(it -> it.length).max().orElseThrow();
         for (int i = 0; i < maxLength; i++) {

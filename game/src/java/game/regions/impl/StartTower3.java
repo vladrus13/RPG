@@ -2,7 +2,7 @@ package game.regions.impl;
 
 import game.regions.RegionFactoryImpl;
 import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
@@ -33,7 +33,7 @@ public class StartTower3 {
         region.setActors(actors);
     }
 
-    public static Region getInstance(World parent) throws GameException {
+    public static Region getInstance(World parent) throws AppException {
         int[][] map = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 3, 0, 0, 0, 0, 0, 0, 0, 1},

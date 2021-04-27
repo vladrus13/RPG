@@ -8,7 +8,7 @@ import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 import ru.vladrus13.rpg.basic.event.ShopEvent;
@@ -99,7 +99,7 @@ public class ShopWorld extends Frame {
             choose1 = Choose.getInstance("shop", liveCount,
                     new Point(50, 50, CoordinatesType.RATIO), new Size(500, 900, CoordinatesType.RATIO),
                     this, new Size(1000, 50, CoordinatesType.RATIO), names, eventsKey, eventsMouse, buttonFactory, textFactory);
-        } catch (GameException e) {
+        } catch (AppException e) {
             e.printStackTrace();
             choose1 = null;
         }
@@ -134,7 +134,7 @@ public class ShopWorld extends Frame {
                         new Size(900, 800, CoordinatesType.RATIO));
                 out.addChild(name);
                 out.addChild(description);
-            } catch (GameException e) {
+            } catch (AppException e) {
                 e.printStackTrace();
             }
         }
@@ -150,7 +150,7 @@ public class ShopWorld extends Frame {
                         new Point(50, distribution[i], CoordinatesType.RATIO),
                         new Size(900, distribution[1] - distribution[0], CoordinatesType.RATIO));
                 emptyFrame.addChild(text);
-            } catch (GameException e) {
+            } catch (AppException e) {
                 e.printStackTrace();
             }
         }

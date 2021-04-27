@@ -10,7 +10,7 @@ import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 
@@ -36,7 +36,7 @@ public class QuickMenu extends Frame {
             choose1 = Choose.getInstance("quick", 2, new Point(100, 100, CoordinatesType.RATIO),
                     new Size(500, 500, CoordinatesType.RATIO), this, buttonSize.copy(),
                     new String[]{"Game", "Exit"}, new Event[]{null, null}, new Event[]{null, null}, buttonFactory, textFactory);
-        } catch (GameException e) {
+        } catch (AppException e) {
             e.printStackTrace();
             choose1 = null;
         }

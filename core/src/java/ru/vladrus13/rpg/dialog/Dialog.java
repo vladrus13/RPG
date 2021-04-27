@@ -8,7 +8,7 @@ import ru.vladrus13.jgraphic.basic.components.Text;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.resources.ActorResources;
@@ -59,8 +59,8 @@ public class Dialog extends Frame {
                 }
                 try {
                     reload();
-                } catch (GameException gameException) {
-                    Writer.printStackTrace(logger, gameException);
+                } catch (AppException AppException) {
+                    Writer.printStackTrace(logger, AppException);
                 }
                 break;
             default:
@@ -68,7 +68,7 @@ public class Dialog extends Frame {
         }
     }
 
-    public void reload() throws GameException {
+    public void reload() throws AppException {
         text = null;
         name = null;
         imageActor = null;
@@ -93,7 +93,7 @@ public class Dialog extends Frame {
         if (dialogBeans.size() == 1) {
             try {
                 reload();
-            } catch (GameException e) {
+            } catch (AppException e) {
                 Writer.printStackTrace(logger, e);
             }
         }
@@ -104,7 +104,7 @@ public class Dialog extends Frame {
         if (this.dialogBeans.size() == dialogBeans.size()) {
             try {
                 reload();
-            } catch (GameException e) {
+            } catch (AppException e) {
                 Writer.printStackTrace(logger, e);
             }
         }

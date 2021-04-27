@@ -1,7 +1,7 @@
 package ru.vladrus13.rpg.ai.world.command;
 
 import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
@@ -27,7 +27,7 @@ public class RandomAI extends WarZoneAI {
             if (another.command != actor.command) {
                 try {
                     return new AttackCommand(actor, another, AbilityFactory.get(1));
-                } catch (GameException e) {
+                } catch (AppException e) {
                     Writer.printStackTrace(logger, e);
                     return null;
                 }

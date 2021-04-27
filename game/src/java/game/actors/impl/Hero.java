@@ -1,7 +1,7 @@
 package game.actors.impl;
 
 import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
@@ -27,7 +27,7 @@ public class Hero extends Actor {
         this.standardStatus = new Status(100, 0, 10, 100);
         try {
             this.abilities = new HashMap<>(Map.of("Splash", AbilityFactory.get(1), "Heal", AbilityFactory.get(2)));
-        } catch (GameException e) {
+        } catch (AppException e) {
             Writer.printStackTrace(Logger.getLogger(Hero.class.getName()), e);
         }
         updateStatus();

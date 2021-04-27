@@ -1,6 +1,6 @@
 package ru.vladrus13.rpg.resources;
 
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 import ru.vladrus13.jgraphic.utils.Writer;
@@ -27,7 +27,7 @@ public class ActorResources {
             for (Direction direction : Direction.values()) {
                 returned.put(direction, ImageLoader.load(path.resolve(direction.getCapitalize() + ".png")));
             }
-        } catch (GameException e) {
+        } catch (AppException e) {
             Writer.printStackTrace(logger, e);
         }
         return returned;
@@ -37,7 +37,7 @@ public class ActorResources {
         Path path = actorsPath.resolve(name);
         try {
             return ImageLoader.load(path.resolve("face.png"));
-        } catch (GameException e) {
+        } catch (AppException e) {
             Writer.printStackTrace(logger, e);
         }
         return null;

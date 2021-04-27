@@ -1,6 +1,6 @@
 package ru.vladrus13.rpg.world.factory;
 
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.rpg.world.actors.Ability;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,13 +12,13 @@ public class AbilityFactory {
 
     public static Class<?>[] abilities;
 
-    public static Ability get(int id) throws GameException {
+    public static Ability get(int id) throws AppException {
         try {
             return (Ability) abilities[id].getMethod("getInstance").invoke(abilities[id]);
         } catch (NoSuchMethodException e) {
-            throw new GameException("No ability with id: " + id);
+            throw new AppException("No ability with id: " + id);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new GameException(e);
+            throw new AppException(e);
         }
     }
 }

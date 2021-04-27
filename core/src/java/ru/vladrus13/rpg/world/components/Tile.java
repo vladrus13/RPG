@@ -5,7 +5,7 @@ import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.event.Event;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.region.RegionItem;
@@ -25,7 +25,7 @@ public class Tile extends Frame {
     private boolean isWalkable = true;
     private Event onStep;
 
-    public Tile(String name, Point start, Size size, int id, Frame parent) throws GameException {
+    public Tile(String name, Point start, Size size, int id, Frame parent) throws AppException {
         super(name, start, size, parent);
         image = ImageLoader.load(path.resolve(id + ".png"));
         recalculate();

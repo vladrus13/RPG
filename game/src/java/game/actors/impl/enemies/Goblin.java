@@ -1,7 +1,7 @@
 package game.actors.impl.enemies;
 
 import ru.vladrus13.jgraphic.bean.Point;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.ai.world.command.RandomAI;
 import ru.vladrus13.rpg.world.actors.Actor;
@@ -17,7 +17,7 @@ public class Goblin extends Enemy {
         this.standardStatus = new Status(50, 0, 10, 50);
         try {
             abilities.put("Splash", AbilityFactory.get(1));
-        } catch (GameException e) {
+        } catch (AppException e) {
             Writer.printStackTrace(logger, e);
         }
         updateStatus();

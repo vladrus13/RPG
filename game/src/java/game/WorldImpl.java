@@ -4,7 +4,7 @@ import game.actors.impl.Hero;
 import game.regions.RegionFactoryImpl;
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.event.Event;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.Game;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
@@ -35,7 +35,7 @@ public class WorldImpl extends World {
         try {
             Integer floor = SaveHolder.save.getInt("floor");
             region = RegionFactoryImpl.getRegion(floor == null ? 1 : floor, this);
-        } catch (GameException e) {
+        } catch (AppException e) {
             Writer.printStackTrace(logger, e);
         }
         this.game = game;
@@ -103,7 +103,7 @@ public class WorldImpl extends World {
                     SaveHolder.save.set("floor", String.valueOf(region.id));
                 }
                 SaveHolder.quickSave();
-            } catch (GameException e) {
+            } catch (AppException e) {
                 Writer.printStackTrace(logger, e);
             }
         }

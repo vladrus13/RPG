@@ -1,7 +1,7 @@
 package ru.vladrus13.rpg.resources;
 
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 
 import java.awt.image.BufferedImage;
@@ -14,15 +14,15 @@ public class ImageTable {
     public final Size size;
     public final BufferedImage[][] images;
 
-    public ImageTable(Path path, Size size) throws GameException {
+    public ImageTable(Path path, Size size) throws AppException {
         this.path = path;
         this.size = size;
         BufferedImage bufferedImage = ImageLoader.load(path);
         if (bufferedImage.getHeight() % size.y != 0) {
-            throw new GameException("Can't divide image height by size of one picture");
+            throw new AppException("Can't divide image height by size of one picture");
         }
         if (bufferedImage.getWidth() % size.x != 0) {
-            throw new GameException("Can't divide image width by size of one picture");
+            throw new AppException("Can't divide image width by size of one picture");
         }
         int countHeight = bufferedImage.getHeight() / (int) size.y;
         int countWidth = bufferedImage.getWidth() / (int) size.x;

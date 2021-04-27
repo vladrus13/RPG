@@ -2,10 +2,9 @@ package ru.vladrus13.rpg.world.actors;
 
 import org.json.JSONObject;
 import ru.vladrus13.jgraphic.basic.Updated;
-import ru.vladrus13.jgraphic.exception.GameException;
+import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.resources.ImageLoader;
 import ru.vladrus13.jgraphic.utils.Writer;
-import ru.vladrus13.rpg.resources.ImageGameLoader;
 import ru.vladrus13.rpg.saves.Savable;
 import ru.vladrus13.rpg.saves.SaveConstante;
 import ru.vladrus13.rpg.world.factory.AbilityFactory;
@@ -17,7 +16,7 @@ import java.util.logging.Logger;
 @Savable(implemented = true)
 public abstract class Ability implements Updated {
     private static final Logger logger = Logger.getLogger(Ability.class.getName());
-    private static final Path abilitiesIconPath = Path.of("graphic").resolve("world").resolve("abilities");
+    private static final Path abilitiesIconPath = Path.of("world").resolve("abilities");
 
     @SaveConstante(name = "id", constructor = 1)
     public int id = -1;
@@ -35,7 +34,7 @@ public abstract class Ability implements Updated {
         }
         try {
             return AbilityFactory.get(((JSONObject) object).getInt("id"));
-        } catch (GameException e) {
+        } catch (AppException e) {
             Writer.printStackTrace(logger, e);
         }
         return null;
@@ -55,13 +54,16 @@ public abstract class Ability implements Updated {
     public void update(long delay) {
         if (current < coolDown) {
             current += delay;
+            if (current > coolDown) {
+                current = coolDown;
+            }
         }
     }
 
     public void loadIcon() {
         try {
             icon = ImageLoader.load(abilitiesIconPath.resolve(getName() + ".png"));
-        } catch (GameException e) {
+        } catch (AppException e) {
             Writer.printStackTrace(logger, e);
         }
     }
