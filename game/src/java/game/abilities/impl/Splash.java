@@ -17,6 +17,7 @@ public class Splash extends AbilityActor {
     public Splash() {
         id = 1;
         coolDown = 400;
+        loadIcon();
     }
 
     public static Ability getInstance() {
@@ -25,6 +26,9 @@ public class Splash extends AbilityActor {
 
     @Override
     public void activate(Actor from, Actor to, Region region) {
+        if (isNotUsable()) {
+            return;
+        }
         if (!to.isSpecialAbitily(this)) {
             to.onPhysical(from.realStatus.attack);
         }

@@ -93,7 +93,6 @@ public class Hero extends Actor {
     @Override
     public void onPhysical(int damage) {
         this.realStatus.hp -= damage;
-        logger.info("Hero get " + damage + " damage. " + realStatus.hp + "/" + realStatus.maxHP + ".");
         if (realStatus.hp <= 0) {
             callEvent(new WorldEventGameOver());
         }

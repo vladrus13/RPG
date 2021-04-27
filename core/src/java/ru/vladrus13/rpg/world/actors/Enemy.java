@@ -53,9 +53,9 @@ public abstract class Enemy extends Actor {
         time = 0;
         Command command = warZoneAI.getCommand((WarZone) region, this);
         if (command instanceof AttackCommand) {
-            time += 1000;
             if (((AttackCommand) command).ability instanceof AbilityActor) {
-                ((AbilityActor) ((AttackCommand) command).ability).activate(this, ((AttackCommand) command).to, region);
+                Ability ability = ((AttackCommand) command).ability;
+                ((AbilityActor) abilities.get(ability.getName())).activate(this, ((AttackCommand) command).to, region);
             }
             // TODO another type of abilities
             return;

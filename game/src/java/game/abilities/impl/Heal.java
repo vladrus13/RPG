@@ -17,6 +17,7 @@ public class Heal extends AbilitySelf {
     public Heal() {
         id = 2;
         coolDown = 5000;
+        loadIcon();
     }
 
     public static Ability getInstance() {
@@ -35,6 +36,9 @@ public class Heal extends AbilitySelf {
 
     @Override
     public void activate(Actor from, Region region) {
+        if (isNotUsable()) {
+            return;
+        }
         if (!from.isSpecialAbitily(this)) {
             from.realStatus.hp += 30;
             if (from.realStatus.hp > from.realStatus.maxHP) {

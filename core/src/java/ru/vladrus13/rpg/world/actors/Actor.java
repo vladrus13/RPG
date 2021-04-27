@@ -117,6 +117,9 @@ public abstract class Actor extends UpdatedFrame {
 
     @Override
     protected void nonCheckingUpdate(long delay) {
+        for (Ability ability : abilities.values()) {
+            ability.update(delay);
+        }
         if (region == null) {
             return;
         }
