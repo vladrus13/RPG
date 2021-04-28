@@ -1,10 +1,10 @@
 package game.abilities.impl;
 
+import ru.vladrus13.jgraphic.basic.animation.Animation;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Size;
-import ru.vladrus13.rpg.basic.animation.Animation;
+import ru.vladrus13.jgraphic.resources.ImageTableLoader;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
-import ru.vladrus13.rpg.resources.ImageGameLoader;
 import ru.vladrus13.rpg.world.actors.Ability;
 import ru.vladrus13.rpg.world.actors.AbilitySelf;
 import ru.vladrus13.rpg.world.actors.Actor;
@@ -46,8 +46,8 @@ public class Heal extends AbilitySelf {
             }
         }
         Path path = Path.of("world").resolve("animations").resolve("Heal.png");
-        ImageGameLoader.upload(path, new Size(192, 192, CoordinatesType.REAL));
-        Animation animation = new Animation("heal", from.getStart().incX(-10).incY(-10), new Size(52, 52, CoordinatesType.REAL), region, ImageGameLoader.load(path), 100);
+        ImageTableLoader.upload(path, new Size(192, 192, CoordinatesType.REAL));
+        Animation animation = new Animation("heal", from.getStart().incX(-10).incY(-10), new Size(52, 52, CoordinatesType.REAL), region, ImageTableLoader.load(path), 100);
         region.callEvent(new RegionEventDrawing(animation, true, false, false));
     }
 }
