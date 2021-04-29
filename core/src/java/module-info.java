@@ -7,6 +7,7 @@ module ru.vladrus13.rpg {
     exports ru.vladrus13.rpg.basic.direction;
     exports ru.vladrus13.rpg.basic.event.region;
     exports ru.vladrus13.rpg.world.actors;
+    exports ru.vladrus13.rpg.world.actors.region;
     exports ru.vladrus13.rpg.world.components;
     exports ru.vladrus13.rpg.world.items.inventory;
     exports ru.vladrus13.rpg.world.places;
@@ -16,7 +17,6 @@ module ru.vladrus13.rpg {
     exports ru.vladrus13.rpg.world.factory;
     exports ru.vladrus13.rpg.ai.world.command;
     exports ru.vladrus13.rpg.world.quickmenu;
-    exports ru.vladrus13.rpg.basic.animation;
     exports ru.vladrus13.rpg.dialog;
 
     requires transitive java.logging;

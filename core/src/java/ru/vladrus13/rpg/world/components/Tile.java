@@ -21,7 +21,7 @@ public class Tile extends Frame {
     private static final Path path = Path.of("world").resolve("tiles");
     private final BufferedImage image;
     public Actor actor;
-    public LinkedList<RegionItem> regionItems = new LinkedList<>();
+    public final LinkedList<RegionItem> regionItems = new LinkedList<>();
     private boolean isWalkable = true;
     private Event onStep;
 

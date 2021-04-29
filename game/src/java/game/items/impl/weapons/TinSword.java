@@ -8,7 +8,7 @@ import ru.vladrus13.rpg.world.items.Weapon;
  **/
 public class TinSword extends Weapon {
 
-    public static int staticId = 1;
+    public static final int staticId = 1;
 
     public TinSword() {
         super(staticId);

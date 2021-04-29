@@ -10,11 +10,11 @@ import java.util.Map;
 @Savable(implemented = false)
 public class Save {
     @SaveConstante(name = "regions", setNameFunction = "setRegions")
-    public Map<String, Variables> regionsData = new HashMap<>();
+    public final Map<String, Variables> regionsData = new HashMap<>();
     @SaveConstante(name = "hero")
     public Actor hero;
     @SaveConstante(name = "global")
-    public Variables global = new Variables();
+    public final Variables global = new Variables();
 
     public void setRegions(JSONObject jsonObject) {
         for (String key : jsonObject.keySet()) {

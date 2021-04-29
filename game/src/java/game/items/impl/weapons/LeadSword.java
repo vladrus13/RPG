@@ -8,7 +8,7 @@ import ru.vladrus13.rpg.world.items.Weapon;
  **/
 public class LeadSword extends Weapon {
 
-    public static int staticId = 2;
+    public static final int staticId = 2;
 
     public LeadSword() {
         super(staticId);

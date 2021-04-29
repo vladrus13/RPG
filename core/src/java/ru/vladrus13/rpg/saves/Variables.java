@@ -8,7 +8,7 @@ import java.util.Map;
 @Savable(implemented = false)
 public class Variables {
     @SaveConstante(name = "variables", setNameFunction = "setVariables")
-    public Map<String, String> variables = new HashMap<>();
+    public final Map<String, String> variables = new HashMap<>();
 
     public String get(String key) {
         return variables.get(key);

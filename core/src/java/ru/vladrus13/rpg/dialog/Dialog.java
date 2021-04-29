@@ -22,8 +22,8 @@ import java.util.Queue;
 
 public class Dialog extends Frame {
 
-    public Queue<DialogBean> dialogBeans = new LinkedList<>();
-    public Background background;
+    public final Queue<DialogBean> dialogBeans = new LinkedList<>();
+    public final Background background;
     public Text text;
     public Text name;
     public Background imageActor;

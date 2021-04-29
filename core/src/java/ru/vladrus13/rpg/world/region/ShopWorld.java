@@ -40,8 +40,8 @@ public class ShopWorld extends Frame {
     public EmptyFrame barterIn;
     public EmptyFrame barterOut;
     public EmptyFrame out;
-    public Region region;
-    ButtonFactory buttonFactory = new ButtonFactory()
+    public final Region region;
+    final ButtonFactory buttonFactory = new ButtonFactory()
             .setBackground(new Background("back",
                     new Point(0, 0, CoordinatesType.RATIO),
                     new Size(1000, 1000, CoordinatesType.RATIO),
@@ -52,10 +52,10 @@ public class ShopWorld extends Frame {
                     new Filler(new Color(0, 0, 0, 25)), null));
 
 
-    Function<Items, String> fromItemType =
+    final Function<Items, String> fromItemType =
             itemType -> (itemType.count == 1 ? "" : itemType.count + " ") + itemType.item.name;
 
-    Function<Collection<Items>, String> fromCollectionItemTypes =
+    final Function<Collection<Items>, String> fromCollectionItemTypes =
             itemTypes -> itemTypes.stream().map(fromItemType).collect(Collectors.joining(", "));
 
     public ShopWorld(String name, Region parent, BarterPlace barterPlace) {

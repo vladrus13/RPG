@@ -2,22 +2,27 @@ package ru.vladrus13.rpg.world.actors.region;
 
 import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
-import ru.vladrus13.jgraphic.basic.components.*;
+import ru.vladrus13.jgraphic.basic.components.Table;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.rpg.world.actors.Ability;
 
-import java.awt.*;
-import java.util.HashMap;
 import java.util.Map;
 
 public class AbilitiesTable extends Table {
 
     private final Map<String, Ability> abilities;
-    private int count;
     @SuppressWarnings("FieldCanBeLocal")
     private final int WIDTH = 4, HEIGHT = 4;
+    private int count;
+
+    public AbilitiesTable(String name, Frame parent, Map<String, Ability> abilities) {
+        super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(300, 1000, CoordinatesType.RATIO), parent);
+        this.abilities = abilities;
+        count = abilities.size();
+        makeTable();
+    }
 
     public void makeTable() {
         int counter = 0;
@@ -28,13 +33,6 @@ public class AbilitiesTable extends Table {
         }
         setTable(images, WIDTH, HEIGHT);
         count = abilities.size();
-    }
-
-    public AbilitiesTable(String name, Frame parent, Map<String, Ability> abilities) {
-        super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(300, 1000, CoordinatesType.RATIO), parent);
-        this.abilities = abilities;
-        count = abilities.size();
-        makeTable();
     }
 
     @Override
