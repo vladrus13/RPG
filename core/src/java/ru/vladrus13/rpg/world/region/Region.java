@@ -14,6 +14,7 @@ import ru.vladrus13.rpg.basic.event.region.RegionEventDie;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
+import ru.vladrus13.rpg.dialog.Dialog;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Enemy;
@@ -226,6 +227,9 @@ public class Region extends UpdatedFrame {
                 }
                 if (regionEventDrawing.frame instanceof UpdatedFrame) {
                     updatedFrames.add((UpdatedFrame) regionEventDrawing.frame);
+                }
+                if (regionEventDrawing.frame instanceof Dialog) {
+                    ((Dialog) regionEventDrawing.frame).renew();
                 }
             }
         }

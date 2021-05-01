@@ -19,9 +19,9 @@ import java.util.LinkedList;
 public class Tile extends Frame {
 
     private static final Path path = Path.of("world").resolve("tiles");
+    public final LinkedList<RegionItem> regionItems = new LinkedList<>();
     private final BufferedImage image;
     public Actor actor;
-    public final LinkedList<RegionItem> regionItems = new LinkedList<>();
     private boolean isWalkable = true;
     private Event onStep;
 

@@ -31,15 +31,6 @@ public class ShopWorld extends Frame {
     public final Background background = new Background("blue",
             new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO),
             new Filler(new Color(0, 0, 255, 225)), this);
-    private final TextFactory textFactory = new TextFactory()
-            .setColor(Color.BLACK)
-            .setTextAlign(Text.TextAlign.LEFT)
-            .setFontSize(new Size(32, 0, CoordinatesType.REAL))
-            .setNameFont("PixelFontGame");
-    public Choose choose;
-    public EmptyFrame barterIn;
-    public EmptyFrame barterOut;
-    public EmptyFrame out;
     public final Region region;
     final ButtonFactory buttonFactory = new ButtonFactory()
             .setBackground(new Background("back",
@@ -50,13 +41,19 @@ public class ShopWorld extends Frame {
                     new Point(0, 0, CoordinatesType.RATIO),
                     new Size(1000, 1000, CoordinatesType.RATIO),
                     new Filler(new Color(0, 0, 0, 25)), null));
-
-
     final Function<Items, String> fromItemType =
             itemType -> (itemType.count == 1 ? "" : itemType.count + " ") + itemType.item.name;
-
     final Function<Collection<Items>, String> fromCollectionItemTypes =
             itemTypes -> itemTypes.stream().map(fromItemType).collect(Collectors.joining(", "));
+    private final TextFactory textFactory = new TextFactory()
+            .setColor(Color.BLACK)
+            .setTextAlign(Text.TextAlign.LEFT)
+            .setFontSize(new Size(32, 0, CoordinatesType.REAL))
+            .setNameFont("PixelFontGame");
+    public Choose choose;
+    public EmptyFrame barterIn;
+    public EmptyFrame barterOut;
+    public EmptyFrame out;
 
     public ShopWorld(String name, Region parent, BarterPlace barterPlace) {
         super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
