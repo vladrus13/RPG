@@ -1,5 +1,9 @@
 package game;
 
+import game.abilities.AbilityFactoryImpl;
+import game.actors.ActorFactoryImpl;
+import game.items.ItemFactoryImpl;
+import game.regions.RegionFactoryImpl;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.Game;
 
@@ -15,7 +19,11 @@ public class Launcher {
                 e.printStackTrace();
             }
             MainProperty.read();
-            Game game = new GameImpl();
+            ActorFactoryImpl.init();
+            ItemFactoryImpl.init();
+            AbilityFactoryImpl.init();
+            RegionFactoryImpl.init();
+            new Game();
         }
     }
 }

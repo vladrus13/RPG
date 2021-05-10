@@ -14,7 +14,9 @@ import ru.vladrus13.rpg.basic.event.region.RegionEventDie;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
+import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.dialog.Dialog;
+import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.actors.Enemy;
@@ -76,6 +78,9 @@ public class Region extends UpdatedFrame {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+        }
         focused.getFirst().keyPressed(e);
     }
 
@@ -120,7 +125,17 @@ public class Region extends UpdatedFrame {
         return this;
     }
 
-    public void setHero(Actor hero) {
+    public void setHero() {
+        Actor hero = SaveHolder.save.hero;
+        this.hero = hero;
+        hero.setParent(this);
+        getTile(hero.getStart()).actor = hero;
+        addFocused(hero);
+    }
+
+    public void setHero(WorldEventTeleport worldEventTeleport) {
+        Actor hero = SaveHolder.save.hero;
+        hero.teleport(this, worldEventTeleport.getPoint(), worldEventTeleport.getDirection());
         this.hero = hero;
         getTile(hero.getStart()).actor = hero;
         addFocused(hero);

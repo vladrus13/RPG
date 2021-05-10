@@ -24,7 +24,7 @@
         "id": 1,
         "inventory": {"items": [{
             "item": {"id": 1},
-            "count": 28
+            "count": 30
         }]},
         "direction": "DOWN"
     }

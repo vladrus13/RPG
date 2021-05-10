@@ -1,7 +1,6 @@
 package game.regions.impl;
 
 import game.items.impl.weapons.TinSword;
-import game.regions.RegionFactoryImpl;
 import ru.vladrus13.jgraphic.basic.components.Background;
 import ru.vladrus13.jgraphic.basic.components.Choose;
 import ru.vladrus13.jgraphic.basic.components.Filler;
@@ -26,6 +25,7 @@ import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.components.Tile;
 import ru.vladrus13.rpg.world.factory.ActorFactory;
 import ru.vladrus13.rpg.world.factory.ItemFactory;
+import ru.vladrus13.rpg.world.factory.RegionFactory;
 import ru.vladrus13.rpg.world.items.inventory.Items;
 import ru.vladrus13.rpg.world.places.Barter;
 import ru.vladrus13.rpg.world.places.BarterPlace;
@@ -115,7 +115,7 @@ public class StartTower2 {
                 {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
-        ArrayList<ArrayList<Tile>> tiles = RegionFactoryImpl.getTiles(map, tileSize, parent);
+        ArrayList<ArrayList<Tile>> tiles = RegionFactory.getTiles(map, tileSize, parent);
         Region region = (new Region(2, "2", parent)).setTiles(tiles);
         setOnStep(region);
         setItems(region);

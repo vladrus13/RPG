@@ -6,17 +6,16 @@ import game.actors.impl.enemies.Dummy;
 import game.actors.impl.enemies.Goblin;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.rpg.resources.ActorResources;
-import ru.vladrus13.rpg.world.factory.ActorFactory;
 import ru.vladrus13.rpg.world.region.Region;
 import ru.vladrus13.rpg.world.region.WarZone;
 
 import java.lang.reflect.Method;
 
+import static ru.vladrus13.rpg.world.factory.ActorFactory.actors;
+
 public class ActorFactoryImpl {
 
     private final static int MAX_ID = 1000;
-
-    public static Method[] actors;
 
     public static void init() {
         try {
@@ -25,7 +24,6 @@ public class ActorFactoryImpl {
             actors[2] = ActorFactoryImpl.class.getDeclaredMethod("createPirate", Point.class, Region.class);
             actors[10] = ActorFactoryImpl.class.getDeclaredMethod("createDummy", Point.class, Region.class);
             actors[11] = ActorFactoryImpl.class.getDeclaredMethod("createGoblin", Point.class, Region.class);
-            ActorFactory.actors = actors;
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }

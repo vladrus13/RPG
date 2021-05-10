@@ -35,9 +35,6 @@ public class Save {
     }
 
     public String get(String key) {
-        if (global == null) {
-            return null;
-        }
         return global.variables.get(key);
     }
 

@@ -13,8 +13,6 @@ import ru.vladrus13.jgraphic.factory.components.TextFactory;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 public class GameOver extends UpdatedFrame {
 
@@ -27,7 +25,7 @@ public class GameOver extends UpdatedFrame {
      * @param parent parent frame
      */
     public GameOver(Frame parent) {
-        super("gameOver", new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
+        super("gameOver", new Point(0, 400, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
         Text text1;
         TextFactory textFactory = new TextFactory()
                 .setTextAlign(Text.TextAlign.CENTER)
@@ -59,13 +57,7 @@ public class GameOver extends UpdatedFrame {
         text.draw(graphics);
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
+    public void reload() {
+        counter = 5000;
     }
 }

@@ -15,8 +15,6 @@ import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 public class QuickMenu extends Frame {
 
@@ -52,15 +50,5 @@ public class QuickMenu extends Frame {
         for (Frame child : childes) {
             child.draw(graphics);
         }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
     }
 }
