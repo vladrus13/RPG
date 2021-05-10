@@ -70,6 +70,7 @@ public class Hero extends Actor {
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()) {
             case MouseEvent.BUTTON1:
+                if (walkDirection != null) break;
                 Actor actor = region.getActor(DirectionService.step(start, direction));
                 if (actor != null) {
                     ((AbilityActor) abilities.get("Splash")).activate(this, actor, region);
