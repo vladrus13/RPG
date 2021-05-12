@@ -40,12 +40,6 @@ public class World extends UpdatedFrame {
         init(game);
     }
 
-    public World(int width, int height, Game game, Save save) {
-        super("world", new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), null);
-        SaveHolder.setSave(save);
-        init(game);
-    }
-
     public void init(Game game) {
         SaveHolder.loadQuickSave();
         try {
