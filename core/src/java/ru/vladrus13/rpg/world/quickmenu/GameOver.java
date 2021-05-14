@@ -4,17 +4,19 @@ import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.components.Text;
-import ru.vladrus13.jgraphic.basic.event.impl.IntEvent;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
+import ru.vladrus13.rpg.basic.Reloaded;
+import ru.vladrus13.rpg.basic.event.game.GameEventChange;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
+import ru.vladrus13.rpg.basic.event.world.WorldEventDrawing;
 
 import java.awt.*;
 
-public class GameOver extends UpdatedFrame {
+public class GameOver extends UpdatedFrame implements Reloaded {
 
     public final Text text;
     public int counter;
@@ -47,8 +49,8 @@ public class GameOver extends UpdatedFrame {
     protected void nonCheckingUpdate(long delay) {
         counter -= delay;
         if (counter < 0) {
-            callEvent(new RegionEventDrawing(this, true, true, true));
-            callEvent(new IntEvent(IntEvent.TO_MENU));
+            callEvent(new WorldEventDrawing(this, true, true, true));
+            callEvent(new GameEventChange(GameEventChange.ChangeWorldFrame.MENU));
         }
     }
 

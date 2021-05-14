@@ -4,6 +4,7 @@ import ru.vladrus13.graphic.Graphics;
 import ru.vladrus13.jgraphic.basic.Frame;
 import ru.vladrus13.jgraphic.basic.UpdatedFrame;
 import ru.vladrus13.jgraphic.basic.event.Event;
+import ru.vladrus13.jgraphic.basic.event.impl.animation.AnimationEventEnd;
 import ru.vladrus13.jgraphic.bean.CoordinatesType;
 import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
@@ -88,6 +89,9 @@ public class Region extends UpdatedFrame {
     public void callEvent(Event event) {
         if (event instanceof RegionEvent) {
             this.invokeRegionEvent((RegionEvent) event);
+            return;
+        }
+        if (event instanceof AnimationEventEnd) {
             return;
         }
         parent.callEvent(event);

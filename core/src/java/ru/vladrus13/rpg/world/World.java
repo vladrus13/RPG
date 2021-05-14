@@ -10,11 +10,11 @@ import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.Game;
+import ru.vladrus13.rpg.basic.Reloaded;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
+import ru.vladrus13.rpg.basic.event.world.WorldEventChange;
 import ru.vladrus13.rpg.basic.event.world.WorldEventDrawing;
-import ru.vladrus13.rpg.basic.event.world.WorldEventGameOver;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
-import ru.vladrus13.rpg.saves.Save;
 import ru.vladrus13.rpg.saves.SaveHolder;
 import ru.vladrus13.rpg.world.factory.RegionFactory;
 import ru.vladrus13.rpg.world.quickmenu.GameOver;
@@ -49,6 +49,8 @@ public class World extends UpdatedFrame {
             Writer.printStackTrace(logger, e);
         }
         this.game = game;
+        quickMenu = new QuickMenu(this);
+        gameOver = new GameOver(this);
         region.setHero();
         addChild(region);
         addFocused(region);
@@ -135,11 +137,31 @@ public class World extends UpdatedFrame {
                 }
             }
         }
-        if (worldEvent instanceof WorldEventGameOver) {
-            childes.clear();
-            focused.clear();
-            gameOver.reload();
-            childes.add(gameOver);
+        if (worldEvent instanceof WorldEventChange) {
+            Frame current;
+            WorldEventChange worldEventChange = (WorldEventChange) worldEvent;
+            switch (worldEventChange.type) {
+                case REGION:
+                    current = region;
+                    break;
+                case GAME_OVER:
+                    current = gameOver;
+                    break;
+                case QUICK_MENU:
+                    current = quickMenu;
+                    break;
+                default:
+                    throw new IllegalStateException("Can't change to " + worldEventChange.type.name());
+            }
+            if (!childes.contains(current)) {
+                childes.clear();
+                focused.clear();
+                childes.add(current);
+                focused.add(current);
+            }
+            if (current instanceof Reloaded) {
+                ((Reloaded) current).reload();
+            }
         }
     }
 }

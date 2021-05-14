@@ -13,13 +13,18 @@ import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.factory.components.ButtonFactory;
 import ru.vladrus13.jgraphic.factory.components.TextFactory;
+import ru.vladrus13.rpg.basic.Reloaded;
+import ru.vladrus13.rpg.basic.event.game.GameEventChange;
+import ru.vladrus13.rpg.basic.event.world.WorldEventChange;
 
 import java.awt.*;
 
-public class QuickMenu extends Frame {
+public class QuickMenu extends Frame implements Reloaded {
 
-    public QuickMenu(String name, Frame parent) {
-        super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
+    Choose choose;
+
+    public QuickMenu(Frame parent) {
+        super("quickmenu", new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
         Choose choose1;
         ButtonFactory buttonFactory = new ButtonFactory()
                 .setChooseBackground(new Background("background", new Filler(Color.BLUE.darker().darker()), null))
@@ -33,12 +38,13 @@ public class QuickMenu extends Frame {
             Size buttonSize = new Size(500, 100, CoordinatesType.RATIO);
             choose1 = Choose.getInstance("quick", 2, new Point(100, 100, CoordinatesType.RATIO),
                     new Size(500, 500, CoordinatesType.RATIO), this, buttonSize.copy(),
-                    new String[]{"Game", "Exit"}, new Event[]{null, null}, new Event[]{null, null}, buttonFactory, textFactory);
+                    new String[]{"Game", "Exit"}, new Event[]{new WorldEventChange(WorldEventChange.ChangeWorldFrame.REGION),
+                            new GameEventChange(GameEventChange.ChangeWorldFrame.MENU)}, new Event[]{null, null}, buttonFactory, textFactory);
         } catch (AppException e) {
             e.printStackTrace();
             choose1 = null;
         }
-        Choose choose = choose1;
+        choose = choose1;
         Background background = new Background("back", new Point(0, 0, CoordinatesType.RATIO),
                 new Size(1000, 1000, CoordinatesType.RATIO), new Filler(Color.BLUE), this);
         addChild(background);
@@ -50,5 +56,9 @@ public class QuickMenu extends Frame {
         for (Frame child : childes) {
             child.draw(graphics);
         }
+    }
+
+    public void reload() {
+        choose.current = 0;
     }
 }

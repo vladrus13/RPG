@@ -6,7 +6,7 @@ import ru.vladrus13.jgraphic.utils.Writer;
 import ru.vladrus13.rpg.basic.direction.Direction;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
-import ru.vladrus13.rpg.basic.event.world.WorldEventGameOver;
+import ru.vladrus13.rpg.basic.event.world.WorldEventChange;
 import ru.vladrus13.rpg.world.actors.AbilityActor;
 import ru.vladrus13.rpg.world.actors.AbilitySelf;
 import ru.vladrus13.rpg.world.actors.Actor;
@@ -95,7 +95,7 @@ public class Hero extends Actor {
     public void onPhysical(int damage) {
         this.realStatus.hp -= damage;
         if (realStatus.hp <= 0) {
-            callEvent(new WorldEventGameOver());
+            callEvent(new WorldEventChange(WorldEventChange.ChangeWorldFrame.GAME_OVER));
         }
     }
 }
