@@ -20,6 +20,9 @@ import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.dialog.Dialog;
 import ru.vladrus13.rpg.dialog.DialogBean;
+import ru.vladrus13.rpg.saves.Save;
+import ru.vladrus13.rpg.saves.SaveHolder;
+import ru.vladrus13.rpg.saves.Variables;
 import ru.vladrus13.rpg.world.World;
 import ru.vladrus13.rpg.world.actors.Actor;
 import ru.vladrus13.rpg.world.components.Tile;
@@ -45,25 +48,24 @@ public class StartTower2 {
 
     private final static int tileSize = MainProperty.getInteger("world.region.tileSize");
 
+    private static void saveControl(Region region) {
+        Save save = SaveHolder.save;
+        if (save.getVariables(region) == null) {
+            Variables variables = new Variables();
+            variables.set("swordsPirate", "5");
+            variables.set("isPickSword", "false");
+            save.set(region, variables);
+        }
+    }
+
     private static void setActors(Region region) throws AppException {
         Actor pirate = ActorFactory.createActor(2, new Point(6L * tileSize, 4L * tileSize), region);
         Choose pirateChoose;
-        BarterPlace pirateBarterPlace = new BarterPlace(new ArrayList<>(Arrays.asList(
+        BarterPlace pirateBarterPlace = new BarterPlace(new ArrayList<>(Collections.singletonList(
                 new Barter(new ArrayList<>(Collections.singletonList(
                         new Items(TinSword.getInstance(), 1))),
-                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
-                ),
-                new Barter(new ArrayList<>(Collections.singletonList(
-                        new Items(TinSword.getInstance(), 1))),
-                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
-                ),
-                new Barter(new ArrayList<>(Collections.singletonList(
-                        new Items(TinSword.getInstance(), 1))),
-                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
-                ),
-                new Barter(new ArrayList<>(Collections.singletonList(
-                        new Items(TinSword.getInstance(), 1))),
-                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))), 5
+                        new ArrayList<>(Collections.singletonList(new Items(TinSword.getInstance(), 1))),
+                        SaveHolder.save.getVariables(region).getInt("swordsPirate")
                 ))));
         Dialog dialog = new Dialog(region);
         dialog.add(new DialogBean(pirate, Color.RED, "HELLO!"));
@@ -99,7 +101,9 @@ public class StartTower2 {
     }
 
     private static void setItems(Region region) throws AppException {
-        region.setItems(new ArrayList<>(Collections.singletonList(new RegionItem(new Point(8L * tileSize, tileSize), region, ItemFactory.get(1)))));
+        if (!SaveHolder.save.getVariables(region).getBoolean("isPickSword")) {
+            region.setItems(new ArrayList<>(Collections.singletonList(new RegionItem(new Point(8L * tileSize, tileSize), region, ItemFactory.get(1)))));
+        }
     }
 
     public static Region getInstance(World parent) throws AppException {
@@ -117,6 +121,7 @@ public class StartTower2 {
         };
         ArrayList<ArrayList<Tile>> tiles = RegionFactory.getTiles(map, tileSize, parent);
         Region region = (new Region(2, "2", parent)).setTiles(tiles);
+        saveControl(region);
         setOnStep(region);
         setItems(region);
         setActors(region);

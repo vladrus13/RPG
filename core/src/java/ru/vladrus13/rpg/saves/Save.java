@@ -63,6 +63,10 @@ public class Save {
         variables.variables.put(key, value);
     }
 
+    public void set(Region region, Variables variables) {
+        regionsData.put(region.name, variables);
+    }
+
     public void set(String key, String value) {
         global.set(key, value);
     }

@@ -22,6 +22,10 @@ public class Variables {
         return Integer.parseInt(variables.get(key));
     }
 
+    public boolean getBoolean(String key) {
+        return Boolean.parseBoolean(variables.get(key));
+    }
+
     public void setVariables(JSONObject jsonObject) {
         for (String key : jsonObject.keySet()) {
             variables.put(key, jsonObject.getString(key));
