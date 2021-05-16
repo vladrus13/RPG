@@ -10,6 +10,7 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.exception.AppException;
 import ru.vladrus13.jgraphic.utils.Writer;
+import ru.vladrus13.rpg.basic.Reloaded;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.resources.ActorResources;
 
@@ -19,7 +20,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Dialog extends Frame {
+public class Dialog extends Frame implements Reloaded {
 
     public final ArrayList<DialogBean> dialogBeans = new ArrayList<>();
     public final Background background;
@@ -35,11 +36,11 @@ public class Dialog extends Frame {
                 new Filler(new Color(0, 0, 0, 100)), this);
     }
 
-    public void renew() {
+    public void reload() {
         number = 0;
         if (!dialogBeans.isEmpty()) {
             try {
-                reload();
+                nextShow();
             } catch (AppException e) {
                 Writer.printStackTrace(logger, e);
             }
@@ -69,7 +70,7 @@ public class Dialog extends Frame {
                     return;
                 }
                 try {
-                    reload();
+                    nextShow();
                 } catch (AppException AppException) {
                     Writer.printStackTrace(logger, AppException);
                 }
@@ -79,7 +80,7 @@ public class Dialog extends Frame {
         }
     }
 
-    public void reload() throws AppException {
+    public void nextShow() throws AppException {
         text = null;
         name = null;
         imageActor = null;
@@ -103,7 +104,7 @@ public class Dialog extends Frame {
         dialogBeans.add(dialogBean);
         if (dialogBeans.size() == 1) {
             try {
-                reload();
+                nextShow();
             } catch (AppException e) {
                 Writer.printStackTrace(logger, e);
             }
@@ -114,7 +115,7 @@ public class Dialog extends Frame {
         this.dialogBeans.addAll(dialogBeans);
         if (this.dialogBeans.size() == dialogBeans.size()) {
             try {
-                reload();
+                nextShow();
             } catch (AppException e) {
                 Writer.printStackTrace(logger, e);
             }

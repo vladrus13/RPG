@@ -248,7 +248,7 @@ public class Region extends UpdatedFrame {
                     updatedFrames.add((UpdatedFrame) regionEventDrawing.frame);
                 }
                 if (regionEventDrawing.frame instanceof Dialog) {
-                    ((Dialog) regionEventDrawing.frame).renew();
+                    ((Dialog) regionEventDrawing.frame).reload();
                 }
             }
         }
@@ -258,5 +258,9 @@ public class Region extends UpdatedFrame {
             }
             getTile(((RegionEventDie) regionEvent).position).actor = null;
         }
+    }
+
+    private void setVariable(String key, String value) {
+        SaveHolder.save.set(this, key, value);
     }
 }
