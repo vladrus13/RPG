@@ -10,11 +10,13 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 import ru.vladrus13.jgraphic.property.MainProperty;
 import ru.vladrus13.rpg.basic.direction.DirectionService;
+import ru.vladrus13.rpg.basic.event.game.GameEventChange;
 import ru.vladrus13.rpg.basic.event.region.RegionEvent;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDie;
 import ru.vladrus13.rpg.basic.event.region.RegionEventDrawing;
 import ru.vladrus13.rpg.basic.event.region.RegionEventOnStep;
 import ru.vladrus13.rpg.basic.event.world.WorldEvent;
+import ru.vladrus13.rpg.basic.event.world.WorldEventChange;
 import ru.vladrus13.rpg.basic.event.world.WorldEventTeleport;
 import ru.vladrus13.rpg.dialog.Dialog;
 import ru.vladrus13.rpg.saves.SaveHolder;
@@ -80,7 +82,8 @@ public class Region extends UpdatedFrame {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-
+            callEvent(new WorldEventChange(WorldEventChange.ChangeWorldFrame.QUICK_MENU));
+            return;
         }
         focused.getFirst().keyPressed(e);
     }
