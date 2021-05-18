@@ -26,9 +26,11 @@ public class QuickMenu extends Frame implements Reloaded {
     public QuickMenu(Frame parent) {
         super("quickmenu", new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
         Choose choose1;
+        Size fullSize = new Size(1000, 1000, CoordinatesType.RATIO);
+        Point fullStart = new Point(0, 0, CoordinatesType.RATIO);
         ButtonFactory buttonFactory = new ButtonFactory()
-                .setChooseBackground(new Background("background", new Filler(Color.BLUE.darker().darker()), null))
-                .setBackground(new Background("background", new Filler(Color.BLUE.darker()), null));
+                .setChooseBackground(new Background("background", fullStart.copy(), fullSize.copy(), new Filler(Color.BLUE.darker().darker()), null))
+                .setBackground(new Background("background", fullStart.copy(), fullSize.copy(), new Filler(Color.BLUE.darker()), null));
         TextFactory textFactory = new TextFactory()
                 .setTextAlign(Text.TextAlign.LEFT)
                 .setFontSize(new Size(300, 0, CoordinatesType.RATIO))
