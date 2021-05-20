@@ -18,6 +18,7 @@ import ru.vladrus13.rpg.basic.event.game.GameEventChange;
 import ru.vladrus13.rpg.basic.event.world.WorldEventChange;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class QuickMenu extends Frame implements Reloaded {
 
@@ -37,7 +38,7 @@ public class QuickMenu extends Frame implements Reloaded {
                 .setNameFont("PixelFontGame")
                 .setColor(Color.BLACK);
         try {
-            Size buttonSize = new Size(500, 100, CoordinatesType.RATIO);
+            Size buttonSize = new Size(1000, 200, CoordinatesType.RATIO);
             choose1 = Choose.getInstance("quick", 2, new Point(100, 100, CoordinatesType.RATIO),
                     new Size(500, 500, CoordinatesType.RATIO), this, buttonSize.copy(),
                     new String[]{"Game", "Exit"}, new Event[]{new WorldEventChange(WorldEventChange.ChangeWorldFrame.REGION),
@@ -62,5 +63,10 @@ public class QuickMenu extends Frame implements Reloaded {
 
     public void reload() {
         choose.current = 0;
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        choose.keyPressed(e);
     }
 }
