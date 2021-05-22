@@ -39,7 +39,7 @@ public class QuickMenu extends Frame implements Reloaded {
                 .setColor(Color.BLACK);
         try {
             Size buttonSize = new Size(1000, 200, CoordinatesType.RATIO);
-            choose1 = Choose.getInstance("quick", 2, new Point(50, 50, CoordinatesType.RATIO),
+            choose1 = Choose.getInstance("quick", 2, new Point(20, 20, CoordinatesType.RATIO),
                     new Size(500, 500, CoordinatesType.RATIO), this, buttonSize.copy(),
                     new String[]{"Game", "Exit"}, new Event[]{new WorldEventChange(WorldEventChange.ChangeWorldFrame.REGION),
                             new GameEventChange(GameEventChange.ChangeWorldFrame.MENU)}, new Event[]{null, null}, buttonFactory, textFactory);
