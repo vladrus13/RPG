@@ -21,13 +21,13 @@
         },
         "start": {
             "x": 32,
-            "y": 32
+            "y": 160
         },
         "id": 1,
         "inventory": {"items": [{
             "item": {"id": 1},
             "count": 30
         }]},
-        "direction": "DOWN"
+        "direction": "UP"
     }
 }
