@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 public class Menu extends Frame {
 
-    private final Choose choose;
+    private final Choose main;
     private final Game game;
 
     public Menu(int width, int height, Game game) {
@@ -31,23 +31,23 @@ public class Menu extends Frame {
         this.game = game;
         Point startStart = new Point(10, 10, CoordinatesType.RATIO);
         Size startSize = new Size(980, 480, CoordinatesType.RATIO);
-        choose = new Choose("menuChoose", new Point(250, 250, CoordinatesType.RATIO), new Size(500, 500, CoordinatesType.RATIO), this);
-        addChild(choose);
+        main = new Choose("menuChoose", new Point(250, 250, CoordinatesType.RATIO), new Size(500, 500, CoordinatesType.RATIO), this);
+        addChild(main);
         try {
-            Button start = new ClassicButton("start", startStart.copy(), startSize.copy(), choose).setEventKey(new GameEventChange(GameEventChange.ChangeWorldFrame.WORLD));
+            Button start = new ClassicButton("start", startStart.copy(), startSize.copy(), main).setEventKey(new GameEventChange(GameEventChange.ChangeWorldFrame.WORLD));
             start.setBackground(new Background("agree", startStart, startSize, new Filler(Color.BLUE), start));
             start.setBackgroundChoose(new Background("disagree", startStart, startSize, new Filler(Color.RED), start));
             ResourceBundle resourceBundle = ResourceBundle.getBundle("internationalization.menu", MainProperty.getLocale());
             start.setText(new Text("text", startStart, startSize, resourceBundle.getString("start"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, start));
             Point exitStart = new Point(10, 510, CoordinatesType.RATIO);
             Size exitSize = new Size(980, 480, CoordinatesType.RATIO);
-            Button exit = new ClassicButton("exit", exitStart.copy(), exitSize.copy(), choose).setEventKey(new GameEventExit());
+            Button exit = new ClassicButton("exit", exitStart.copy(), exitSize.copy(), main).setEventKey(new GameEventExit());
             exit.setBackground(new Background("agree", exitStart, exitSize, new Filler(Color.BLUE), exit));
             exit.setBackgroundChoose(new Background("disagree", exitStart, exitSize, new Filler(Color.RED), exit));
             exit.setText(new Text("text", exitStart, exitSize, resourceBundle.getString("exit"), "Inventory", new Size(300, 0, CoordinatesType.RATIO), Color.BLACK, Text.TextAlign.CENTER, exit));
-            choose.addButton(start);
-            choose.addButton(exit);
-            focused.add(choose);
+            main.addButton(start);
+            main.addButton(exit);
+            focused.add(main);
         } catch (AppException e) {
             Logger logger = Logger.getLogger(Menu.class.getName());
             Writer.printStackTrace(logger, e);
@@ -57,7 +57,7 @@ public class Menu extends Frame {
 
     @Override
     protected void nonCheckingDraw(Graphics graphics) {
-        choose.draw(graphics);
+        main.draw(graphics);
     }
 
     @Override
