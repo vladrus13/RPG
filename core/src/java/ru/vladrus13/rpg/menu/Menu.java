@@ -24,11 +24,13 @@ import java.util.logging.Logger;
 public class Menu extends Frame {
 
     private final Choose main;
+    private final Settings settings;
     private final Game game;
 
     public Menu(int width, int height, Game game) {
         super("menu", new Point(0, 0, CoordinatesType.REAL), new Size(width, height, CoordinatesType.REAL), null);
         this.game = game;
+        this.settings = new Settings(this);
         Point startStart = new Point(10, 10, CoordinatesType.RATIO);
         Size startSize = new Size(980, 480, CoordinatesType.RATIO);
         main = new Choose("menuChoose", new Point(250, 250, CoordinatesType.RATIO), new Size(500, 500, CoordinatesType.RATIO), this);

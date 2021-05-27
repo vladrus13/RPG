@@ -7,8 +7,8 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 
 public class Settings extends Frame {
-    public Settings(String name, Frame parent) {
-        super(name, new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
+    public Settings(Frame parent) {
+        super("settings", new Point(0, 0, CoordinatesType.RATIO), new Size(1000, 1000, CoordinatesType.RATIO), parent);
     }
 
     @Override
