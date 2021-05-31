@@ -7,8 +7,8 @@ import ru.vladrus13.jgraphic.bean.Point;
 import ru.vladrus13.jgraphic.bean.Size;
 
 public class BattleStatus extends Frame {
-    public BattleStatus(String name, Frame parent) {
-        super(name, new Point(0, 800, CoordinatesType.RATIO), new Size(1000, 200, CoordinatesType.RATIO), parent);
+    public BattleStatus(Frame parent) {
+        super("battle-status", new Point(0, 800, CoordinatesType.RATIO), new Size(1000, 200, CoordinatesType.RATIO), parent);
     }
 
     @Override
